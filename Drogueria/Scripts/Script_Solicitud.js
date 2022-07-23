@@ -2,7 +2,37 @@
 
 $(function () {
     CargaProductos();
+    CargaPrioridad();
 });
+
+function CargaPrioridad() {
+
+    $.ajax({
+        url: window.urlObtenerPrioridad,
+        type: 'POST',
+        success: function (data) {
+            $('#cmbArticulo').empty();
+            $('#cmbArticulo').append('<option value="-1">[Seleccione prioridad]</option>')
+
+            var contador = 0;
+            $.each(data,
+                function (value, item) {
+                    var texto = '<option value="' + item.Id + '">' + item.Descripcion + '</option>';
+                    $('#cmbPrioridad').append(texto);
+                    contador++;
+                }
+            );
+
+
+            //alert(contador);
+            // hideLoading();
+        },
+        error: function () {
+            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
+            //hideLoading();
+        }
+    });
+}
 
 
 function CargaProductos() {

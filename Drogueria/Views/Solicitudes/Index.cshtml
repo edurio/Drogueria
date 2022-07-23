@@ -30,6 +30,7 @@
 
     <script>
         var urlObtenerProductos = '@Url.Action("ObtenerProductos", "Solicitudes")';
+         var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "Solicitudes")';
 
         $(document).ready(function () {
 
@@ -84,7 +85,17 @@
                         <div class="ui divider"></div>
                         <div class="ui form">
 
-
+                            <div class="two fields">
+                                <div class="field error">
+                                    <label>Fecha Solicitud</label>
+                                    <input placeholder="First Name" type="text">
+                                </div>
+                                <div class="field">
+                                    <label>Prioridad</label>
+                                    <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                    </select>
+                                </div>
+                            </div>
 
                             <div id="divTxtRut" class="field">
                                 <label>RUT Conductor</label>
@@ -94,29 +105,18 @@
                                 <label>Nº Tarjeta Proximidad</label>
                                 <input id="TxtNumeroTarjeta" type="text" placeholder="Digite el Nº de tarjeta de proximidad...">
                             </div>
-                            <div id="divTxtNombre" class="field">
-                                <label>Nombre completo</label>
-                                <input id="txtNombre" type="text" placeholder="Digite los nombres...">
-                                @*</div>
-                                    <div id="divTxtPrimerApellido" class="field">
-                                    <label>Primer Apellido</label>
-                                    <input id="txtPrimerApellido" type="text" placeholder="Digite el primer apellido...">
-                                    </div>
-                                    <div id="divTxtSegundoApellido" class="field">
-                                    <label>Segundo Apellido</label>
-                                    <input id="txtSegundoApellido" type="text" placeholder="Digite el segundo apellido...">
-                                    </div>*@
-                                <div id="divTxtNumeroCelular" class="field">
-                                    <label>Celular</label>
-                                    <input id="txtNumeroCelular" type="tel" placeholder="Digite el celular...">
-                                </div>
-                                <div class="field">
-                                    <label>Observación</label>
-                                    <textarea id="txtObservacion" rows="2" placeholder="Observación"></textarea>
-                                </div>
 
-
+                            <div id="divTxtNumeroCelular" class="field">
+                                <label>Celular</label>
+                               
                             </div>
+                            <div class="field">
+                                <label>Observación</label>
+                                <textarea id="txtObservacion" rows="2" placeholder="Observación"></textarea>
+                            </div>
+
+
+                        </div>
                         </div>
                     </div>
 
