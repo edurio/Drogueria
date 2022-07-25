@@ -45,6 +45,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Charts.v21.1.Core, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Charts.v21.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v21.1.Core, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.Printing.v21.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.XtraCharts.v21.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.XtraPrinting.v21.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.XtraReports.v21.1.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\ControlStock\ControlStock\bin\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -121,6 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibroSolicitudesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SolicitudesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -134,12 +158,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="CSS\demo.css" />
+    <Content Include="CSS\jquery.easy-gallery.css" />
+    <Content Include="CSS\slippry.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\CrearSolicitudFnd.png" />
+    <Content Include="Images\LibroSolicitudes.png" />
     <Content Include="Images\LogoBackline.png" />
+    <Content Include="Images\LogoBackline2.png" />
     <Content Include="Images\Wall1.jpg" />
+    <Content Include="js\easing.js" />
+    <Content Include="js\move-top.js" />
+    <Content Include="js\slippry.js" />
     <Content Include="RecursosExternos\bootstrap.min.css" />
     <Content Include="RecursosExternos\bootstrap.min.js" />
     <Content Include="RecursosExternos\calendar.min.css" />
@@ -150,6 +183,7 @@
     <Content Include="RecursosExternos\semantic.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="CSS\slippry.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -179,6 +213,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Solicitudes\Index.cshtml" />
+    <Content Include="Views\LibroSolicitudes\Index.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Shared\_LayoutMenu.cshtml" />
+    <Content Include="Views\Solicitudes\Solicitudes.cshtml" />
+    <Content Include="Views\LibroSolicitudes\LibroSolicitudes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -206,6 +245,13 @@
       <Project>{fd5a6c75-e548-40c7-99ec-b539f692cd31}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reportes\Reportes.csproj">
+      <Project>{d65ed863-3f49-491d-bb33-ef166b27e40b}</Project>
+      <Name>Reportes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

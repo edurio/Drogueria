@@ -32,19 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
-      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <HintPath>..\..\Maquinarias\Maquinarias\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
-      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <HintPath>..\..\Maquinarias\Maquinarias\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\Maquinarias\Maquinarias\bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\..\Maquinarias\Maquinarias\bin\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Interception">
-      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <HintPath>..\..\Maquinarias\Maquinarias\bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,8 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetalleSolicitudDAL.cs" />
+    <Compile Include="EstadoDAL.cs" />
     <Compile Include="PrioridadDAL.cs" />
     <Compile Include="ProductoDAL.cs" />
+    <Compile Include="SolicitudDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,9 +1,14 @@
-﻿<html>
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Solicitudes/Solicitudes.cshtml";
+}
+
+<html>
 <head>
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
-
+    <title>Crear solicitud</title>
 
     <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="~/RecursosExternos/bootstrap.min.js"></script>
@@ -15,22 +20,24 @@
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
     <style>
-          body {
-        width: 100%;
-        height: 100%;
-        background-image: url('/Images/Wall1.jpg');
-        background-position: center;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-
-
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
     </style>
 
     <script>
         var urlObtenerProductos = '@Url.Action("ObtenerProductos", "Solicitudes")';
-         var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "Solicitudes")';
+        var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "Solicitudes")';
+        var urlObtenerEstado = '@Url.Action("ObtenerEstado", "Solicitudes")';
+        var urlAgregarProducto = '@Url.Action("AgregarProducto", "Solicitudes")';
+        var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "Solicitudes")';
+
 
         $(document).ready(function () {
 
@@ -44,79 +51,64 @@
 
 </head>
 <body>
-    <h2 style="color:white">Crear Solicitudes </h2> 
-</body>
-</html>
-
-
-<!-- Modal Conductor (bootstrap) -->
-<div  id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto;">
-    <div class="modal-dialog" role="document" >
-        <div class="modal-content" style="width:1000px">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Ingreso y mantención de conductores</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="image content">
-                    <div class="ui info message">
-                        <i class="close icon"></i>
-                        <div class="header">
-                            Atención al llenar el formulario!
-                        </div>
-                        La data de este formulario debe ser llenada con la mayor exactitud posible
-                        @*<br />
-                            <div id="msjExito" class="ui hidden success message">
-                                <i class="close icon"></i>
-                                <div class="header">El conductor ha sigo guardada con éxito. </div>
-                                <p>el conductor está disponible para ser utilizado</p>
-                            </div>*@
-                        <div id="msjAdvertencia" class="ui icon hidden warning message">
-                            <i class="exclamation triangle icon"></i>
-                            <div class="content">
-                                <div class="header">
-                                    Esta conductor ya existe!!!
-                                </div>
-                                <p>el RUT que está digitando ya está registrado.</p>
+    <br />
+    <!-- Modal Conductor (bootstrap) -->
+    <div id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+        <div class="modal-xl" role="document">
+            <div class="modal-content" style="width:100%">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Ingreso de solicitudes</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="image content">
+                        <div class="ui info message">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Atención al llenar el formulario!
                             </div>
-                        </div>
-                        <div class="ui divider"></div>
-                        <div class="ui form">
+                            La data de este formulario debe ser llenada con la mayor exactitud posible
+                            @*<br />
+                                <div id="msjExito" class="ui hidden success message">
+                                    <i class="close icon"></i>
+                                    <div class="header">El conductor ha sigo guardada con éxito. </div>
+                                    <p>el conductor está disponible para ser utilizado</p>
+                                </div>*@
+                            <div id="msjAdvertencia" class="ui icon hidden warning message">
+                                <i class="exclamation triangle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Esta conductor ya existe!!!
+                                    </div>
+                                    <p>el RUT que está digitando ya está registrado.</p>
+                                </div>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="ui form">
 
-                            <div class="two fields">
-                                <div class="field error">
-                                    <label>Fecha Solicitud</label>
-                                    <input placeholder="First Name" type="text">
+                                <div class="two fields">
+                                    <div class="field">
+                                        <label>Fecha Solicitud</label>
+                                        <input id="txtFechaIngreso" placeholder=" " type="text" value=@Session["FechaActual"] readonly>
+                                    </div>
+                                    <div class="field">
+                                        <label>Prioridad</label>
+                                        <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Estado</label>
+                                        <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="field">
-                                    <label>Prioridad</label>
-                                    <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-                                    </select>
+                                    <label>Observación</label>
+                                    <textarea id="txtObservacion" rows="4" placeholder="Observación"></textarea>
                                 </div>
                             </div>
-
-                            <div id="divTxtRut" class="field">
-                                <label>RUT Conductor</label>
-                                <input id="txtRut" type="text" onblur="FormateaRut()" placeholder="Ejemplo:13328180-7">
-                            </div>
-                            <div id="divTxtNumeroTarjeta" class="field">
-                                <label>Nº Tarjeta Proximidad</label>
-                                <input id="TxtNumeroTarjeta" type="text" placeholder="Digite el Nº de tarjeta de proximidad...">
-                            </div>
-
-                            <div id="divTxtNumeroCelular" class="field">
-                                <label>Celular</label>
-                               
-                            </div>
-                            <div class="field">
-                                <label>Observación</label>
-                                <textarea id="txtObservacion" rows="2" placeholder="Observación"></textarea>
-                            </div>
-
-
-                        </div>
                         </div>
                     </div>
 
@@ -125,36 +117,42 @@
                             Detalle artículos
                         </h4>
                         <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
-                            <div id="divMensajeProgramacionNO" class="ui icon warning message">
-                                <i id="divIcono" class="exclamation circle icon"></i>
+                            <div id="divMensajeProgramacionNO" class="ui icon info message">
+                                <i id="divIcono" class="info icon"></i>
                                 <div class="content">
                                     <div id="divTituloMsj" class="header">
-                                        Advertencia
+                                        Atención!
                                     </div>
-                                    <p id="divDetalleMsj">No puede utilizar la programación porque la empresa no es de tipo "Proveedor".</p>
+                                    <p id="divDetalleMsj">Debe agregar al menos un producto para poder guardar la solicitud.</p>
                                 </div>
                             </div>
                             <form class="ui form">
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:50%">
-                                            <select id="cmbArticulo" name="cmbArticulo" class="ui fluid search selection dropdown">
-                                            </select>
+                                        <td style="width:40%">
+                                            <div id="divcmbArticulo" class="field">
+                                                <label>Articulo</label>
+                                                <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
+                                                </select>
+                                            </div>
                                         </td>
                                         <td style="width:10%">
                                             <div class="field">
+                                                <label>Cantidad</label>
                                                 <input id="txtCantidad" type="number" />
                                             </div>
 
                                         </td>
                                         <td style="width:30%">
                                             <div class="field">
+                                                <label>Observación</label>
                                                 <input id="txtObservacionArticulo" type="text" />
                                             </div>
                                         </td>
                                         <td style="width:10%">
                                             <div class="field">
-                                                <div class="ui right labeled icon button" onclick="AgregarArticulo();">Agregar<i class="trash icon"></i></div>
+                                                <label style="opacity:0">" "</label>
+                                                <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -177,20 +175,20 @@
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot class="full-width">
-                                <tr>
-                                    <th></th>
-                                    <th colspan="12">
+                            @*<tfoot class="full-width">
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="12">
 
-                                        <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
-                                            Importar desde excel
-                                            <i class="plus icon"></i>
-                                        </div>
+                                            <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
+                                                Importar desde excel
+                                                <i class="plus icon"></i>
+                                            </div>
 
-                                      
-                                    </th>
-                                </tr>
-                            </tfoot>
+
+                                        </th>
+                                    </tr>
+                                </tfoot>*@
                         </table>
                     </div>
 
@@ -205,19 +203,28 @@
                     </div>
                 </div>
                 <br />
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="check icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar crear la solicitud.</p>
+                    </div>
+                </div>
                 <div id="msjExito" class="ui icon success hidden message">
                     <i class="check icon"></i>
                     <div class="content">
                         <div class="header">
-                            Conductor guardado con éxito!!!
+                            Éxito!!!
                         </div>
-                        <p>El conductor está disponible para ser utilizado.</p>
+                        <p>La solicitud fue guardada con éxito.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="ui right labeled icon button" onclick="LimpiarConductor();location.reload();" data-dismiss="modal">Salir<i class="cancel icon"></i></div>
-                    <div class="ui right labeled icon button" onclick="LimpiarConductor();">Limpiar<i class="trash icon"></i></div>
-                    <div id="btnGuardarConductor" class="ui positive right labeled icon button">
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/Home')">Salir<i class="cancel icon"></i></div>
+                    <div id="btnLimpiar" class="ui right labeled icon button" onclick="LimpiarConductor();">Limpiar<i class="trash icon"></i></div>
+                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
                         Guardar
                         <i class="checkmark icon"></i>
                     </div>
@@ -225,4 +232,8 @@
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
+
+
+
