@@ -14,6 +14,13 @@ namespace Entidades
         public int Usr_Id { get; set; }
         public string UsuarioCreador { get; set; }
         public DateTime Fecha_Ingreso { get; set; }
+        public string FechaMostrar
+        {
+            get
+            {
+                return Fecha_Ingreso.ToShortDateString();
+            }
+        }
         public int Folio { get; set; }
         public int Prioridad_Id { get; set; }
         public string Prioridad { get; set; }
@@ -22,5 +29,6 @@ namespace Entidades
         public string Observacion_Solicitud { get; set; }
         public bool Nula { get; set; }
         public bool Eliminado { get; set; }
+        public bool Es_Modificacion { get; set; }
     }
 }

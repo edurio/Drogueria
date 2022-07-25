@@ -14,5 +14,8 @@ namespace Entidades
         public string ProductoStr { get; set; }
         public int Cantidad { get; set; }
         public string Observacion { get; set; }
+        public bool ProductoNuevo { get; set; }
+        public int Indice { get; set; }
+        public bool Eliminado { get; set; }
     }
 }
