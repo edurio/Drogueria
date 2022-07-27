@@ -27,5 +27,11 @@ namespace Drogueria.Controllers
 
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "Error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public ActionResult AccionSalir()
+        {
+            SessionH.Usuario = null;
+            SessionH.Logueado = false;
+            return RedirectToAction("Index", "Login");
+        }
     }
 }
