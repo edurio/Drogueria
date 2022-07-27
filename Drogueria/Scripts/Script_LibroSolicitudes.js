@@ -214,7 +214,7 @@ function GuardarSolicitud() {
             if (data != 'error') {
                 $('#msjExito').removeClass("hidden");
                 window.location.href = data;
-                setTimeout(() => { window.location.href = '/LibroSolicitudes' }, 2000);
+                setTimeout(() => { window.location.href = '/LibroSolicitudes?limpiar=1' }, 2000);
             }
             if (data === 'error') {
                 $('#msjError').removeClass("hidden");
@@ -261,6 +261,32 @@ function AgregarProducto() {
         },
         error: function (ex) {
             alert('Error al guardar el producto');
+        }
+    });
+
+}
+function BusquedaFiltro() {
+    $('#btnBuscarFiltro').addClass("loading");
+    $('#btnBuscarFiltro').addClass("disabled");
+
+    $('#dimmer').dimmer('show');
+
+    var entity = {
+        Desde: $('#txtFiltroDesde').val(),
+        Hasta: $('#txtFiltroHasta').val(),
+    }
+    $.ajax({
+        url: window.urlBusquedaFiltro,
+        type: 'POST',
+        data: { entity: entity },
+        success: function (data) {
+
+            window.location.href = '/LibroSolicitudes';
+
+        },
+        error: function () {
+            showMessage('#divMensajePublicacionViaje', 'danger', 'Ocurrió un error al guardar la información. Por favor intente nuevamente.');
+            //hideLoading();
         }
     });
 

@@ -63,7 +63,7 @@
         var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "LibroSolicitudes")';
         var urlAgregarProducto = '@Url.Action("AgregarProducto", "LibroSolicitudes")';
         var urlQuitarProducto = '@Url.Action("QuitarProducto", "LibroSolicitudes")';
-        
+        var urlBusquedaFiltro = '@Url.Action("BusquedaFiltro", "LibroSolicitudes")';
 
         $(document).ready(function () {
 
@@ -71,6 +71,10 @@
             $('.ui.menu .ui.dropdown').dropdown({
                 on: 'hover'
             });
+
+            ExportarExcel = function () {
+                location.href = '@Url.Action("ExportToExcel", "LibroSolicitudes")';
+             };
         });
     </script>
 </head>
@@ -397,7 +401,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/LibroSolicitudes')">Salir<i class="cancel icon"></i></div>
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/LibroSolicitudes?limpiar=1')">Salir<i class="cancel icon"></i></div>
                     <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
                         Guardar
                         <i class="checkmark icon"></i>

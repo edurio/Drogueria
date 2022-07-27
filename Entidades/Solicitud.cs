@@ -12,7 +12,6 @@ namespace Entidades
         public int Emp_Id { get; set; }
         public string Empresa { get; set; }
         public int Usr_Id { get; set; }
-        public string UsuarioCreador { get; set; }
         public DateTime Fecha_Ingreso { get; set; }
         public string FechaMostrar
         {
@@ -30,5 +29,6 @@ namespace Entidades
         public bool Nula { get; set; }
         public bool Eliminado { get; set; }
         public bool Es_Modificacion { get; set; }
+        public string UsuarioCreador { get; set; }
     }
 }
