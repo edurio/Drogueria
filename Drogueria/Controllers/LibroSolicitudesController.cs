@@ -11,18 +11,40 @@ namespace Drogueria.Controllers
     public class LibroSolicitudesController : Controller
     {
         // GET: LibroSolicitudes
-        public ActionResult Index()
+        public ActionResult Index(string limpiar)
         {
             Drogueria.Models.LibroSolicitudesModel modelo = new Models.LibroSolicitudesModel();
             Entidades.Filtro filtro = new Entidades.Filtro();
-            Session["FiltroInformeDesde"] = Utiles.ReversaFecha(DateTime.Now);
-            Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
-            filtro.EmpId = SessionH.Usuario.EmpId;
-            modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
-
             var text = DateTime.Now.ToString();
             Session["FechaActual"] = text;
             Session["ListaProductos"] = new List<Entidades.DetalleSolicitud>();
+
+            if (Session["registrosEncontrados"] != null && limpiar == null)
+            {
+                Session["FiltroInformeDesde"] = Session["FiltroInformeDesde"];
+                Session["FiltroInformeHasta"] = Session["FiltroInformeHasta"];
+                modelo.lista = Session["registrosEncontrados"] as List<Entidades.Solicitud>;
+            }
+            if (Session["registrosEncontrados"] != null && limpiar != null)
+            {
+                filtro.EmpId = SessionH.Usuario.EmpId;
+                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(DateTime.Now);
+                Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
+                filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
+                filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
+                modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
+                Session["registrosEncontrados"] = modelo.lista;
+            }
+            if (Session["registrosEncontrados"] == null && limpiar != null)
+            {
+                filtro.EmpId = SessionH.Usuario.EmpId;
+                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(DateTime.Now);
+                Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
+                filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
+                filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
+                modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
+                Session["registrosEncontrados"] = modelo.lista;
+            }
 
             return View(modelo);
         }
@@ -193,6 +215,28 @@ namespace Drogueria.Controllers
             {
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = "error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
+        }
+        public ActionResult BusquedaFiltro(Entidades.Filtro entity)
+        {
+            entity.Desde = Utiles.FechaObtenerMinimo(entity.Desde);
+            entity.Hasta = Utiles.FechaObtenerMaximo(entity.Hasta);
+            entity.EmpId = SessionH.Usuario.EmpId;
+            List<Entidades.Solicitud> historicosEncontrados = DAL.SolicitudDAL.ObtenerSolicitud(entity);
+            Session["FiltroInformeDesde"] = Utiles.ReversaFecha(entity.Desde);
+            Session["FiltroInformeHasta"] = Utiles.ReversaFecha(entity.Hasta);
+            Session["registrosEncontrados"] = historicosEncontrados;
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "OK", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        public FileContentResult ExportToExcel()
+        {
+            var timestamp = Utiles.ObtenerTimeStamp();
+            List<Entidades.Solicitud> lista = Session["registrosEncontrados"] as List<Entidades.Solicitud>;
+
+            string[] columns = { "FechaMostrar", "Folio", "Prioridad", "Estado", "Observacion_Solicitud", "UsuarioCreador" };
+            byte[] filecontent = Code.ExcelExportHelper.ExportExcel(lista, "Listado de solicitudes", true, columns);
+            return File(filecontent, Code.ExcelExportHelper.ExcelContentType, "listaSolicitudes_" + timestamp + ".xlsx");
+
         }
     }
 }
