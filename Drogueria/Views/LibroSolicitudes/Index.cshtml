@@ -1,14 +1,20 @@
-﻿@{
+﻿@model Drogueria.Models.LibroSolicitudesModel
+
+@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Solicitudes/Solicitudes.cshtml";
+    Layout = "~/Views/Home/Home.cshtml";
 }
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>Libro de solicitudes</title>
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
-    <title>Crear solicitud</title>
+
 
     <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="~/RecursosExternos/bootstrap.min.js"></script>
@@ -19,7 +25,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
+    <script src="~/Scripts/Script_LibroSolicitudes.js"></script>
+
     <style>
+
+
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
         body {
             width: 100%;
             height: 100%;
@@ -27,17 +42,28 @@
             background-position: center;
             background-size: 100% 100%;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+        }
+
+        .card-img-top {
+            width: 250px;
+        }
+
+        .contenedor-imagen {
+            width: 100%;
+            text-align: center;
         }
     </style>
 
     <script>
-        var urlObtenerProductos = '@Url.Action("ObtenerProductos", "Solicitudes")';
-        var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "Solicitudes")';
-        var urlObtenerEstado = '@Url.Action("ObtenerEstado", "Solicitudes")';
-        var urlAgregarProducto = '@Url.Action("AgregarProducto", "Solicitudes")';
-        var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "Solicitudes")';
-
+        var urlObtenerProductos = '@Url.Action("ObtenerProductos", "LibroSolicitudes")';
+        var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "LibroSolicitudes")';
+        var urlObtenerEstado = '@Url.Action("ObtenerEstado", "LibroSolicitudes")';
+        var urlObtenerSolicitud = '@Url.Action("ObtenerSolicitud", "LibroSolicitudes")';
+        var urlObtenerDetalleSolicitud = '@Url.Action("ObtenerDetalleSolicitud", "LibroSolicitudes")';
+        var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "LibroSolicitudes")';
+        var urlAgregarProducto = '@Url.Action("AgregarProducto", "LibroSolicitudes")';
+        var urlQuitarProducto = '@Url.Action("QuitarProducto", "LibroSolicitudes")';
+        
 
         $(document).ready(function () {
 
@@ -47,13 +73,158 @@
             });
         });
     </script>
-    <script src="~/Scripts/Script_Solicitud.js"></script>
-
 </head>
 <body>
     <br />
-    <!-- Modal Conductor (bootstrap) -->
-    <div id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+    <div>
+        @if (Request.Browser.IsMobileDevice)
+        {
+            <div class="fields">
+                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
+                        <i class="table download icon"></i>Exportar a Excel
+                    </div>*@
+            </div>
+            <table class="ui fixed table inverted table-striped table-bordered">
+                <tbody>
+                    @foreach (var listaSolicitudes in Model.lista)
+                    {
+                        <tr>
+                            <td style="width:10%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                    <i class="eye icon"></i>
+                                </button>
+                            </td>
+                            <td>Fecha de ingreso: @listaSolicitudes.Fecha_Ingreso.ToString()</td>
+                            <td>Numero de solicitud: @listaSolicitudes.Folio</td>
+                            <td>Prioridad: @listaSolicitudes.Prioridad</td>
+                            <td>Estado: @listaSolicitudes.Estado</td>
+                            <td>Observación: @listaSolicitudes.Observacion_Solicitud</td>
+                            <td>Usuario solicitante: @listaSolicitudes.UsuarioCreador</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="10">
+                            <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
+                <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%; opacity:0.9">
+                    <div class="ui icon warning message">
+                        <i class="search icon"></i>
+                        <div class="content">
+                            <div class="header">
+                                Filtro
+                            </div>
+                            <p>Para lograr una búsqueda efectiva debe seleccionar al menos un filtro.</p>
+                        </div>
+                    </div>
+                    <table border="0">
+                        <tr>
+                            <td><label>Fecha desde</label></td>
+                            <td style="width:5px"></td>
+                            <td>
+                                <div class="ui calendar" id="divFiltroDesde">
+                                    <div class="ui input left icon">
+                                        <input id="txtFiltroDesde" type="date" placeholder="Fecha desde" value=@Session["FiltroInformeDesde"]>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width:5px"></td>
+                            <td style="text-align:right"><label>Fecha Hasta</label></td>
+                            <td style="width:5px"></td>
+                            <td><div class="ui input"><input id="txtFiltroHasta" type="date" placeholder="Fecha hasta" value=@Session["FiltroInformeHasta"]></div></td>
+                            <td style="width:5px"></td>
+                            <td>
+                                <div id="btnBuscarFiltro" style="width:200px" class="ui blue right labeled icon button" onclick="BusquedaFiltro();">
+                                    Buscar por fecha
+                                    <i class="search icon"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="width:5px">
+                            <td><label></label></td>
+                            <td></td>
+
+                        </tr>
+
+
+                    </table>
+                    @*<table border="0">
+                        <tr>
+                            <td><label>N° Venta</label></td>
+                            <td style="width:5px"></td>
+                            <td>
+                                <div class="ui input"><input id="txtFiltroNumero" type="number" placeholder="Digite el N° Venta"></div>
+                            </td>
+                            <td style="width:5px"></td>
+                            <td>
+                                <div id="btnBuscarPorNumero" style="width:200px" class="ui orange right labeled icon button" onclick="BusquedaFiltroPorNumero();">
+                                    Buscar por numero
+                                    <i class="search icon"></i>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>*@
+                </div>
+                <div class="fields">
+                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalSolicitud">Crear solicitud<i class="check icon"></i></div>
+                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                </div>
+                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:100px"></th>
+                            <th>Fecha de ingreso</th>
+                            <th>Numero Solicitud</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                            <th>Observación</th>
+                            <th>Usuario solicitante</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listaSolicitudes in Model.lista)
+                        {
+                            <tr>
+
+                                <td style="width:8%">
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                        <i class="eye icon"></i>
+                                    </button>
+                                </td>
+                                <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
+                                <td>@listaSolicitudes.Folio</td>
+                                <td>@listaSolicitudes.Prioridad</td>
+                                <td>@listaSolicitudes.Estado</td>
+                                <td>@listaSolicitudes.Observacion_Solicitud</td>
+                                <td>@listaSolicitudes.UsuarioCreador</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="7">
+                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        }
+    </div>
+    <br />
+    <div class="modal fade" id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
         <div class="modal-xl" role="document">
             <div class="modal-content" style="width:100%">
                 <div class="modal-header">
@@ -91,7 +262,11 @@
                                 <div class="two fields">
                                     <div class="field">
                                         <label>Fecha Solicitud</label>
-                                        <input id="txtFechaIngreso" placeholder=" " type="text" value=@Session["FechaActual"] readonly>
+                                        <input id="txtFechaIngreso" placeholder=" " value=@Session["FechaActual"] type="text" readonly>
+                                    </div>
+                                    <div class="field">
+                                        <label>Folio</label>
+                                        <input id="txtFolio" placeholder=" " type="text" readonly>
                                     </div>
                                     <div class="field">
                                         <label>Prioridad</label>
@@ -218,12 +393,11 @@
                         <div class="header">
                             Éxito!!!
                         </div>
-                        <p>La solicitud fue guardada con éxito.</p>
+                        <p>La solicitud fue modificada con éxito.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/Home')">Salir<i class="cancel icon"></i></div>
-                    <div id="btnLimpiar" class="ui right labeled icon button" onclick="LimpiarConductor();">Limpiar<i class="trash icon"></i></div>
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/LibroSolicitudes')">Salir<i class="cancel icon"></i></div>
                     <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
                         Guardar
                         <i class="checkmark icon"></i>
@@ -235,5 +409,4 @@
 </body>
 </html>
 
-
-
+<input type="hidden" id="idSolicitudSeleccionada" value="0" />
