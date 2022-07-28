@@ -218,12 +218,12 @@ function GuardarSolicitud() {
             }
             if (data === 'error') {
                 $('#msjError').removeClass("hidden");
-                $('#btnAgregarProducto').addClass('disabled');
-                $('#btnGeneraVenta').addClass('disabled');
-                $('#btnVolver').removeClass('disabled');
-                $('#btnVolver').removeClass('loading');
-                $('#btnLimpiar').removeClass('disabled');
-                $('#btnLimpiar').removeClass('loading');
+
+                $('#btnGuardar').removeClass('loading');
+                $('#btnGuardar').removeClass('disabled');
+
+                $('#btnSalir').removeClass('loading');
+                $('#btnSalir').removeClass('disabled');
             }
 
         },
