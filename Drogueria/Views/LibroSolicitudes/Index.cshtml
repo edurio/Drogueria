@@ -231,26 +231,25 @@
     <div class="modal fade" id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
         <div class="modal-xl" role="document">
             <div class="modal-content" style="width:100%">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Ingreso de solicitudes</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div style="height:3px">
+
                 </div>
+                <h4 class="ui center aligned header">
+                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    Ingreso de solicitudes
+                </h4>
                 <div class="modal-body">
                     <div class="image content">
                         <div class="ui info message">
-                            <i class="close icon"></i>
                             <div class="header">
                                 Atención al llenar el formulario!
                             </div>
-                            La data de este formulario debe ser llenada con la mayor exactitud posible
-                            @*<br />
-                                <div id="msjExito" class="ui hidden success message">
-                                    <i class="close icon"></i>
-                                    <div class="header">El conductor ha sigo guardada con éxito. </div>
-                                    <p>el conductor está disponible para ser utilizado</p>
-                                </div>*@
+                            <ul class="list">
+                                <li>
+                                    La data de este formulario debe ser llenada con la mayor exactitud posible.
+                                </li>
+                                <li>Si está creando una solicitud nueva, el número de folio se creará de forma correlativa al guardar la solicitud.</li>
+                            </ul>
                             <div id="msjAdvertencia" class="ui icon hidden warning message">
                                 <i class="exclamation triangle icon"></i>
                                 <div class="content">
@@ -302,7 +301,9 @@
                                     <div id="divTituloMsj" class="header">
                                         Atención!
                                     </div>
-                                    <p id="divDetalleMsj">Debe agregar al menos un producto para poder guardar la solicitud.</p>
+                                    <ul class="list">
+                                        <li>Debe agregar al menos un producto para poder guardar la solicitud.</li>
+                                    </ul>
                                 </div>
                             </div>
                             <form class="ui form">
@@ -355,19 +356,19 @@
                             <tbody>
                             </tbody>
                             @*<tfoot class="full-width">
-                                    <tr>
-                                        <th></th>
-                                        <th colspan="12">
+                        <tr>
+                            <th></th>
+                            <th colspan="12">
 
-                                            <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
-                                                Importar desde excel
-                                                <i class="plus icon"></i>
-                                            </div>
+                                <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
+                                    Importar desde excel
+                                    <i class="plus icon"></i>
+                                </div>
 
 
-                                        </th>
-                                    </tr>
-                                </tfoot>*@
+                            </th>
+                        </tr>
+                    </tfoot>*@
                         </table>
                     </div>
 
@@ -383,7 +384,7 @@
                 </div>
                 <br />
                 <div id="msjError" class="ui icon error hidden message">
-                    <i class="check icon"></i>
+                    <i class="times circle icon"></i>
                     <div class="content">
                         <div class="header">
                             Error!!!

@@ -35,7 +35,11 @@ namespace DAL
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_SOLICITUD_DETALLE_LEER");
 
+            db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);
+            db.AddInParameter(dbCommand, "ESTADO_ID", DbType.Int32, filtro.Estado_Id != 0 ? filtro.Estado_Id : (object)null);
             db.AddInParameter(dbCommand, "SOLICITUD_ID", DbType.Int32, filtro.Solicitud_Id != 0 ? filtro.Solicitud_Id : (object)null);
+            db.AddInParameter(dbCommand, "FECHA_DESDE", DbType.DateTime, filtro.Desde != DateTime.MinValue ? filtro.Desde : (object)null);
+            db.AddInParameter(dbCommand, "FECHA_HASTA", DbType.DateTime, filtro.Hasta != DateTime.MinValue ? filtro.Hasta : (object)null);
 
             IDataReader reader = (IDataReader)db.ExecuteReader(dbCommand);
 
@@ -48,6 +52,9 @@ namespace DAL
                 int CANTIDAD = reader.GetOrdinal("CANTIDAD");
                 int OBSERVACION = reader.GetOrdinal("OBSERVACION");
                 int NUEVO = reader.GetOrdinal("NUEVO");
+                int FOLIO = reader.GetOrdinal("FOLIO");
+                int FECHA = reader.GetOrdinal("FECHA");
+                int PRIORIDAD = reader.GetOrdinal("PRIORIDAD");
 
                 while (reader.Read())
                 {
@@ -60,6 +67,9 @@ namespace DAL
                     OBJ.Cantidad = (int)(!reader.IsDBNull(CANTIDAD) ? reader.GetValue(CANTIDAD) : 0);
                     OBJ.Observacion = (String)(!reader.IsDBNull(OBSERVACION) ? reader.GetValue(OBSERVACION) : string.Empty);
                     OBJ.ProductoNuevo = (bool)(!reader.IsDBNull(NUEVO) ? reader.GetValue(NUEVO) : false);
+                    OBJ.FolioSolicitud = (int)(!reader.IsDBNull(FOLIO) ? reader.GetValue(FOLIO) : 0);
+                    OBJ.Fecha_Ingreso = (DateTime)(!reader.IsDBNull(FECHA) ? reader.GetValue(FECHA) : DateTime.MinValue);
+                    OBJ.Prioridad = (String)(!reader.IsDBNull(PRIORIDAD) ? reader.GetValue(PRIORIDAD) : string.Empty);
                     //EndFields
 
                     detalleSolicitud.Add(OBJ);

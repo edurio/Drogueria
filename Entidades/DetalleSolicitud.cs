@@ -10,6 +10,16 @@ namespace Entidades
     {
         public int Id { get; set; }
         public int Solicitud_Id { get; set; }
+        public int FolioSolicitud { get; set; }
+        public DateTime Fecha_Ingreso { get; set; }
+        public string FechaMostrar
+        {
+            get
+            {
+                return Fecha_Ingreso.ToShortDateString();
+            }
+        }
+        public string Prioridad { get; set; }
         public int Producto_Id { get; set; }
         public string ProductoStr { get; set; }
         public int Cantidad { get; set; }
@@ -17,5 +27,6 @@ namespace Entidades
         public bool ProductoNuevo { get; set; }
         public int Indice { get; set; }
         public bool Eliminado { get; set; }
+        
     }
 }
