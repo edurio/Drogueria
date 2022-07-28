@@ -66,7 +66,7 @@
       <HintPath>..\..\..\Program Files (x86)\DevExpress 21.1\Components\Bin\Framework\DevExpress.XtraReports.v21.1.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>..\..\ControlStock\ControlStock\bin\EPPlus.dll</HintPath>
+      <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
