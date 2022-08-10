@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClaseDAL.cs" />
     <Compile Include="DetalleSolicitudDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
     <Compile Include="PrioridadDAL.cs" />

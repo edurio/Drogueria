@@ -49,15 +49,21 @@ namespace Drogueria.Controllers
 
             return View(modelo);
         }
-        public JsonResult ObtenerProductos()
+        public JsonResult ObtenerProductos(int id)
         {
-            var lista = DAL.ProductoDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId });
+            var lista = DAL.ProductoDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId, ClasId = id });
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public JsonResult ObtenerPrioridad()
         {
             var lista = DAL.PrioridadDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId });
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult ObtenerClases()
+        {
+            var lista = DAL.ClaseDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId });
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         public JsonResult ObtenerEstado()

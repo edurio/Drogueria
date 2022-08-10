@@ -2,10 +2,53 @@
 var _arregloArticulos = [];
 
 $(function () {
-    CargaProductos();
+   // CargaProductos();
     CargaPrioridad();
     ObtenerEstado();
+    CargaTipo();
+    ObtenerClase();
+
+    $('#cmbClase').change(function () { CargaProductos();  });
 });
+
+
+function CargaTipo() {
+    $('#cmbTipo').empty();
+    $('#cmbTipo').append('<option value="-1">[tipo]</option>');
+    $('#cmbTipo').append('<option value="1">Mensual</option>');
+    $('#cmbTipo').append('<option value="2">Crítico</option>');
+
+    
+}
+
+function ObtenerClase() {
+
+    $.ajax({
+        url: window.urlObtenerClases,
+        type: 'POST',
+        success: function (data) {
+            $('#cmbClase').empty();
+            $('#cmbClase').append('<option value="-1">[Seleccione clase]</option>')
+
+            var contador = 0;
+            $.each(data,
+                function (value, item) {
+                    var texto = '<option value="' + item.Id + '">' + item.Descripcion + '</option>';
+                    $('#cmbClase').append(texto);
+                    contador++;
+                }
+            );
+
+
+            //alert(contador);
+            // hideLoading();
+        },
+        error: function () {
+            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
+            //hideLoading();
+        }
+    });
+}
 
 function ObtenerEstado() {
 
@@ -14,7 +57,7 @@ function ObtenerEstado() {
         type: 'POST',
         success: function (data) {
             $('#cmbEstado').empty();
-            $('#cmbEstado').append('<option value="-1">[Seleccione estado]</option>')
+            $('#cmbEstado').append('<option value="-1">[seleccione estado]</option>')
 
             var contador = 0;
             $.each(data,
@@ -42,7 +85,7 @@ function CargaPrioridad() {
         type: 'POST',
         success: function (data) {
             $('#cmbPrioridad').empty();
-            $('#cmbPrioridad').append('<option value="-1">[Seleccione prioridad]</option>')
+            $('#cmbPrioridad').append('<option value="-1">[prioridad]</option>')
 
             var contador = 0;
             $.each(data,
@@ -64,10 +107,12 @@ function CargaPrioridad() {
     });
 }
 function CargaProductos() {
+    var id = $('#cmbClase').dropdown('get value');
 
     $.ajax({
         url: window.urlObtenerProductos,
         type: 'POST',
+        data: { id: id },
         success: function (data) {
             $('#cmbArticulo').dropdown('clear');
             $('#cmbArticulo').empty();
@@ -106,6 +151,11 @@ function ObtenerSolicitud(id) {
             $("#cmbEstado").dropdown('set selected', data.Estado_Id);
             $('#txtObservacion').val(data.Observacion_Solicitud);
             ObtenerDetalleSolicitud();
+
+            if (data.Estado_Id == 1) {
+                $("#btnGuardar").addClass("disabled");
+                
+            }
         },
 
         error: function () {
@@ -187,9 +237,8 @@ function GridPie() {
 }
 function GuardarSolicitud() {
 
-    //if (ValidaGeneraVenta() == false)
-
-    //    return;
+    if (ValidaGenerarSolicitud() == false)
+        return;
 
     $('#btnGuardar').addClass('loading');
     $('#btnGuardar').addClass('disabled');
@@ -235,9 +284,10 @@ function GuardarSolicitud() {
 }
 function AgregarProducto() {
 
-    //if (ValidaAgregar() == false)
+   
 
-    //    return;
+    if (ValidaAgregar() == false)
+        return;
 
     var DetalleProducto = {
         Producto_Id: $('#cmbArticulo').val(),
@@ -290,4 +340,118 @@ function BusquedaFiltro() {
         }
     });
 
+}
+
+
+function ValidaAgregar() {
+    var errores = [];
+
+    //LIMPIO LOS ESTILOS
+    $('#divcmbClase').removeClass("error");
+    $('#divcmbArticulo').removeClass("error");
+    $('#divtxtCantidad').removeClass("error");
+   
+    //DIVS GENERICOS
+    $('#DivMessajeErrorProducto').addClass("hidden");
+
+    var cla = $('#cmbClase').val();
+    if ($('#cmbClase').val() == null || $('#cmbClase').val() == -1) {
+        $('#divcmbClase').addClass("error");
+        errores.push('Debe indicar la clase de artículo');       
+    }
+
+    var art = $('#cmbArticulo').val();
+    if ($('#cmbArticulo').val() == null || $('#cmbArticulo').val() == -1) {
+        $('#divcmbArticulo').addClass("error");
+        errores.push('Debe indicar el artículo');
+    }
+
+    var cant = $('#txtCantidad').val();
+    if ($('#txtCantidad').val() <= 0) {
+        $('#divtxtCantidad').addClass("error");
+        errores.push('Debe indicar la cantidad a solicitar');
+    }
+
+    if (errores.length > 0) {
+        var mensaje = '';
+        //mensaje = mensaje + '<ul>';
+        $('#DivMessajeErrorProducto').removeClass("hidden");
+        //$.each(errores, function (index, item) {
+        //    mensaje += '<li>' + item + '</li>';
+        //});
+
+        for (i = 0; i < errores.length; i++) {
+            mensaje += '<li>' + errores[i] + '</li>';
+        }
+
+        mensaje += '</ul>';
+        $('#listMessajeErrorProducto').empty();
+        $('#listMessajeErrorProducto').prepend(mensaje);
+
+        // showMessage('#divMensajeNuevoCamion', 'danger', mensaje);
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+
+
+function ValidaGenerarSolicitud() {
+    var errores = [];
+
+    //LIMPIO LOS ESTILOS
+    $('#divcmbTipo').removeClass("error");
+    $('#cmbPrioridad').removeClass("error");
+    $('#divcmbEstado').removeClass("error");
+    
+   
+    //DIVS GENERICOS
+    $('#DivMessajeErrorGeneral').addClass("hidden");
+
+   
+    if ($('#cmbTipo').val() == null || $('#cmbTipo').val() == -1) {
+        $('#divcmbTipo').addClass("error");
+        errores.push('Debe indicar el tipo de solicitud');
+    }
+
+    if ($('#cmbPrioridad').val() == null || $('#cmbPrioridad').val() == -1) {
+        $('#divcmbPrioridad').addClass("error");
+        errores.push('Debe indicar la prioridad solicitud');
+    }
+
+    if ($('#cmbEstado').val() == null || $('#cmbEstado').val() == -1) {
+        $('#divcmbEstado').addClass("error");
+        errores.push('Debe indicar el estado de la  solicitud');
+    }
+
+    if (_arregloArticulos == null || _arregloArticulos.length == 0) {      
+        errores.push('Debe indicar agregar por lo menos un artículo');
+    }
+
+    
+
+    if (errores.length > 0) {
+        var mensaje = '';
+        //mensaje = mensaje + '<ul>';
+        $('#DivMessajeErrorGeneral').removeClass("hidden");
+        //$.each(errores, function (index, item) {
+        //    mensaje += '<li>' + item + '</li>';
+        //});
+
+        for (i = 0; i < errores.length; i++) {
+            mensaje += '<li>' + errores[i] + '</li>';
+        }
+
+        mensaje += '</ul>';
+        $('#listMessajeError').empty();
+        $('#listMessajeError').prepend(mensaje);
+
+        // showMessage('#divMensajeNuevoCamion', 'danger', mensaje);
+        return false;
+    }
+    else {
+        return true;
+    }
 }

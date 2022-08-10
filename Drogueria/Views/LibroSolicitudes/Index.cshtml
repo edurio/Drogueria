@@ -64,6 +64,7 @@
         var urlAgregarProducto = '@Url.Action("AgregarProducto", "LibroSolicitudes")';
         var urlQuitarProducto = '@Url.Action("QuitarProducto", "LibroSolicitudes")';
         var urlBusquedaFiltro = '@Url.Action("BusquedaFiltro", "LibroSolicitudes")';
+        var urlObtenerClases = '@Url.Action("ObtenerClases", "LibroSolicitudes")';
 
         $(document).ready(function () {
 
@@ -271,16 +272,22 @@
                                         <label>Folio</label>
                                         <input id="txtFolio" placeholder=" " type="text" readonly>
                                     </div>
-                                    <div class="field">
+                                    <div id="divcmbTipo" class="field">
+                                        <label>Tipo</label>
+                                        <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <div id="divcmbPrioridad"  class="field">
                                         <label>Prioridad</label>
                                         <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
                                         </select>
                                     </div>
-                                    <div class="field">
+                                    <div id="divcmbEstado" class="field">
                                         <label>Estado</label>
                                         <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
                                         </select>
                                     </div>
+
                                 </div>
                                 <div class="field">
                                     <label>Observación</label>
@@ -289,24 +296,19 @@
                             </div>
                         </div>
                     </div>
-
+                    <div style="height:7px"></div>
                     <div id="divProgramacion">
-                        <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%">
+                        <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
                             Detalle artículos
                         </h4>
                         <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
-                            <div id="divMensajeProgramacionNO" class="ui icon info message">
-                                <i id="divIcono" class="info icon"></i>
-                                <div class="content">
-                                    <div id="divTituloMsj" class="header">
-                                        Atención!
-                                    </div>
-                                    <ul class="list">
-                                        <li>Debe agregar al menos un producto para poder guardar la solicitud.</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            
                             <form class="ui form">
+                                <div id="divcmbClase" class="field">
+                                    <label>Clase</label>
+                                    <select id="cmbClase" name="cmbClase" class="ui search selection dropdown">
+                                    </select>
+                                </div>
                                 <table style="width:100%">
                                     <tr>
                                         <td style="width:40%">
@@ -317,9 +319,9 @@
                                             </div>
                                         </td>
                                         <td style="width:10%">
-                                            <div class="field">
+                                            <div id="divtxtCantidad" class="field">
                                                 <label>Cantidad</label>
-                                                <input id="txtCantidad" type="number" />
+                                                <input id="txtCantidad" type="number" min="1" />
                                             </div>
 
                                         </td>
@@ -337,9 +339,16 @@
                                         </td>
                                     </tr>
                                 </table>
+
+
                             </form>
 
-
+                            <div id="DivMessajeErrorProducto" class="ui error hidden message" style="margin-left:auto; margin-right:auto; width:100%">                               
+                                <div class="header">
+                                    Se han encontrado algunos problemas, revíselos...
+                                </div>
+                                <ul id="listMessajeErrorProducto" class="list"></ul>
+                            </div>
 
                         </div>
 
