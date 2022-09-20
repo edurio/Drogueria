@@ -72,6 +72,11 @@
     </script>
 </head>
 <body>
+    <div class="ui dimmer" id="dimmerCargando">
+        <div class="ui massive text loader">
+            <h3 id="textoDimmer">Cargando artículos</h3>
+        </div>
+    </div>
     <br />
     <div>
         @if (Request.Browser.IsMobileDevice)
@@ -86,17 +91,16 @@
                 <tbody>
                     @foreach (var listaDetalleSolicitudes in Model.lista)
                     {
-                    <tr>
-                        <td style="width:10%">
-                            
-                        </td>
-                        <td>Numero de solicitud: @listaDetalleSolicitudes.FolioSolicitud</td>
-                        <td>Fecha de ingreso: @listaDetalleSolicitudes.Fecha_Ingreso.ToString()</td>
-                        <td>Prioridad: @listaDetalleSolicitudes.Prioridad</td>
-                        <td>Estado: @listaDetalleSolicitudes.ProductoStr</td>
-                        <td>Observación: @listaDetalleSolicitudes.Cantidad</td>
-                        <td>Usuario solicitante: @listaDetalleSolicitudes.Observacion</td>
-                    </tr>
+                        <tr>
+                            <td style="width:10%">
+                            </td>
+                            <td>Numero de solicitud: @listaDetalleSolicitudes.FolioSolicitud</td>
+                            <td>Fecha de ingreso: @listaDetalleSolicitudes.Fecha_Ingreso.ToString()</td>
+                            <td>Prioridad: @listaDetalleSolicitudes.Prioridad</td>
+                            <td>Estado: @listaDetalleSolicitudes.ProductoStr</td>
+                            <td>Observación: @listaDetalleSolicitudes.Cantidad</td>
+                            <td>Usuario solicitante: @listaDetalleSolicitudes.Observacion</td>
+                        </tr>
                     }
                 </tbody>
                 <tfoot>

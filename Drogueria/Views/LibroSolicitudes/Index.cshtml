@@ -191,6 +191,7 @@
                             <th style="width:100px"></th>
                             <th>Fecha de ingreso</th>
                             <th>Numero Solicitud</th>
+                            <th>Tipo</th>
                             <th>Prioridad</th>
                             <th>Estado</th>
                             <th>Observación</th>
@@ -200,20 +201,21 @@
                     <tbody>
                         @foreach (var listaSolicitudes in Model.lista)
                         {
-                            <tr>
+                        <tr>
 
-                                <td style="width:8%">
-                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
-                                        <i class="eye icon"></i>
-                                    </button>
-                                </td>
-                                <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
-                                <td>@listaSolicitudes.Folio</td>
-                                <td>@listaSolicitudes.Prioridad</td>
-                                <td>@listaSolicitudes.Estado</td>
-                                <td>@listaSolicitudes.Observacion_Solicitud</td>
-                                <td>@listaSolicitudes.UsuarioCreador</td>
-                            </tr>
+                            <td style="width:8%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                    <i class="eye icon"></i>
+                                </button>
+                            </td>
+                            <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
+                            <td>@listaSolicitudes.Folio</td>
+                            <td>@listaSolicitudes.Tipo</td>
+                            <td>@listaSolicitudes.Prioridad</td>
+                            <td>@listaSolicitudes.Estado</td>
+                            <td>@listaSolicitudes.Observacion_Solicitud</td>
+                            <td>@listaSolicitudes.UsuarioCreador</td>
+                        </tr>
                         }
                     </tbody>
                     <tfoot>

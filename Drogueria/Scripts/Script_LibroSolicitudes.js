@@ -107,6 +107,7 @@ function CargaPrioridad() {
     });
 }
 function CargaProductos() {
+    $('#dimmerCargando').modal('show');
     var id = $('#cmbClase').dropdown('get value');
 
     $.ajax({
@@ -129,6 +130,7 @@ function CargaProductos() {
 
             //alert(contador);
             // hideLoading();
+            $('#dimmerCargando').modal('hide');
         },
         error: function () {
             alert('Error al cargar los productos existentes');
@@ -250,6 +252,7 @@ function GuardarSolicitud() {
         Id: _id,
         Fecha_Ingreso: $('#txtFechaIngreso').val(),
         Folio: $('#txtFolio').val(),
+        Tipo_Id: $('#cmbTipo').val(),
         Prioridad_Id: $('#cmbPrioridad').val(),
         Estado_Id: $('#cmbEstado').val(),
         Observacion_Solicitud: $('#txtObservacion').val(),

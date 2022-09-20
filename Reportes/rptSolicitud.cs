@@ -26,6 +26,7 @@ namespace Reportes
             txtPrioridad.Text = lista[0].Prioridad;
             txtEstado.Text = lista[0].Estado;
             txtObservacion.Text = lista[0].Observacion_Solicitud;
+            txtTipo.Text = lista[0].Tipo;
 
             DataSet dataSet1 = new DataSet();
             dataSet1.DataSetName = "dataSet";
@@ -47,7 +48,7 @@ namespace Reportes
             this.DataSource = dataSet1;
             this.DataMember = dataTable1.TableName;
 
-            this.tcOP.DataBindings.Add("Text", null, dataTable1.Columns[0].Caption);
+            
             this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[1].Caption);
             this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[2].Caption);
             this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);
