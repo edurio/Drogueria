@@ -3,8 +3,8 @@ var _arregloArticulos = [];
 
 $(function () {
    // CargaProductos();
-    CargaPrioridad();
-    ObtenerEstado();
+    /*CargaPrioridad();*/
+    /*ObtenerEstado();*/
     CargaTipo();
     ObtenerClase();
 
@@ -50,62 +50,64 @@ function ObtenerClase() {
     });
 }
 
-function ObtenerEstado() {
+//function ObtenerEstado() {
 
-    $.ajax({
-        url: window.urlObtenerEstado,
-        type: 'POST',
-        success: function (data) {
-            $('#cmbEstado').empty();
-            $('#cmbEstado').append('<option value="-1">[seleccione estado]</option>')
+//    $.ajax({
+//        url: window.urlObtenerEstado,
+//        type: 'POST',
+//        success: function (data) {
+//            $('#cmbEstado').empty();
+//            $('#cmbEstado').append('<option value="-1">[seleccione estado]</option>')
 
-            var contador = 0;
-            $.each(data,
-                function (value, item) {
-                    var texto = '<option value="' + item.Id + '">' + item.Estado_Solicitud + '</option>';
-                    $('#cmbEstado').append(texto);
-                    contador++;
-                }
-            );
-
-
-            //alert(contador);
-            // hideLoading();
-        },
-        error: function () {
-            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
-            //hideLoading();
-        }
-    });
-}
-function CargaPrioridad() {
-
-    $.ajax({
-        url: window.urlObtenerPrioridad,
-        type: 'POST',
-        success: function (data) {
-            $('#cmbPrioridad').empty();
-            $('#cmbPrioridad').append('<option value="-1">[prioridad]</option>')
-
-            var contador = 0;
-            $.each(data,
-                function (value, item) {
-                    var texto = '<option value="' + item.Id + '">' + item.Descripcion + '</option>';
-                    $('#cmbPrioridad').append(texto);
-                    contador++;
-                }
-            );
+//            var contador = 0;
+//            $.each(data,
+//                function (value, item) {
+//                    var texto = '<option value="' + item.Id + '">' + item.Estado_Solicitud + '</option>';
+//                    $('#cmbEstado').append(texto);
+//                    contador++;
+//                }
+//            );
 
 
-            //alert(contador);
-            // hideLoading();
-        },
-        error: function () {
-            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
-            //hideLoading();
-        }
-    });
-}
+//            //alert(contador);
+//            // hideLoading();
+//        },
+//        error: function () {
+//            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
+//            //hideLoading();
+//        }
+//    });
+//}
+
+//function CargaPrioridad() {
+
+//    $.ajax({
+//        url: window.urlObtenerPrioridad,
+//        type: 'POST',
+//        success: function (data) {
+//            $('#cmbPrioridad').empty();
+//            $('#cmbPrioridad').append('<option value="-1">[prioridad]</option>')
+
+//            var contador = 0;
+//            $.each(data,
+//                function (value, item) {
+//                    var texto = '<option value="' + item.Id + '">' + item.Descripcion + '</option>';
+//                    $('#cmbPrioridad').append(texto);
+//                    contador++;
+//                }
+//            );
+
+
+//            //alert(contador);
+//            // hideLoading();
+//        },
+//        error: function () {
+//            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
+//            //hideLoading();
+//        }
+//    });
+//}
+
 function CargaProductos() {
     $('#dimmerCargando').modal('show');
     var id = $('#cmbClase').dropdown('get value');
@@ -149,7 +151,6 @@ function ObtenerSolicitud(id) {
         success: function (data) {
             $('#txtFechaIngreso').val(data.FechaMostrar)
             $('#txtFolio').val(data.Folio);
-            $("#cmbPrioridad").dropdown('set selected', data.Prioridad_Id);
             $("#cmbEstado").dropdown('set selected', data.Estado_Id);
             $('#txtObservacion').val(data.Observacion_Solicitud);
             ObtenerDetalleSolicitud();
@@ -253,8 +254,7 @@ function GuardarSolicitud() {
         Fecha_Ingreso: $('#txtFechaIngreso').val(),
         Folio: $('#txtFolio').val(),
         Tipo_Id: $('#cmbTipo').val(),
-        Prioridad_Id: $('#cmbPrioridad').val(),
-        Estado_Id: $('#cmbEstado').val(),
+        /*Estado_Id: $('#cmbEstado').val(),*/
         Observacion_Solicitud: $('#txtObservacion').val(),
     };
 
@@ -406,7 +406,7 @@ function ValidaGenerarSolicitud() {
 
     //LIMPIO LOS ESTILOS
     $('#divcmbTipo').removeClass("error");
-    $('#cmbPrioridad').removeClass("error");
+    /*$('#cmbPrioridad').removeClass("error");*/
     $('#divcmbEstado').removeClass("error");
     
    
@@ -419,15 +419,15 @@ function ValidaGenerarSolicitud() {
         errores.push('Debe indicar el tipo de solicitud');
     }
 
-    if ($('#cmbPrioridad').val() == null || $('#cmbPrioridad').val() == -1) {
-        $('#divcmbPrioridad').addClass("error");
-        errores.push('Debe indicar la prioridad solicitud');
-    }
+    //if ($('#cmbPrioridad').val() == null || $('#cmbPrioridad').val() == -1) {
+    //    $('#divcmbPrioridad').addClass("error");
+    //    errores.push('Debe indicar la prioridad solicitud');
+    //}
 
-    if ($('#cmbEstado').val() == null || $('#cmbEstado').val() == -1) {
-        $('#divcmbEstado').addClass("error");
-        errores.push('Debe indicar el estado de la  solicitud');
-    }
+    //if ($('#cmbEstado').val() == null || $('#cmbEstado').val() == -1) {
+    //    $('#divcmbEstado').addClass("error");
+    //    errores.push('Debe indicar el estado de la  solicitud');
+    //}
 
     if (_arregloArticulos == null || _arregloArticulos.length == 0) {      
         errores.push('Debe indicar agregar por lo menos un artículo');
@@ -457,4 +457,37 @@ function ValidaGenerarSolicitud() {
     else {
         return true;
     }
+}
+function PreparaEnviaSolicitud(id) {
+    $('#idSolicitudSeleccionada').val(id);
+}
+
+function EnviaSolicitud() {
+
+    $('#btnEnviar').addClass('loading');
+    $('#btnEnviar').addClass('disabled');
+
+    var idSolicitud = $('#idSolicitudSeleccionada').val();
+
+    $.ajax({
+        url: window.urlEnviarSolicitud,
+        type: 'POST',
+        data: { idSolicitud: idSolicitud },
+        dataType: "json",
+        success: function (resultado) {
+            if (resultado == 'ok') {
+                {
+                    $('#divConsultaEnviar').addClass("hidden");
+                    $('#divExitoEnviar').removeClass("hidden");
+                    setTimeout(() => { location.reload(); }, 2000);
+                }
+            }
+        },
+
+        error: function () {
+            showMessage('#divMensajePublicacionViaje', 'danger', 'Ocurrió un error al guardar la información. Por favor intente nuevamente.');
+            //hideLoading();
+        }
+    });
+
 }

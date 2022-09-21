@@ -105,6 +105,7 @@ namespace Drogueria.Controllers
 
                 entity.Usr_Id = SessionH.Usuario.Id;
                 entity.Emp_Id = SessionH.Usuario.EmpId;
+                entity.Estado_Id = 2;
                 entity = DAL.SolicitudDAL.InsertarSolicitud(entity);
 
                 List<Entidades.DetalleSolicitud> listadoProductos = Session["ListaProductos"] as List<Entidades.DetalleSolicitud>;
@@ -244,6 +245,12 @@ namespace Drogueria.Controllers
             byte[] filecontent = Code.ExcelExportHelper.ExportExcel(lista, "Listado de solicitudes", true, columns);
             return File(filecontent, Code.ExcelExportHelper.ExcelContentType, "listaSolicitudes_" + timestamp + ".xlsx");
 
+        }
+        public JsonResult EnviarSolicitud(int idSolicitud)
+        {
+            DAL.SolicitudDAL.EnviarSolicitud(idSolicitud);
+            
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
