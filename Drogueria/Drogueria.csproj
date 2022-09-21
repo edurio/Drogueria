@@ -147,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibroSolicitudesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MantenedorProductosController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +174,7 @@
     <Content Include="Images\LibroSolicitudes.png" />
     <Content Include="Images\LogoBackline.png" />
     <Content Include="Images\LogoBackline2.png" />
+    <Content Include="Images\MantenedoresC.jpg" />
     <Content Include="Images\SolicitudDetalle.png" />
     <Content Include="Images\Wall1.jpg" />
     <Content Include="js\easing.js" />
@@ -202,6 +204,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Script_LibroSolicitudes.js" />
     <Content Include="Scripts\Script_Login.js" />
+    <Content Include="Scripts\Script_MantenedorProductos.js" />
     <Content Include="Scripts\Script_SolicitudDetalle.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -224,6 +227,8 @@
     <Content Include="Views\LibroSolicitudes\LibroSolicitudes.cshtml" />
     <Content Include="Views\SolicitudDetalle\Index.cshtml" />
     <Content Include="Views\SolicitudDetalle\SolicitudDetalle.cshtml" />
+    <Content Include="Views\MantenedorProductos\Index.cshtml" />
+    <Content Include="Views\MantenedorProductos\MantenedorProductos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

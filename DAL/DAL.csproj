@@ -58,10 +58,12 @@
   <ItemGroup>
     <Compile Include="ClaseDAL.cs" />
     <Compile Include="DetalleSolicitudDAL.cs" />
+    <Compile Include="EstablecimientoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
     <Compile Include="PrioridadDAL.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="SolicitudDAL.cs" />
+    <Compile Include="UnidadDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
