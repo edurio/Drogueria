@@ -265,7 +265,7 @@ function GuardarSolicitud() {
         success: function (data) {
             if (data != 'error') {
                 $('#msjExito').removeClass("hidden");
-                window.location.href = data;
+                window.open(data, "_blank");
                 setTimeout(() => { window.location.href = '/LibroSolicitudes?limpiar=1' }, 2000);
             }
             if (data === 'error') {
@@ -344,8 +344,6 @@ function BusquedaFiltro() {
     });
 
 }
-
-
 function ValidaAgregar() {
     var errores = [];
 
@@ -398,9 +396,6 @@ function ValidaAgregar() {
         return true;
     }
 }
-
-
-
 function ValidaGenerarSolicitud() {
     var errores = [];
 
@@ -461,7 +456,6 @@ function ValidaGenerarSolicitud() {
 function PreparaEnviaSolicitud(id) {
     $('#idSolicitudSeleccionada').val(id);
 }
-
 function EnviaSolicitud() {
 
     $('#btnEnviar').addClass('loading');
