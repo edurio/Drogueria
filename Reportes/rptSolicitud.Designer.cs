@@ -31,6 +31,8 @@ namespace Reportes
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rptSolicitud));
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
+            this.txtTipo = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel12 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrPictureBox1 = new DevExpress.XtraReports.UI.XRPictureBox();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -63,8 +65,8 @@ namespace Reportes
             this.tcArticulo = new DevExpress.XtraReports.UI.XRTableCell();
             this.tcCantidad = new DevExpress.XtraReports.UI.XRTableCell();
             this.tcObservación = new DevExpress.XtraReports.UI.XRTableCell();
-            this.txtTipo = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel12 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tcUnidad = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -94,6 +96,30 @@ namespace Reportes
             this.TopMargin.HeightF = 385.3526F;
             this.TopMargin.Name = "TopMargin";
             // 
+            // txtTipo
+            // 
+            this.txtTipo.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.txtTipo.LocationFloat = new DevExpress.Utils.PointFloat(132.5F, 185.3825F);
+            this.txtTipo.Multiline = true;
+            this.txtTipo.Name = "txtTipo";
+            this.txtTipo.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.txtTipo.SizeF = new System.Drawing.SizeF(230.2083F, 23.00001F);
+            this.txtTipo.StylePriority.UseBorders = false;
+            this.txtTipo.Text = "txtTipo";
+            // 
+            // xrLabel12
+            // 
+            this.xrLabel12.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrLabel12.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xrLabel12.LocationFloat = new DevExpress.Utils.PointFloat(9.58322F, 185.3825F);
+            this.xrLabel12.Multiline = true;
+            this.xrLabel12.Name = "xrLabel12";
+            this.xrLabel12.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel12.SizeF = new System.Drawing.SizeF(122.9167F, 23F);
+            this.xrLabel12.StylePriority.UseBorders = false;
+            this.xrLabel12.StylePriority.UseFont = false;
+            this.xrLabel12.Text = "Tipo:";
+            // 
             // xrPictureBox1
             // 
             this.xrPictureBox1.ImageSource = new DevExpress.XtraPrinting.Drawing.ImageSource("img", resources.GetString("xrPictureBox1.ImageSource"));
@@ -110,12 +136,12 @@ namespace Reportes
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTable1.BorderWidth = 2F;
             this.xrTable1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(11.04174F, 360.3526F);
+            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 360.3526F);
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(636.9584F, 25F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(648F, 25F);
             this.xrTable1.StylePriority.UseBackColor = false;
             this.xrTable1.StylePriority.UseBorders = false;
             this.xrTable1.StylePriority.UseBorderWidth = false;
@@ -126,6 +152,7 @@ namespace Reportes
             this.xrTableRow1.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell2,
             this.xrTableCell3,
+            this.xrTableCell1,
             this.xrTableCell4});
             this.xrTableRow1.Name = "xrTableRow1";
             this.xrTableRow1.Weight = 1D;
@@ -401,12 +428,12 @@ namespace Reportes
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTable2.BorderWidth = 1F;
             this.xrTable2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(11.04173F, 0F);
+            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrTable2.Name = "xrTable2";
             this.xrTable2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
             this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow2});
-            this.xrTable2.SizeF = new System.Drawing.SizeF(636.9584F, 25F);
+            this.xrTable2.SizeF = new System.Drawing.SizeF(648F, 25F);
             this.xrTable2.StylePriority.UseBackColor = false;
             this.xrTable2.StylePriority.UseBorders = false;
             this.xrTable2.StylePriority.UseBorderWidth = false;
@@ -417,6 +444,7 @@ namespace Reportes
             this.xrTableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.tcArticulo,
             this.tcCantidad,
+            this.tcUnidad,
             this.tcObservación});
             this.xrTableRow2.Name = "xrTableRow2";
             this.xrTableRow2.Weight = 1D;
@@ -442,29 +470,21 @@ namespace Reportes
             this.tcObservación.Text = "tcObservación";
             this.tcObservación.Weight = 2.1779171752929685D;
             // 
-            // txtTipo
+            // xrTableCell1
             // 
-            this.txtTipo.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.txtTipo.LocationFloat = new DevExpress.Utils.PointFloat(132.5F, 185.3825F);
-            this.txtTipo.Multiline = true;
-            this.txtTipo.Name = "txtTipo";
-            this.txtTipo.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.txtTipo.SizeF = new System.Drawing.SizeF(230.2083F, 23.00001F);
-            this.txtTipo.StylePriority.UseBorders = false;
-            this.txtTipo.Text = "txtTipo";
+            this.xrTableCell1.BackColor = System.Drawing.Color.White;
+            this.xrTableCell1.Multiline = true;
+            this.xrTableCell1.Name = "xrTableCell1";
+            this.xrTableCell1.StylePriority.UseBackColor = false;
+            this.xrTableCell1.Text = "Unidad";
+            this.xrTableCell1.Weight = 2.1779171752929685D;
             // 
-            // xrLabel12
+            // tcUnidad
             // 
-            this.xrLabel12.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrLabel12.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel12.LocationFloat = new DevExpress.Utils.PointFloat(9.58322F, 185.3825F);
-            this.xrLabel12.Multiline = true;
-            this.xrLabel12.Name = "xrLabel12";
-            this.xrLabel12.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel12.SizeF = new System.Drawing.SizeF(122.9167F, 23F);
-            this.xrLabel12.StylePriority.UseBorders = false;
-            this.xrLabel12.StylePriority.UseFont = false;
-            this.xrLabel12.Text = "Tipo:";
+            this.tcUnidad.Multiline = true;
+            this.tcUnidad.Name = "tcUnidad";
+            this.tcUnidad.Text = "tcUnidad";
+            this.tcUnidad.Weight = 2.1779171752929685D;
             // 
             // rptSolicitud
             // 
@@ -518,5 +538,7 @@ namespace Reportes
         private DevExpress.XtraReports.UI.XRPictureBox xrPictureBox1;
         private DevExpress.XtraReports.UI.XRLabel txtTipo;
         private DevExpress.XtraReports.UI.XRLabel xrLabel12;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
+        private DevExpress.XtraReports.UI.XRTableCell tcUnidad;
     }
 }

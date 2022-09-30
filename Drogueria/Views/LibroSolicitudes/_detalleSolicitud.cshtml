@@ -1,0 +1,97 @@
+﻿@model Drogueria.Models.LibroSolicitudesModel
+
+
+<div id="divProgramacion">
+    <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
+        Detalle artículos
+    </h4>
+    <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
+
+        <form class="ui form">
+            <div id="divcmbClase" class="field">
+                <label>Clase</label>
+                <select id="cmbClase" name="cmbClase" class="ui search selection dropdown">
+                </select>
+            </div>
+            <table style="width:100%">
+                <tr>
+                    <td style="width:40%">
+                        <div id="divcmbArticulo" class="field">
+                            <label>Articulo</label>
+                            <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
+                            </select>
+                        </div>
+                    </td>
+                    <td style="width:10%">
+                        <div id="divtxtCantidad" class="field">
+                            <label>Cantidad</label>
+                            <input id="txtCantidad" type="number" min="1" />
+                        </div>
+
+                    </td>
+                    <td style="width:30%">
+                        <div class="field">
+                            <label>Observación</label>
+                            <input id="txtObservacionArticulo" type="text" />
+                        </div>
+                    </td>
+                    <td style="width:10%">
+                        <div class="field">
+                            <label style="opacity:0">" "</label>
+                            <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+        </form>
+
+        <div id="DivMessajeErrorProducto" class="ui error hidden message" style="margin-left:auto; margin-right:auto; width:100%">
+            <div class="header">
+                Se han encontrado algunos problemas, revíselos...
+            </div>
+            <ul id="listMessajeErrorProducto" class="list"></ul>
+        </div>
+
+    </div>
+
+    <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
+        <thead>
+            <tr>
+
+                <th style="width:10%">Op</th>
+                <th style="width:50%">Artículo</th>
+                <th style="width:10%">Cantidad</th>
+                <th style="width:30%">Observacion</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+
+        @{
+            if (Model.listaProductos != null && Model.listaProductos.Count > 0)
+            {
+                foreach(var a in Model.listaProductos)
+                {
+
+                }
+            }
+         }
+
+        @*<tfoot class="full-width">
+                <tr>
+                    <th></th>
+                    <th colspan="12">
+
+                        <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
+                            Importar desde excel
+                            <i class="plus icon"></i>
+                        </div>
+
+
+                    </th>
+                </tr>
+            </tfoot>*@
+    </table>
+</div>

@@ -13,5 +13,20 @@ namespace Entidades
         public string Nombre { get; set; }
         public string Correo { get; set; }
         public string Password { get; set; }
+        public int Est_id { get; set; }
+
+        public bool EsDrogueria 
+        { 
+            get
+            {
+                if (Est_id == 0)
+                {
+                    return true;
+                }
+
+                return false;
+
+            }
+        }
     }
 }

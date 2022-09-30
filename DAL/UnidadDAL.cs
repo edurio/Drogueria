@@ -12,6 +12,19 @@ namespace DAL
 {
     public class UnidadDAL
     {
+        public static Entidades.Unidad InsertarUnidad(Entidades.Unidad unidad)
+        {
+            Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA_Solicitudes");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_UNID_UNIDADES_INS");
+
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, unidad.Id);
+            db.AddInParameter(dbCommand, "DESCRIPCION", DbType.String, unidad.Descripcion != null ? unidad.Descripcion : (object)null);
+            db.AddInParameter(dbCommand, "ELIMINADO", DbType.Byte, unidad.Eliminado == true ? 1 : 0);
+
+            unidad.Id = int.Parse(db.ExecuteScalar(dbCommand).ToString());
+
+            return unidad;
+        }
         public static List<Entidades.Unidad> ObtenerUnidades()
         {
             List<Entidades.Unidad> listaUnidades = new List<Entidades.Unidad>();

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Drogueria.Models.MantenedorProductosModel
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/MantenedorProductos/MantenedorProductos.cshtml";
 }
@@ -23,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_MantenedorProductos.js"></script>
+    <script src="~/Scripts/Script_MantenedorProductos30092022.js"></script>
 
     <style>
 
@@ -55,7 +57,8 @@
     <script>
 
         var urlObtenerUnidades = '@Url.Action("ObtenerUnidades", "MantenedorProductos")';
-        var urlObtenerEstablecimiento = '@Url.Action("ObtenerEstablecimiento", "MantenedorProductos")';
+        var urlInsertarProductoExterno = '@Url.Action("InsertarProductoExterno", "MantenedorProductos")';
+        var urlRecuperaProducto = '@Url.Action("RecuperaProducto", "MantenedorProductos")';
 
         $(document).ready(function () {
 
@@ -71,7 +74,98 @@
     </script>
 </head>
 <body>
-    <div @*class="modal fade"*@ id="modalMantenedorProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+    <br />
+    <div>
+        @if (Request.Browser.IsMobileDevice)
+        {
+            <div class="fields">
+                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
+                        <i class="table download icon"></i>Exportar a Excel
+                    </div>*@
+            </div>
+            <table class="ui fixed table inverted table-striped table-bordered">
+                <tbody>
+                    @foreach (var listaProductos in Model.lista)
+                    {
+                        <tr>
+                            <td style="width:10%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalMantenedorProductos" value="@listaProductos.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                    <i class="eye icon"></i>
+                                </button>
+                            </td>
+                            <td>ID: @listaProductos.Id</td>
+                            <td>ID Externo: @listaProductos.Id_Externo</td>
+
+                            <td>Descripción: @listaProductos.Descripcion</td>
+                            <td>Unidad: @listaProductos.Unidad</td>
+                            <td>Establecimiento: @listaProductos.Establecimiento</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <div style="margin-left:auto; margin-right:auto;width:90%;opacity:0.9">
+                <div class="fields">
+                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalMantenedorProductos">Crear Producto<i class="check icon"></i></div>
+                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                </div>
+                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:100px"></th>
+                            <th style="width:10%">ID</th>
+                            <th style="width:10%">ID Externo</th>
+                            <th>Descripción</th>
+                            <th style="width:10%">Unidad</th>
+                            <th>Establecimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listaProductos in Model.lista)
+                        {
+                            <tr>
+
+                                <td style="width:8%">
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalMantenedorProductos" value="@listaProductos.Id" onclick="RecuperaProducto(this.value, this);">
+                                        <i class="pencil icon"></i>
+                                    </button>
+                                </td>
+                                <td>@listaProductos.Id</td>
+                                <td>@listaProductos.Id_Externo</td>
+                                <td>@listaProductos.Descripcion</td>
+                                <td>@listaProductos.Unidad</td>
+                                <td>@listaProductos.Establecimiento</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6">
+                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+
+
+        }
+    </div>
+    <br />
+    <div class="modal fade" id="modalMantenedorProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
         <div class="modal-xl" role="document">
             <div class="modal-content" style="width:100%">
                 <div style="height:3px">
@@ -109,20 +203,28 @@
                                         <label>ID Externo</label>
                                         <input id="txtIdExterno" placeholder="Aquí debes indicar el ID externo..." type="number">
                                     </div>
-                                    <div id="divcmbEstablecimiento" class="field">
-                                        <label>Establecimiento</label>
-                                        <select id="cmbEstablecimiento" name="cmbEstablecimiento" class="ui fluid search selection dropdown">
-                                        </select>
-                                    </div>
                                     <div id="divcmbUnidad" class="field">
                                         <label>Unidad</label>
                                         <select id="cmbUnidad" name="cmbUnidad" class="ui fluid search selection dropdown">
                                         </select>
                                     </div>
+                                    <div class="field">
+                                        <label>Factor de seguridad</label>
+                                        <input id="txtFactorSeguridad" placeholder="Aquí debes indicar el factor de seguridad..." type="number">
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <label>Descripción de producto</label>
                                     <input id="txtDescripcion" placeholder="Aquí debes indicar la descripción del producto..." type="text">
+                                </div>
+                            </div>
+                            <div id="msjExito" class="ui icon success hidden message">
+                                <i class="check icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Éxito!!!
+                                    </div>
+                                    <p>El producto fue guardado con éxito.</p>
                                 </div>
                             </div>
                         </div>
@@ -147,17 +249,9 @@
                         <p>Error al intentar guardar el producto.</p>
                     </div>
                 </div>
-                <div id="msjExito" class="ui icon success hidden message">
-                    <i class="check icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Éxito!!!
-                        </div>
-                        <p>El producto fue guardado con éxito.</p>
-                    </div>
-                </div>
+              
                 <div class="modal-footer">
-                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
+                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarProductoExterno();">
                         Guardar
                         <i class="checkmark icon"></i>
                     </div>
@@ -168,3 +262,5 @@
     </div>
 </body>
 </html>
+
+<input type="hidden" id="idProducto" value="0" />

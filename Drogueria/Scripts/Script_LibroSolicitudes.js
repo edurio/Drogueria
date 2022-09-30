@@ -424,9 +424,9 @@ function ValidaGenerarSolicitud() {
     //    errores.push('Debe indicar el estado de la  solicitud');
     //}
 
-    if (_arregloArticulos == null || _arregloArticulos.length == 0) {      
-        errores.push('Debe indicar agregar por lo menos un artículo');
-    }
+    //if (_arregloArticulos == null || _arregloArticulos.length == 0) {      
+    //    errores.push('Debe indicar agregar por lo menos un artículo');
+    //}
 
     
 

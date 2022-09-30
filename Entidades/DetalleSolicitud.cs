@@ -27,6 +27,6 @@ namespace Entidades
         public bool ProductoNuevo { get; set; }
         public int Indice { get; set; }
         public bool Eliminado { get; set; }
-        
+        public string Unidad { get; set; }
     }
 }

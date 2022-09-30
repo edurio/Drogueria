@@ -48,6 +48,8 @@
     <Compile Include="Filtro.cs" />
     <Compile Include="Prioridad.cs" />
     <Compile Include="Producto.cs" />
+    <Compile Include="ProductoExterno.cs" />
+    <Compile Include="RLProductos.cs" />
     <Compile Include="Solicitud.cs" />
     <Compile Include="Unidad.cs" />
     <Compile Include="Usuario.cs" />

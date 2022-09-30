@@ -14,17 +14,48 @@ namespace Drogueria.Controllers
         // GET: MantenedorProductos
         public ActionResult Index()
         {
-            return View();
+            Drogueria.Models.MantenedorProductosModel modelo = new Models.MantenedorProductosModel();
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            var text = DateTime.Now.ToString();
+            Session["FechaActual"] = text;
+
+            filtro.Est_Id = SessionH.Usuario.Est_id;
+            modelo.lista = DAL.ProductoExternoDAL.ObtenerProductoExterno(filtro);
+
+            return View(modelo);
         }
         public JsonResult ObtenerUnidades()
         {
             var lista = DAL.UnidadDAL.ObtenerUnidades();
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-        public JsonResult ObtenerEstablecimiento()
+        public JsonResult InsertarProductoExterno(Entidades.ProductoExterno entity)
         {
-            var lista = DAL.EstablecimientoDAL.ObtenerEstablecimiento(new Entidades.Filtro() { EmpId = 49 });
-            return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            try
+            {
+                entity.Est_Id = 1;
+                entity = DAL.ProductoExternoDAL.InsertarProductoExterno(entity);
+
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+        public JsonResult RecuperaProducto(int id)
+        {
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            filtro.Id = id;
+            var lista = DAL.ProductoExternoDAL.ObtenerProductoExterno(filtro);
+
+            if (lista.Count == 1)
+            {
+
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista[0], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "noexiste", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

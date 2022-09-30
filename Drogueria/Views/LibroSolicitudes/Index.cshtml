@@ -88,8 +88,8 @@
             <div class="fields">
                 <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
                 @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
-                        <i class="table download icon"></i>Exportar a Excel
-                    </div>*@
+                    <i class="table download icon"></i>Exportar a Excel
+                </div>*@
             </div>
             <table class="ui fixed table inverted table-striped table-bordered">
                 <tbody>
@@ -121,133 +121,136 @@
         }
         else
         {
-            <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
-                <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%; opacity:0.9">
-                    <div class="ui icon warning message">
-                        <i class="search icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                Filtro
+            if (Model.SolicitudCargada == false)
+            {
+                <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
+                    <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%; opacity:0.9">
+                        <div class="ui icon warning message">
+                            <i class="search icon"></i>
+                            <div class="content">
+                                <div class="header">
+                                    Filtro
+                                </div>
+                                <p>Para lograr una búsqueda efectiva debe seleccionar al menos un filtro.</p>
                             </div>
-                            <p>Para lograr una búsqueda efectiva debe seleccionar al menos un filtro.</p>
                         </div>
-                    </div>
-                    <table border="0">
-                        <tr>
-                            <td><label>Fecha desde</label></td>
-                            <td style="width:5px"></td>
-                            <td>
-                                <div class="ui calendar" id="divFiltroDesde">
-                                    <div class="ui input left icon">
-                                        <input id="txtFiltroDesde" type="date" placeholder="Fecha desde" value=@Session["FiltroInformeDesde"]>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="width:5px"></td>
-                            <td style="text-align:right"><label>Fecha Hasta</label></td>
-                            <td style="width:5px"></td>
-                            <td><div class="ui input"><input id="txtFiltroHasta" type="date" placeholder="Fecha hasta" value=@Session["FiltroInformeHasta"]></div></td>
-                            <td style="width:5px"></td>
-                            <td>
-                                <div id="btnBuscarFiltro" style="width:200px" class="ui blue right labeled icon button" onclick="BusquedaFiltro();">
-                                    Buscar por fecha
-                                    <i class="search icon"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr style="width:5px">
-                            <td><label></label></td>
-                            <td></td>
-
-                        </tr>
-
-
-                    </table>
-                    @*<table border="0">
+                        <table border="0">
                             <tr>
-                                <td><label>N° Venta</label></td>
+                                <td><label>Fecha desde</label></td>
                                 <td style="width:5px"></td>
                                 <td>
-                                    <div class="ui input"><input id="txtFiltroNumero" type="number" placeholder="Digite el N° Venta"></div>
+                                    <div class="ui calendar" id="divFiltroDesde">
+                                        <div class="ui input left icon">
+                                            <input id="txtFiltroDesde" type="date" placeholder="Fecha desde" value=@Session["FiltroInformeDesde"]>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td style="width:5px"></td>
+                                <td style="text-align:right"><label>Fecha Hasta</label></td>
+                                <td style="width:5px"></td>
+                                <td><div class="ui input"><input id="txtFiltroHasta" type="date" placeholder="Fecha hasta" value=@Session["FiltroInformeHasta"]></div></td>
+                                <td style="width:5px"></td>
                                 <td>
-                                    <div id="btnBuscarPorNumero" style="width:200px" class="ui orange right labeled icon button" onclick="BusquedaFiltroPorNumero();">
-                                        Buscar por numero
+                                    <div id="btnBuscarFiltro" style="width:200px" class="ui blue right labeled icon button" onclick="BusquedaFiltro();">
+                                        Buscar por fecha
                                         <i class="search icon"></i>
                                     </div>
                                 </td>
                             </tr>
+                            <tr style="width:5px">
+                                <td><label></label></td>
+                                <td></td>
 
-                        </table>*@
-                </div>
-                <div class="fields">
-                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalSolicitud">Crear solicitud<i class="check icon"></i></div>
-                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
-                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
-                </div>
-                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width:100px"></th>
-                            <th>Fecha de ingreso</th>
-                            <th>Numero Solicitud</th>
-                            <th>Tipo</th>
-
-                            <th>Observación</th>
-                            <th>Usuario solicitante</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var listaSolicitudes in Model.lista)
-                        {
-                            <tr>
-
-                                <td style="width:8%">
-                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
-                                        <i class="eye icon"></i>
-                                    </button>
-                                </td>
-                                <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
-                                <td>@listaSolicitudes.Folio</td>
-                                <td>@listaSolicitudes.Tipo</td>
-
-                                <td>@listaSolicitudes.Observacion_Solicitud</td>
-                                <td>@listaSolicitudes.UsuarioCreador</td>
-                                @if (listaSolicitudes.Estado_Id == 1)
-                                {
-                                    <td>
-                                        <button class="ui icon green button" value="@listaSolicitudes.Id" disabled>
-                                            <i class="paper plane outline icon"></i>
-                                        </button>
-                                    </td>
-                                }
-                                @if (listaSolicitudes.Estado_Id == 2)
-                                {
-                                    <td>
-                                        <button class="ui icon red button" data-toggle="modal" data-target="#modalEnviarSolicitud" value="@listaSolicitudes.Id" onclick="PreparaEnviaSolicitud(this.value, this);">
-                                            <i class="paper plane outline icon"></i>
-                                        </button>
-                                    </td>
-                                }
                             </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="7">
-                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+
+
+                        </table>
+
+                    </div>
+                    <div class="fields">
+                        <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalSolicitud">Crear solicitud<i class="check icon"></i></div>
+                        <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                        <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                    </div>
+                    <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:100px"></th>
+                                <th>Fecha de ingreso</th>
+                                <th>Numero Solicitud</th>
+                                <th>Tipo</th>
+
+                                <th>Observación</th>
+                                <th>Usuario solicitante</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.lista != null)
+                            {
+                                foreach (var listaSolicitudes in Model.lista)
+                                {
+                                    <tr>
+
+                                        <td style="width:8%">
+                                            <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                                <i class="eye icon"></i>
+                                            </button>
+                                        </td>
+                                        <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
+                                        <td>@listaSolicitudes.Folio</td>
+                                        <td>@listaSolicitudes.Tipo</td>
+
+                                        <td>@listaSolicitudes.Observacion_Solicitud</td>
+                                        <td>@listaSolicitudes.UsuarioCreador</td>
+                                        @if (listaSolicitudes.Estado_Id == 1)
+                                        {
+                                            <td>
+                                                <button class="ui icon green button" value="@listaSolicitudes.Id" disabled>
+                                                    <i class="paper plane outline icon"></i>
+                                                </button>
+                                            </td>
+                                        }
+                                        @if (listaSolicitudes.Estado_Id == 2)
+                                        {
+                                            <td>
+                                                <button class="ui icon red button" data-toggle="modal" data-target="#modalEnviarSolicitud" value="@listaSolicitudes.Id" onclick="PreparaEnviaSolicitud(this.value, this);">
+                                                    <i class="paper plane outline icon"></i>
+                                                </button>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="7">
+                                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+
+
+
+
 
         }
     </div>
     <br />
-    <div class="modal fade" id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+
+    @{
+        string claseModal = "";
+        if (Model.SolicitudCargada == false)
+        {
+            claseModal = "modal fade";
+        }
+     }
+
+    <div class=@claseModal id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
         <div class="modal-xl" role="document">
             <div class="modal-content" style="width:100%">
                 <div style="height:3px">
@@ -301,10 +304,10 @@
                                             </select>
                                         </div>*@
                                     @*<div id="divcmbEstado" class="field">
-                                        <label>Estado</label>
-                                        <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-                                        </select>
-                                    </div>*@
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
 
                                 </div>
                                 <div class="field">
@@ -314,62 +317,64 @@
                             </div>
                         </div>
                     </div>
+
                     <div style="height:7px"></div>
                     <div id="divProgramacion">
-                        <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
-                            Detalle artículos
-                        </h4>
-                        <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
+                        @if (Model.SolicitudCargada == false)
+                        {
+                            <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
+                                Detalle artículos
+                            </h4>
+                            <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
 
-                            <form class="ui form">
-                                <div id="divcmbClase" class="field">
-                                    <label>Clase</label>
-                                    <select id="cmbClase" name="cmbClase" class="ui search selection dropdown">
-                                    </select>
+
+                                <form class="ui form">
+                                    <div id="divcmbClase" class="field">
+                                        <label>Clase</label>
+                                        <select id="cmbClase" name="cmbClase" class="ui search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:40%">
+                                                <div id="divcmbArticulo" class="field">
+                                                    <label>Articulo</label>
+                                                    <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td style="width:10%">
+                                                <div id="divtxtCantidad" class="field">
+                                                    <label>Cantidad</label>
+                                                    <input id="txtCantidad" type="number" min="1" />
+                                                </div>
+
+                                            </td>
+                                            <td style="width:30%">
+                                                <div class="field">
+                                                    <label>Observación</label>
+                                                    <input id="txtObservacionArticulo" type="text" />
+                                                </div>
+                                            </td>
+                                            <td style="width:10%">
+                                                <div class="field">
+                                                    <label style="opacity:0">" "</label>
+                                                    <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+
+                                <div id="DivMessajeErrorProducto" class="ui error hidden message" style="margin-left:auto; margin-right:auto; width:100%">
+                                    <div class="header">
+                                        Se han encontrado algunos problemas, revíselos...
+                                    </div>
+                                    <ul id="listMessajeErrorProducto" class="list"></ul>
                                 </div>
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="width:40%">
-                                            <div id="divcmbArticulo" class="field">
-                                                <label>Articulo</label>
-                                                <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td style="width:10%">
-                                            <div id="divtxtCantidad" class="field">
-                                                <label>Cantidad</label>
-                                                <input id="txtCantidad" type="number" min="1" />
-                                            </div>
 
-                                        </td>
-                                        <td style="width:30%">
-                                            <div class="field">
-                                                <label>Observación</label>
-                                                <input id="txtObservacionArticulo" type="text" />
-                                            </div>
-                                        </td>
-                                        <td style="width:10%">
-                                            <div class="field">
-                                                <label style="opacity:0">" "</label>
-                                                <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-
-
-                            </form>
-
-                            <div id="DivMessajeErrorProducto" class="ui error hidden message" style="margin-left:auto; margin-right:auto; width:100%">
-                                <div class="header">
-                                    Se han encontrado algunos problemas, revíselos...
-                                </div>
-                                <ul id="listMessajeErrorProducto" class="list"></ul>
                             </div>
-
-                        </div>
-
+                        }
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -377,25 +382,25 @@
                                     <th style="width:10%">Op</th>
                                     <th style="width:50%">Artículo</th>
                                     <th style="width:10%">Cantidad</th>
+                                    <th style="width:10%">Unidad</th>
                                     <th style="width:30%">Observacion</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (Model.listaProductosExternos != null)
+                                {
+                                    foreach (var a in Model.listaProductosExternos)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td>@a.Descripcion</td>
+                                            <td>@a.Consumo</td>
+                                            <td>@a.Unidad</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
-                            @*<tfoot class="full-width">
-                                    <tr>
-                                        <th></th>
-                                        <th colspan="12">
-
-                                            <div id="btnAgregarConductor" class="ui blue right labeled icon button" data-toggle="modal" data-target="#modalSolicitud">
-                                                Importar desde excel
-                                                <i class="plus icon"></i>
-                                            </div>
-
-
-                                        </th>
-                                    </tr>
-                                </tfoot>*@
                         </table>
                     </div>
 
