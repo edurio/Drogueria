@@ -1,0 +1,266 @@
+﻿@model Drogueria.Models.MantenedorProductosModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/MantenedorProductos/MantenedorProductos.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>Mantenedor de Productos</title>
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+
+
+    <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/RecursosExternos/bootstrap.min.js"></script>
+    <script src="~/RecursosExternos/jquery.min.js"></script>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+    <script src="~/Scripts/Script_MantenedorProductos30092022.js"></script>
+
+    <style>
+
+
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .card-img-top {
+            width: 250px;
+        }
+
+        .contenedor-imagen {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+
+        var urlObtenerUnidades = '@Url.Action("ObtenerUnidades", "MantenedorProductos")';
+        var urlInsertarProductoExterno = '@Url.Action("InsertarProductoExterno", "MantenedorProductos")';
+        var urlRecuperaProducto = '@Url.Action("RecuperaProducto", "MantenedorProductos")';
+
+        $(document).ready(function () {
+
+            $('.ui.selection.dropdown').dropdown();
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+
+            ExportarExcel = function () {
+                location.href = '@Url.Action("ExportToExcel", "LibroSolicitudes")';
+             };
+        });
+    </script>
+</head>
+<body>
+    <br />
+    <div>
+        @if (Request.Browser.IsMobileDevice)
+        {
+            <div class="fields">
+                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
+                        <i class="table download icon"></i>Exportar a Excel
+                    </div>*@
+            </div>
+            <table class="ui fixed table inverted table-striped table-bordered">
+                <tbody>
+                    @foreach (var listaProductos in Model.lista)
+                    {
+                        <tr>
+                            <td style="width:10%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalMantenedorProductos" value="@listaProductos.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                    <i class="eye icon"></i>
+                                </button>
+                            </td>
+                            <td>ID: @listaProductos.Id</td>
+                            <td>ID Externo: @listaProductos.Id_Externo</td>
+
+                            <td>Descripción: @listaProductos.Descripcion</td>
+                            <td>Unidad: @listaProductos.Unidad</td>
+                            <td>Establecimiento: @listaProductos.Establecimiento</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <div style="margin-left:auto; margin-right:auto;width:90%;opacity:0.9">
+                <div class="fields">
+                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalMantenedorProductos">Crear Producto<i class="check icon"></i></div>
+                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                </div>
+                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:100px"></th>
+                            <th style="width:10%">ID</th>
+                            <th style="width:10%">ID Externo</th>
+                            <th>Descripción</th>
+                            <th style="width:10%">Unidad</th>
+                            <th>Establecimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listaProductos in Model.lista)
+                        {
+                            <tr>
+
+                                <td style="width:8%">
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalMantenedorProductos" value="@listaProductos.Id" onclick="RecuperaProducto(this.value, this);">
+                                        <i class="pencil icon"></i>
+                                    </button>
+                                </td>
+                                <td>@listaProductos.Id</td>
+                                <td>@listaProductos.Id_Externo</td>
+                                <td>@listaProductos.Descripcion</td>
+                                <td>@listaProductos.Unidad</td>
+                                <td>@listaProductos.Establecimiento</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6">
+                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+
+
+        }
+    </div>
+    <br />
+    <div class="modal fade" id="modalMantenedorProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+        <div class="modal-xl" role="document">
+            <div class="modal-content" style="width:100%">
+                <div style="height:3px">
+
+                </div>
+                <h4 class="ui center aligned header">
+                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    Mantenedor de productos
+                </h4>
+                <div class="modal-body">
+                    <div class="image content">
+                        <div class="ui info message">
+                            <div class="header">
+                                Atención al completar los datos!
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    La data de este formulario debe ser llenada con la mayor exactitud posible.
+                                </li>
+                            </ul>
+                            <div id="msjAdvertencia" class="ui icon hidden warning message">
+                                <i class="exclamation triangle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Esta conductor ya existe!!!
+                                    </div>
+                                    <p>el RUT que está digitando ya está registrado.</p>
+                                </div>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="ui form">
+
+                                <div class="two fields">
+                                    <div class="field">
+                                        <label>ID Externo</label>
+                                        <input id="txtIdExterno" placeholder="Aquí debes indicar el ID externo..." type="number">
+                                    </div>
+                                    <div id="divcmbUnidad" class="field">
+                                        <label>Unidad</label>
+                                        <select id="cmbUnidad" name="cmbUnidad" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label>Factor de seguridad</label>
+                                        <input id="txtFactorSeguridad" placeholder="Aquí debes indicar el factor de seguridad..." type="number">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Descripción de producto</label>
+                                    <input id="txtDescripcion" placeholder="Aquí debes indicar la descripción del producto..." type="text">
+                                </div>
+                            </div>
+                            <div id="msjExito" class="ui icon success hidden message">
+                                <i class="check icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Éxito!!!
+                                    </div>
+                                    <p>El producto fue guardado con éxito.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Se han encontrado algunos problemas, revíselos...
+                            </div>
+                            <ul id="listMessajeError" class="list"></ul>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="times circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar guardar el producto.</p>
+                    </div>
+                </div>
+              
+                <div class="modal-footer">
+                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarProductoExterno();">
+                        Guardar
+                        <i class="checkmark icon"></i>
+                    </div>
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/MantenedorProductos')">Salir<i class="cancel icon"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<input type="hidden" id="idProducto" value="0" />

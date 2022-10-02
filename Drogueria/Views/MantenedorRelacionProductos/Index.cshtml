@@ -1,0 +1,249 @@
+﻿@model Drogueria.Models.MantenedorRelacionProductosModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/MantenedorRelacionProductos/MantenedorRelacionProductos.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>Mantenedor de relación de productos</title>
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+
+
+    <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/RecursosExternos/bootstrap.min.js"></script>
+    <script src="~/RecursosExternos/jquery.min.js"></script>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+    <script src="~/Scripts/Script_MantenedorRelacionProductos30092022.js"></script>
+
+    <style>
+
+
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .card-img-top {
+            width: 250px;
+        }
+
+        .contenedor-imagen {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        var urlObtenerProductos = '@Url.Action("ObtenerProductos", "MantenedorRelacionProductos")';
+        var urlObtenerProductoExterno = '@Url.Action("ObtenerProductoExterno", "MantenedorRelacionProductos")';
+        var urlInsertarRelacionProducto = '@Url.Action("InsertarRelacionProducto", "MantenedorRelacionProductos")';
+        var urlObtenerProductosRelacionados = '@Url.Action("ObtenerProductosRelacionados", "MantenedorRelacionProductos")';
+        
+
+        $(document).ready(function () {
+
+            $('.ui.selection.dropdown').dropdown();
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+
+            ExportarExcel = function () {
+                location.href = '@Url.Action("ExportToExcel", "LibroSolicitudes")';
+             };
+        });
+    </script>
+</head>
+<body>
+    <br />
+    <div>
+        @if (Request.Browser.IsMobileDevice)
+        {
+            <div class="fields">
+                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
+                        <i class="table download icon"></i>Exportar a Excel
+                    </div>*@
+            </div>
+            <table class="ui fixed table inverted table-striped table-bordered">
+                <tbody>
+                    @foreach (var listaProductos in Model.lista)
+                    {
+                        <tr>
+                            <td style="width:10%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalRelacion" value="@listaProductos.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                    <i class="eye icon"></i>
+                                </button>
+                            </td>
+                            <td>ID Drogueria: @listaProductos.Prod_Id_Drogueria</td>
+                            <td>Descripción Drogueria: @listaProductos.Descripcion_Drogueria</td>
+                            <td>ID Externo: @listaProductos.Prod_Id_Externo</td>
+                            <td>Descripción Externa: @listaProductos.Descripcion_Externa</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="10">
+                            <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
+
+                <div class="fields">
+                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalRelacion">Crear relación<i class="exchange icon"></i></div>
+                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                </div>
+                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:100px"></th>
+                            <th style="width:10%">ID Droguería</th>
+                            <th>Descripción Droguería</th>
+                            <th style="width:10%">ID Externo</th>
+                            <th>Descripción Externo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listaProductos in Model.lista)
+                        {
+                            <tr>
+
+                                <td style="width:8%">
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalRelacion" value="@listaProductos.Id" onclick="ObtenerProductosRelacionados(this.value, this);">
+                                        <i class="pencil icon"></i>
+                                    </button>
+                                </td>
+                                <td>@listaProductos.Prod_Id_Drogueria</td>
+                                <td>@listaProductos.Descripcion_Drogueria</td>
+                                <td>@listaProductos.Prod_Id_Externo</td>
+                                <td>@listaProductos.Descripcion_Externa</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5">
+                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+
+
+        }
+    </div>
+    <br />
+    <br />
+    <div class="modal fade" id="modalRelacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+        <div class="modal-xl" role="document">
+            <div class="modal-content" style="width:100%">
+                <div style="height:3px">
+
+                </div>
+                <h4 class="ui center aligned header">
+                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    Relacionar productos
+                </h4>
+                <div class="modal-body">
+                    <div class="image content">
+                        <div class="ui info message">
+                            <div class="header">
+                                Atención!
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    La data de este formulario debe ser llenada con la mayor exactitud posible.
+                                </li>
+                                <li>Aquí podrá generar la relación entre los productos de droguería y los productos de su establecimiento.</li>
+                            </ul>
+                            <div class="ui divider"></div>
+                            <div class="ui form">
+                                <div class="two fields">
+                                    <div id="divcmbProdDrogueria" class="field">
+                                        <label>Producto Drogueria</label>
+                                        <select id="cmbProdDrogueria" name="cmbProdDrogueria" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <div id="divcmbProdExterno" class="field">
+                                        <label>Producto Establecimiento</label>
+                                        <select id="cmbProdExterno" name="cmbProdExterno" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="msjExito" class="ui icon success hidden message">
+                                <i class="check icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Éxito!!!
+                                    </div>
+                                    <p>El producto fue relacionado con éxito.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Se han encontrado algunos problemas, revíselos...
+                            </div>
+                            <ul id="listMessajeError" class="list"></ul>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="times circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar crear la solicitud.</p>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div id="btnGuardar" class="ui black right labeled icon button" onclick="GuardarRelacionProducto();">
+                        Relacionar
+                        <i class="checkmark icon"></i>
+                    </div>
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/MantenedorRelacionProductos')">Salir<i class="cancel icon"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<input type="hidden" id="idRelacion" value="0" />

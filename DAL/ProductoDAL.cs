@@ -20,7 +20,7 @@ namespace DAL
             DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_PRODUCTOS_GET");
 
             db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId);
-            db.AddInParameter(dbCommand, "CLAS_ID", DbType.Int32, filtro.ClasId);
+            db.AddInParameter(dbCommand, "CLAS_ID", DbType.Int32, filtro.ClasId != 0 ? filtro.ClasId : (object)null);
 
 
             IDataReader reader = (IDataReader)db.ExecuteReader(dbCommand);
@@ -31,7 +31,6 @@ namespace DAL
                 int NOMBRE = reader.GetOrdinal("DESCRIPCION");               
                 int CLASE = reader.GetOrdinal("CLASE");
 
-
                 while (reader.Read())
                 {
                     Entidades.Producto OBJ = new Entidades.Producto();
@@ -39,8 +38,6 @@ namespace DAL
                     OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
                     OBJ.Descripcion = (String)(!reader.IsDBNull(NOMBRE) ? reader.GetValue(NOMBRE) : string.Empty);
                     OBJ.Clase = (String)(!reader.IsDBNull(CLASE) ? reader.GetValue(CLASE) : string.Empty);
-
-
                     //EndFields
 
                     lista.Add(OBJ);

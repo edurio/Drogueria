@@ -38,11 +38,12 @@ namespace Reportes
             dataTable1.Columns.Add("OP", typeof(string));
             dataTable1.Columns.Add("Articulo", typeof(string));
             dataTable1.Columns.Add("Cantidad", typeof(string));
+            dataTable1.Columns.Add("Unidad", typeof(string));
             dataTable1.Columns.Add("Observación", typeof(string));
 
             foreach (var d in detalleSolicitud)
             {
-                dataTable1.Rows.Add(new object[] { " ", d.ProductoStr, d.Cantidad, d.Observacion });
+                dataTable1.Rows.Add(new object[] { " ", d.ProductoStr, d.Cantidad, d.Unidad, d.Observacion });
             }
 
             this.DataSource = dataSet1;
@@ -51,8 +52,8 @@ namespace Reportes
             
             this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[1].Caption);
             this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[2].Caption);
-            this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);
-
+            this.tcUnidad.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);
+            this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[4].Caption);
         }
     }
 }

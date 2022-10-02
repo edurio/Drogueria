@@ -31,6 +31,7 @@ namespace DAL
                 //int CORREO = reader.GetOrdinal("CORREO");
                 //int TELEFONO = reader.GetOrdinal("TELEFONO");
                 int CLAVE = reader.GetOrdinal("PASSWORD");
+                int EST_ID = reader.GetOrdinal("EST_ID");
                 
 
                 while (reader.Read())
@@ -40,8 +41,9 @@ namespace DAL
                     OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
                     OBJ.EmpId = (int)(!reader.IsDBNull(EMP_ID) ? reader.GetValue(EMP_ID) : 0);
                     OBJ.Nombre = (String)(!reader.IsDBNull(NOMBRE) ? reader.GetValue(NOMBRE) : string.Empty);
-                  //  OBJ.Correo = (String)(!reader.IsDBNull(CORREO) ? reader.GetValue(CORREO) : string.Empty);
-                    
+                    //  OBJ.Correo = (String)(!reader.IsDBNull(CORREO) ? reader.GetValue(CORREO) : string.Empty);
+                    OBJ.Est_id = (int)(!reader.IsDBNull(EST_ID) ? reader.GetValue(EST_ID) : 0);
+
 
                     //EndFields
 

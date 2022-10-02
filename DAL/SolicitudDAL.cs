@@ -62,7 +62,6 @@ namespace DAL
             db.AddInParameter(dbCommand, "FECHA", DbType.DateTime, solicitud.Fecha_Ingreso != DateTime.MinValue ? solicitud.Fecha_Ingreso : (object)null);
             db.AddInParameter(dbCommand, "FOLIO", DbType.Int32, solicitud.Folio != 0 ? solicitud.Folio : (object)null);
             db.AddInParameter(dbCommand, "TIPO_ID", DbType.Int32, solicitud.Tipo_Id != 0 ? solicitud.Tipo_Id : (object)null);
-            db.AddInParameter(dbCommand, "PRIO_ID", DbType.Int32, solicitud.Prioridad_Id != 0 ? solicitud.Prioridad_Id : (object)null);
             db.AddInParameter(dbCommand, "SOES_ID", DbType.Int32, solicitud.Estado_Id != 0 ? solicitud.Estado_Id : (object)null);
             db.AddInParameter(dbCommand, "OBSERVACION", DbType.String, solicitud.Observacion_Solicitud != null ? solicitud.Observacion_Solicitud : (object)null);
             db.AddInParameter(dbCommand, "NULA", DbType.Byte, solicitud.Nula == true ? 1 : 0);
@@ -96,8 +95,6 @@ namespace DAL
                 int FECHA = reader.GetOrdinal("FECHA");
                 int FOLIO = reader.GetOrdinal("FOLIO");
                 int TIPO_ID = reader.GetOrdinal("TIPO_ID");
-                int PRIO_ID = reader.GetOrdinal("PRIO_ID");
-                int PRIORIDAD = reader.GetOrdinal("PRIORIDAD");
                 int SOES_ID = reader.GetOrdinal("SOES_ID");
                 int ESTADO = reader.GetOrdinal("ESTADO");
                 int OBSERVACION = reader.GetOrdinal("OBSERVACION");
@@ -114,8 +111,6 @@ namespace DAL
                     OBJ.Fecha_Ingreso = (DateTime)(!reader.IsDBNull(FECHA) ? reader.GetValue(FECHA) : DateTime.MinValue);
                     OBJ.Folio = (int)(!reader.IsDBNull(FOLIO) ? reader.GetValue(FOLIO) : 0);
                     OBJ.Tipo_Id = (int)(!reader.IsDBNull(TIPO_ID) ? reader.GetValue(TIPO_ID) : 0);
-                    OBJ.Prioridad_Id = (int)(!reader.IsDBNull(PRIO_ID) ? reader.GetValue(PRIO_ID) : 0);
-                    OBJ.Prioridad = (String)(!reader.IsDBNull(PRIORIDAD) ? reader.GetValue(PRIORIDAD) : string.Empty);
                     OBJ.Estado_Id = (int)(!reader.IsDBNull(SOES_ID) ? reader.GetValue(SOES_ID) : 0);
                     OBJ.Estado = (String)(!reader.IsDBNull(ESTADO) ? reader.GetValue(ESTADO) : string.Empty);
                     OBJ.Observacion_Solicitud = (String)(!reader.IsDBNull(OBSERVACION) ? reader.GetValue(OBSERVACION) : string.Empty);
@@ -139,5 +134,18 @@ namespace DAL
             return solicitud;
 
         }
+        public static void EnviarSolicitud(int idSolicitud)
+        {
+            Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_SOLICITUD_ENVIAR");
+
+
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, idSolicitud);
+
+
+
+            db.ExecuteNonQuery(dbCommand);
+        }
+
     }
 }

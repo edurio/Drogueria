@@ -69,6 +69,11 @@
       <HintPath>..\..\..\..\Paso\ASMAR\bin Alexis  1902\bin\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\ESD\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -144,14 +149,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\ExcelExportHelper.cs" />
+    <Compile Include="Controllers\CargadorProductosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibroSolicitudesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MantenedorProductosController.cs" />
+    <Compile Include="Controllers\MantenedorRelacionProductosController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LibroSolicitudesModel.cs" />
+    <Compile Include="Models\MantenedorProductosModel.cs" />
+    <Compile Include="Models\MantenedorRelacionProductosModel.cs" />
     <Compile Include="Models\SolicitudDetalleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionH.cs" />
@@ -169,11 +179,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="HtmlPage1.html" />
+    <Content Include="Images\CargarProductos.png" />
     <Content Include="Images\CrearSolicitudFnd.png" />
     <Content Include="Images\LibroSolicitudes.png" />
     <Content Include="Images\LogoBackline.png" />
     <Content Include="Images\LogoBackline2.png" />
+    <Content Include="Images\MantenedoresC.jpg" />
+    <Content Include="Images\MantenedorRelacion.png" />
     <Content Include="Images\SolicitudDetalle.png" />
     <Content Include="Images\Wall1.jpg" />
     <Content Include="js\easing.js" />
@@ -200,9 +212,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Script_MantenedorRelacionProductos30092022.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Script_LibroSolicitudes.js" />
     <Content Include="Scripts\Script_Login.js" />
+    <Content Include="Scripts\Script_MantenedorProductos30092022.js" />
     <Content Include="Scripts\Script_SolicitudDetalle.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -225,9 +239,18 @@
     <Content Include="Views\LibroSolicitudes\LibroSolicitudes.cshtml" />
     <Content Include="Views\SolicitudDetalle\Index.cshtml" />
     <Content Include="Views\SolicitudDetalle\SolicitudDetalle.cshtml" />
+    <Content Include="Views\MantenedorProductos\Index.cshtml" />
+    <Content Include="Views\MantenedorProductos\MantenedorProductos.cshtml" />
+    <Content Include="Views\LibroSolicitudes\_detalleSolicitud.cshtml" />
+    <Content Include="Views\CargadorProductos\Index.cshtml" />
+    <Content Include="Views\CargadorProductos\CargadorProductos.cshtml" />
+    <Content Include="Views\MantenedorRelacionProductos\Index.cshtml" />
+    <Content Include="Views\MantenedorRelacionProductos\MantenedorRelacionProductos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\_detalleSolicitud\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

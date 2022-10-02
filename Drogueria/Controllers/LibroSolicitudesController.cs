@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Text;
 using System.IO;
 using System.Configuration;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Drogueria.Controllers
 {
@@ -25,6 +26,7 @@ namespace Drogueria.Controllers
                 Session["FiltroInformeDesde"] = Session["FiltroInformeDesde"];
                 Session["FiltroInformeHasta"] = Session["FiltroInformeHasta"];
                 modelo.lista = Session["registrosEncontrados"] as List<Entidades.Solicitud>;
+                modelo.SolicitudCargada = false;
             }
             if (Session["registrosEncontrados"] != null && limpiar != null)
             {
@@ -34,6 +36,7 @@ namespace Drogueria.Controllers
                 filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
+                modelo.SolicitudCargada = false;
                 Session["registrosEncontrados"] = modelo.lista;
             }
             if (Session["registrosEncontrados"] == null && limpiar != null)
@@ -44,7 +47,14 @@ namespace Drogueria.Controllers
                 filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
+                modelo.SolicitudCargada = false;
                 Session["registrosEncontrados"] = modelo.lista;
+            }
+
+            if (Session["listaProductosCargados"] != null)
+            {
+                modelo.SolicitudCargada = true;
+                modelo.listaProductosExternos = Session["listaProductosCargados"] as List<Entidades.ProductoExterno>;
             }
 
             return View(modelo);
@@ -105,10 +115,28 @@ namespace Drogueria.Controllers
 
                 entity.Usr_Id = SessionH.Usuario.Id;
                 entity.Emp_Id = SessionH.Usuario.EmpId;
+                entity.Estado_Id = 2;
                 entity = DAL.SolicitudDAL.InsertarSolicitud(entity);
 
-                List<Entidades.DetalleSolicitud> listadoProductos = Session["ListaProductos"] as List<Entidades.DetalleSolicitud>;
                 
+
+                List<Entidades.DetalleSolicitud> listadoProductos = Session["ListaProductos"] as List<Entidades.DetalleSolicitud>;
+
+                if (Session["listaProductosCargados"] != null)
+                {
+                    List<Entidades.ProductoExterno> listadoProductosCargados = Session["listaProductosCargados"] as List<Entidades.ProductoExterno>;
+                    foreach (var a in listadoProductosCargados)
+                    {
+                        Entidades.DetalleSolicitud listado = new Entidades.DetalleSolicitud();
+                        listado.Producto_Id = a.Id_Externo;
+                        listado.ProductoStr = a.Descripcion;
+                        listado.ProductoNuevo = true;
+                        listado.Unidad = a.Unidad;
+                        listado.Cantidad = a.Consumo;
+                        listadoProductos.Add(listado);
+                    }
+                }
+
                 foreach (var detalle in listadoProductos)
                 {
                     if (detalle.ProductoNuevo == true)
@@ -138,6 +166,7 @@ namespace Drogueria.Controllers
                 }
 
                 Session["ListaProductos"] = new List<Entidades.DetalleSolicitud>();
+                Session["listaProductosCargados"] = null;
 
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = url, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
@@ -213,7 +242,7 @@ namespace Drogueria.Controllers
                         return new JsonResult() { ContentEncoding = Encoding.Default, Data = listadoProductos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     }
                 }
-               
+
 
                 //ControlStock.DAL.FacturaDAL.InsertarFactura(entity);
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = listadoProductos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -245,5 +274,14 @@ namespace Drogueria.Controllers
             return File(filecontent, Code.ExcelExportHelper.ExcelContentType, "listaSolicitudes_" + timestamp + ".xlsx");
 
         }
+        public JsonResult EnviarSolicitud(int idSolicitud)
+        {
+            DAL.SolicitudDAL.EnviarSolicitud(idSolicitud);
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+
     }
 }
