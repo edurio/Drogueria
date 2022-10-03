@@ -11,6 +11,8 @@ namespace Drogueria.Models
 
         public bool SolicitudCargada;
 
+        public int CantidadNoRelacionada;
+
         public List<Entidades.ProductoExterno> listaProductosExternos;
     }
 }

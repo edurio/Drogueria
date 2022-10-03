@@ -18,5 +18,6 @@ namespace Entidades
         public int Unid_Id { get; set; }
         public string Unidad { get; set; }
         public bool Eliminado { get; set; }
+        public bool SinRelacionar { get; set; }
     }
 }

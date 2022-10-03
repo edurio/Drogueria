@@ -7,6 +7,7 @@ $(function () {
     /*ObtenerEstado();*/
     CargaTipo();
     ObtenerClase();
+    ObtenerProductosCombo();
 
     $('#cmbClase').change(function () { CargaProductos();  });
 });
@@ -20,6 +21,7 @@ function CargaTipo() {
 
     
 }
+
 
 function ObtenerClase() {
 
@@ -42,6 +44,21 @@ function ObtenerClase() {
 
             //alert(contador);
             // hideLoading();
+        },
+        error: function () {
+            // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
+            //hideLoading();
+        }
+    });
+}
+
+function LimpiarSolicitud() {
+
+    $.ajax({
+        url: window.urlLimpiarSolicitud,
+        type: 'POST',
+        success: function (data) {
+            location.reload();
         },
         error: function () {
             // showMessage('body', 'danger', 'Ocurrió un error al listar las marcas de camiones.');
@@ -484,4 +501,58 @@ function EnviaSolicitud() {
         }
     });
 
+}
+
+
+function ObtenerProductosCombo() {
+
+    $.ajax({
+        url: window.urlObtenerProductos,
+        type: 'POST',
+        success: function (data) {
+            $('#cmbProdDrogueria').dropdown('clear');
+            $('#cmbProdDrogueria').empty();
+            $('#cmbProdDrogueria').append('<option value="-1">[Seleccione producto]</option>');
+            var contador = 0;
+            $.each(data,
+                function (value, item) {
+                    var texto = '<option value="' + item.Id + '">' + item.Descripcion + " " + "(ID: " + (item.Id) + ")" + '</option>';
+                    $('#cmbProdDrogueria').append(texto);
+                }
+            );
+        },
+        error: function () {
+            alert(error.mensaje);
+        }
+    });
+
+}
+
+function PreparaRelacion(id, producto) {
+    $("#idProductoSeleccionado").val(id);
+    $("#txtNombreExterno").val(producto);
+}
+
+
+function GuardarRelacion() {
+
+    var strParams = {
+        Prod_Id_Drogueria: $('#cmbProdDrogueria').val(),
+        Prod_Id_Externo: $('#idProductoSeleccionado').val(),
+        Descripcion_Drogueria: $('#cmbProdDrogueria').dropdown('get text'),
+        Descripcion_Externa: $("#txtNombreExterno").val()
+    };
+
+    $.ajax({
+        url: window.urlGuardarRelacion,
+        type: 'POST',
+        data: { entity: strParams },
+        success: function (data) {
+            location.reload();
+
+        },
+        error: function (ex) {
+            alert('Error al generar la solicitud');
+        }
+    });
 }

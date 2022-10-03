@@ -155,6 +155,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MantenedorProductosController.cs" />
     <Compile Include="Controllers\MantenedorRelacionProductosController.cs" />
+    <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,6 +247,7 @@
     <Content Include="Views\CargadorProductos\CargadorProductos.cshtml" />
     <Content Include="Views\MantenedorRelacionProductos\Index.cshtml" />
     <Content Include="Views\MantenedorRelacionProductos\MantenedorRelacionProductos.cshtml" />
+    <Content Include="Views\Solicitud\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -51,6 +51,11 @@
     </style>
 </head>
 <body>
+    <div class="ui dimmer" id="dimmerCargar">
+        <div class="ui massive text loader">
+            <h3 id="textoDimmer">Leyendo Productos desde el excel</h3>
+        </div>
+    </div>
     <br />
     <div @*class="modal fade"*@ id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
         <div class="modal-xl" role="document">
@@ -106,7 +111,7 @@
                                 <form action="" method="post" enctype="multipart/form-data">
                                     <input type="file" name="file" id="file" style="display:none" onchange="$('#txtNombreArchivo').val('j'); $('#btnSubirArchivo').removeClass('disabled');$('#txtNombreArchivo').html($('#file').val());" />
                                     <div class="ui divider"></div>
-                                    <button id="btnSubirArchivo" class="ui disabled button" type="submit" onclick="$('#btnSubirArchivo').addClass('loading')" onchange="$('#txtNombreArchivo').html('');">
+                                    <button id="btnSubirArchivo" class="ui disabled button" type="submit" onclick="$('#btnSubirArchivo').addClass('loading');$('#dimmerCargar').show()" onchange="$('#txtNombreArchivo').html('');">
                                         <i class="cog icon"></i>
                                         Procesar el Excel
                                     </button>

@@ -31,7 +31,7 @@ namespace Drogueria.Controllers
                 ProcesarExcel(path);
             }
             
-            return RedirectToAction("Index", "LibroSolicitudes");
+            return RedirectToAction("Index", "Solicitud");
         }
 
 
@@ -108,6 +108,7 @@ namespace Drogueria.Controllers
                         productoExterno.Unid_Id = idUnidad;
                         productoExterno.Unidad = unidad;
                         productoExterno.Consumo = int.Parse(consumo.ToString());
+                        productoExterno.SinRelacionar = false;
                         Entidades.ProductoExterno productoNuevo = DAL.ProductoExternoDAL.InsertarProductoExterno(productoExterno);
 
                         productoExternos.Add(productoNuevo);
@@ -121,6 +122,7 @@ namespace Drogueria.Controllers
                         productoExterno.Est_Id = SessionH.Usuario.Est_id;
                         productoExterno.Unid_Id = idUnidad;
                         productoExterno.Unidad = unidad;
+                        productoExterno.SinRelacionar = false;
                         productoExterno.Consumo = int.Parse(consumo.ToString());
                         listaProductosLeidos.Add(productoExterno);
                     }
