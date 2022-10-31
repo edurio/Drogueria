@@ -62,10 +62,10 @@ namespace Drogueria.Controllers
                 var rlProd = DAL.RLProductosDAL.ObtenerProductosRelacionados(filtro2);
 
                 int cantidad = 0;
-                foreach(var a in modelo.listaProductosExternos)
+                foreach (var a in modelo.listaProductosExternos)
                 {
                     bool encontrado = false;
-                    foreach(var b in rlProd)
+                    foreach (var b in rlProd)
                     {
                         if (a.Id_Externo == b.Prod_Id_Externo)
                         {
@@ -79,12 +79,12 @@ namespace Drogueria.Controllers
                         a.SinRelacionar = true;
                     }
                     if (encontrado == true)
-                    {                        
+                    {
                         a.SinRelacionar = false;
                     }
                 }
                 modelo.CantidadNoRelacionada = cantidad;
-                
+
             }
 
             return View(modelo);
@@ -158,11 +158,13 @@ namespace Drogueria.Controllers
                     foreach (var a in listadoProductosCargados)
                     {
                         Entidades.DetalleSolicitud listado = new Entidades.DetalleSolicitud();
-                        listado.Producto_Id = a.Id_Externo;
+                        listado.Producto_Id = a.ProdId;
                         listado.ProductoStr = a.Descripcion;
                         listado.ProductoNuevo = true;
                         listado.Unidad = a.Unidad;
-                        listado.Cantidad = a.Consumo;
+                        listado.Factor = a.FactorSeguridad;
+                        listado.Consumo = a.Consumo;
+                        listado.Cantidad = a.Solicitado;
                         listadoProductos.Add(listado);
                     }
                 }
@@ -330,6 +332,52 @@ namespace Drogueria.Controllers
             {
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = "error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
+        }
+
+        public JsonResult CambiarFactor(int id, string factor)
+        {
+            factor = factor.Replace(".", ",");
+            decimal factorDec = decimal.Parse(factor.ToString());
+            List<Entidades.ProductoExterno> lista = Session["listaProductosCargados"] as List<Entidades.ProductoExterno>;
+            foreach (var a in lista)
+            {
+                if (a.Id == id)
+                {
+                    a.FactorSeguridad = factorDec;
+                    var soli = decimal.Parse(a.Consumo.ToString()) * factorDec;
+
+                    string[] textSplit = soli.ToString().Split(new Char[] { ',' });
+                    string numeroEntero = textSplit[0];
+                    int nuevaCantidad = int.Parse(numeroEntero);
+
+                    a.Solicitado = nuevaCantidad;
+                    break;
+                }
+            }
+
+            Session["listaProductosCargados"] = lista;
+
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult EliminarNoRelacionados()
+        {
+            List<Entidades.ProductoExterno> lista = Session["listaProductosCargados"] as List<Entidades.ProductoExterno>;
+            List<Entidades.ProductoExterno> listaRetorno = new List<Entidades.ProductoExterno>();
+
+            foreach(var a in lista)
+            {
+                if (a.SinRelacionar == false)
+                {
+                    listaRetorno.Add(a);
+                }
+            }
+
+            Session["listaProductosCargados"] = listaRetorno;
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
         }
     }
 }

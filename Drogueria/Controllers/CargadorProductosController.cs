@@ -37,6 +37,10 @@ namespace Drogueria.Controllers
 
         void ProcesarExcel(string ruta)
         {
+            //Cargar las relaciones de los productos
+            Entidades.Filtro filtroR = new Entidades.Filtro();
+            filtroR.Est_Id = SessionH.Usuario.Est_id;
+            var listaRelaciones= DAL.RLProductosDAL.ObtenerProductosRelacionados(filtroR);
 
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
@@ -66,6 +70,18 @@ namespace Drogueria.Controllers
                     var unidad = xlWorksheet.Cells[i, 7].Value;
 
                     bool productoEncontrado = false;
+
+                    //Reviso la relación con los productos externos/drogueria
+                    int idProductoDrogueria = 0;
+                    foreach (var lista in listaRelaciones)
+                    {
+                        if (lista.Prod_Id_Externo == idExterno)
+                        {
+                            idProductoDrogueria = lista.Prod_Id_Drogueria;
+                            break;
+                        }
+
+                    }
 
                     foreach (var lista in productoExternos)
                     {
@@ -99,15 +115,27 @@ namespace Drogueria.Controllers
                         idUnidad = nuevaUnidad.Id;
                     }
 
+
+
+                    decimal proyectado = decimal.Parse(consumo.ToString()) * SessionH.Establecimiento.FactorRiesgo;
+                    string numtext = proyectado.ToString();
+                    string[] textSplit = numtext.Split(new Char[] { ','});
+                    string numeroEntero = textSplit[0];
+                    int nuevaCantidad = int.Parse(numeroEntero);
+
                     if (productoEncontrado == false)
                     {
                         Entidades.ProductoExterno productoExterno = new Entidades.ProductoExterno();
+                        productoExterno.Id = i;
+                        productoExterno.ProdId = idProductoDrogueria;
                         productoExterno.Id_Externo = int.Parse(idExterno.ToString());
                         productoExterno.Descripcion = descripcion;
                         productoExterno.Est_Id = SessionH.Usuario.Est_id;
                         productoExterno.Unid_Id = idUnidad;
                         productoExterno.Unidad = unidad;
                         productoExterno.Consumo = int.Parse(consumo.ToString());
+                        productoExterno.FactorSeguridad = SessionH.Establecimiento.FactorRiesgo;
+                        productoExterno.Solicitado = int.Parse(nuevaCantidad.ToString());
                         productoExterno.SinRelacionar = false;
                         Entidades.ProductoExterno productoNuevo = DAL.ProductoExternoDAL.InsertarProductoExterno(productoExterno);
 
@@ -117,6 +145,8 @@ namespace Drogueria.Controllers
                     else
                     {
                         Entidades.ProductoExterno productoExterno = new Entidades.ProductoExterno();
+                        productoExterno.Id = i;
+                        productoExterno.ProdId = idProductoDrogueria;
                         productoExterno.Id_Externo = int.Parse(idExterno.ToString());
                         productoExterno.Descripcion = descripcion;
                         productoExterno.Est_Id = SessionH.Usuario.Est_id;
@@ -124,6 +154,8 @@ namespace Drogueria.Controllers
                         productoExterno.Unidad = unidad;
                         productoExterno.SinRelacionar = false;
                         productoExterno.Consumo = int.Parse(consumo.ToString());
+                        productoExterno.FactorSeguridad = SessionH.Establecimiento.FactorRiesgo;
+                        productoExterno.Solicitado = int.Parse(nuevaCantidad.ToString());
                         listaProductosLeidos.Add(productoExterno);
                     }
                 }

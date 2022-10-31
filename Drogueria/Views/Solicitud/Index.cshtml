@@ -69,6 +69,11 @@
         var urlLimpiarSolicitud = '@Url.Action("LimpiarSolicitud", "Solicitud")';
         var urlObtenerProductos = '@Url.Action("ObtenerProductos", "MantenedorRelacionProductos")';
         var urlGuardarRelacion = '@Url.Action("InsertarRelacionProducto", "Solicitud")';
+        var urlCambiarFactor = '@Url.Action("CambiarFactor", "Solicitud")';
+        var urlEliminarNoRelacionados = '@Url.Action("EliminarNoRelacionados", "Solicitud")';
+
+        
+
 
         $(document).ready(function () {
 
@@ -135,15 +140,15 @@
                                         </select>
                                     </div>
                                     @*<div id="divcmbPrioridad"  class="field">
-                        <label>Prioridad</label>
-                        <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-                        </select>
-                    </div>*@
+                                            <label>Prioridad</label>
+                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
                                     @*<div id="divcmbEstado" class="field">
-                        <label>Estado</label>
-                        <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-                        </select>
-                    </div>*@
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
 
                                 </div>
                                 <div class="field">
@@ -155,15 +160,20 @@
 
                         @if (@Model.CantidadNoRelacionada > 0)
                         {
-                            <div class="ui icon negative  message">
-                                <i class="exclamation triangle icon"></i>
-                                <div class="content">
-                                    <div class="header">
-                                        Errores en la carga
-                                    </div>
-                                    <p>Hay productos (@Model.CantidadNoRelacionada) en la carga que no tienen configurado su equivalente para la droguería, debe configurar su equivalente</p>
-                                </div>
+                    <div class="ui icon negative  message">
+                        <i class="exclamation triangle icon"></i>
+                        <div class="content">
+                            <div class="header">
+                                Errores en la carga
                             </div>
+                            <p>Hay productos (@Model.CantidadNoRelacionada) en la carga que no tienen configurado su equivalente para la droguería, debe configurar su equivalente</p>
+                            <button class="ui red labeled icon button" onclick="EliminarNoRelacionados();">
+                                <i class="trash icon"></i>
+                                Eliminar productos no relacionados
+                            </button>
+                        </div>
+                        
+                    </div>
                         }
 
 
@@ -203,6 +213,7 @@
                                                 </div>
 
                                             </td>
+
                                             <td style="width:30%">
                                                 <div class="field">
                                                     <label>Observación</label>
@@ -228,17 +239,21 @@
 
                             </div>
                         }
+                    
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             <thead>
                                 <tr>
 
-                                    <th style="width:10%">Op</th>
+                                    <th style="width:15%">Op</th>
                                     <th style="width:50%">Artículo</th>
-                                    <th style="width:10%">Cantidad</th>
+                                    <th style="width:10%">Consumo</th>
+                                    <th style="width:10%">Factor</th>
+                                    <th style="width:10%">Solicitado</th>
                                     <th style="width:10%">Unidad</th>
                                     <th style="width:30%">Observacion</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 @if (Model.listaProductosExternos != null)
                                 {
@@ -251,15 +266,24 @@
                                                     <button class="ui compact yellow icon button" data-toggle="modal" data-target="#modalRelacion" onclick="PreparaRelacion('@a.Id_Externo','@a.Descripcion')">
                                                         <i class="exclamation triangle icon"></i>
                                                     </button>
+                                                    <button class="ui compact green icon button" data-toggle="modal" data-target="#modalFactor" onclick="PreparaFactor('@a.Id','@a.Descripcion','@a.FactorSeguridad')">
+                                                        <i class="edit icon"></i>
+                                                    </button>
                                                 </td>
                                             }
                                             else
                                             {
-                                                <td></td>
+                                                <td>
+                                                    <button class="ui compact green icon button" data-toggle="modal" data-target="#modalFactor" onclick="PreparaFactor('@a.Id','@a.Descripcion','@a.FactorSeguridad')">
+                                                        <i class="edit icon"></i>
+                                                    </button>
+                                                </td>
                                             }
 
                                             <td>@a.Descripcion</td>
-                                            <td style="text-align:right">@a.Consumo</td>
+                                            <td style="text-align:right">@a.Consumo.ToString("#,#")</td>
+                                            <td style="text-align:right">@a.FactorSeguridad</td>
+                                            <td style="text-align:right">@a.Solicitado.ToString("#,#")</td>
                                             <td>@a.Unidad</td>
                                             <td></td>
                                         </tr>
@@ -327,7 +351,7 @@
             </h4>
             <div class="modal-body">
                 <div class="image content">
-                    <div class="ui info message">                                                                   
+                    <div class="ui info message">
                         <div class="ui form">
                             <form>
 
@@ -351,7 +375,7 @@
                                     <select id="cmbProdDrogueria" name="cmbProdDrogueria" class="ui fluid search selection dropdown">
                                     </select>
                                 </div>
-                            </form>                            
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -392,5 +416,86 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalFactor" tabindex="-1" role="dialog" aria-labelledby="modalFactor" aria-hidden="true" style="margin-top:auto; margin-left: auto; margin-right: auto; width: 30%; opacity:1">
+    <div class="modal-xl" role="document">
+        <div class="modal-content" style="width:100%">
+            <div style="height:2px">
+
+            </div>
+            <h4 class="ui center aligned header">
+                Modificar Factor
+            </h4>
+            <div class="modal-body">
+                <div class="image content">
+                    <div class="ui info message">
+                        <div class="ui form">
+                            <form>
+
+
+                                <div class="ui icon message">
+                                    <i class="calculator icon"></i>
+                                    <div class="content">
+                                        <div class="header">
+                                            Factor
+                                        </div>
+                                        Modifique el factor de riesgo según su criterio y aplíquelo al artículos seleccionado
+                                    </div>
+                                </div>
+
+                                <div class="fields">
+                                    <div class="twelve wide field">
+                                        <label>Artículo seleccionado</label>
+                                        <input type="text" id="txtNombreProductoFactor" readonly>
+                                    </div>
+                                    <div class="four wide field">
+                                        <label>Aplicar Factor</label>
+                                        <input type="number" id="txtFactor" min="1" max="100">
+                                    </div>
+
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            Se han encontrado algunos problemas, revíselos...
+                        </div>
+                        <ul id="listMessajeError" class="list"></ul>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div id="msjError" class="ui icon error hidden message">
+                <i class="times circle icon"></i>
+                <div class="content">
+                    <div class="header">
+                        Error!!!
+                    </div>
+                    <p>Error al intentar crear la solicitud.</p>
+                </div>
+            </div>
+            <div id="msjExito" class="ui icon success hidden message">
+                <i class="check icon"></i>
+                <div class="content">
+                    <div class="header">
+                        Éxito!!!
+                    </div>
+                    <p>La solicitud fue modificada con éxito.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="btnGuardar" class="ui right green labeled icon button" onclick="CambiarFactor();">Aplicar Factor<i class="calculator icon"></i></div>
+                <div id="btnSalir" class="ui right labeled icon button" data-dismiss="modal">Cancelar<i class="cancel icon"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="idCarga" value="0" />
 <input type="hidden" id="idSolicitudSeleccionada" value="0" />
 <input type="hidden" id="idProductoSeleccionado" value="0" />

@@ -10,6 +10,7 @@ namespace Entidades
     {
         public int Id { get; set; }
         public int Emp_Id { get; set; }
+        public Decimal FactorRiesgo { get; set; }
         public string Descripcion { get; set; }
         public bool Eliminado { get; set; }
     }

@@ -23,6 +23,8 @@ namespace Entidades
         public int Producto_Id { get; set; }
         public string ProductoStr { get; set; }
         public int Cantidad { get; set; }
+        public decimal Factor { get; set; }
+        public int Consumo { get; set; }
         public string Observacion { get; set; }
         public bool ProductoNuevo { get; set; }
         public int Indice { get; set; }

@@ -18,7 +18,8 @@ namespace DAL
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA_Solicitudes");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_EST_ESTABLECIMIENTO_LEER");
 
-            db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId);
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, filtro.Id != 0 ? filtro.Id : (object) null);
+            db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);
 
 
             IDataReader reader = (IDataReader)db.ExecuteReader(dbCommand);
@@ -27,6 +28,7 @@ namespace DAL
             {
                 int ID = reader.GetOrdinal("ID");
                 int EMP_ID = reader.GetOrdinal("EMP_ID");
+                int FACTOR_RIESGO = reader.GetOrdinal("FACTOR_RIESGO");
                 int DESCRIPCION = reader.GetOrdinal("DESCRIPCION");
 
                 while (reader.Read())
@@ -35,6 +37,7 @@ namespace DAL
                     //BeginFields
                     OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
                     OBJ.Emp_Id = (int)(!reader.IsDBNull(EMP_ID) ? reader.GetValue(EMP_ID) : 0);
+                    OBJ.FactorRiesgo = (decimal)(!reader.IsDBNull(FACTOR_RIESGO) ? reader.GetValue(FACTOR_RIESGO) : decimal.Parse("1"));
                     OBJ.Descripcion = (String)(!reader.IsDBNull(DESCRIPCION) ? reader.GetValue(DESCRIPCION) : string.Empty);
                     //EndFields
 

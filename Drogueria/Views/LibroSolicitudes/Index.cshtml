@@ -211,7 +211,7 @@
                 </div>
                 <h4 class="ui center aligned header">
                     <img src="~/Images/LogoBackline2.png" class="ui image">
-                    Ingreso de solicitudes
+                    Ingreso de solicitudesxxx
                 </h4>
                 <div class="modal-body">
                     <div class="image content">
@@ -219,12 +219,7 @@
                             <div class="header">
                                 Atención al llenar el formulario!
                             </div>
-                            <ul class="list">
-                                <li>
-                                    La data de este formulario debe ser llenada con la mayor exactitud posible.
-                                </li>
-                                <li>Si está creando una solicitud nueva, el número de folio se creará de forma correlativa al guardar la solicitud.</li>
-                            </ul>
+                            
                             <div id="msjAdvertencia" class="ui icon hidden warning message">
                                 <i class="exclamation triangle icon"></i>
                                 <div class="content">
@@ -248,7 +243,7 @@
                                     </div>
                                     <div id="divcmbTipo" class="field">
                                         <label>Tipo</label>
-                                        <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown">
+                                        <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown" readonly>
                                         </select>
                                     </div>
                                     @*<div id="divcmbPrioridad"  class="field">
@@ -265,7 +260,7 @@
                                 </div>
                                 <div class="field">
                                     <label>Observación</label>
-                                    <textarea id="txtObservacion" rows="4" placeholder="Observación"></textarea>
+                                    <textarea id="txtObservacion" rows="4" placeholder="Observación" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -273,79 +268,24 @@
 
                     <div style="height:7px"></div>
                     <div id="divProgramacion">
-                        @if (Model.SolicitudCargada == false)
-                        {
-                            <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
-                                Detalle artículos
-                            </h4>
-                            <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%">
-
-
-                                <form class="ui form">
-                                    <div id="divcmbClase" class="field">
-                                        <label>Clase</label>
-                                        <select id="cmbClase" name="cmbClase" class="ui search selection dropdown">
-                                        </select>
-                                    </div>
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td style="width:40%">
-                                                <div id="divcmbArticulo" class="field">
-                                                    <label>Articulo</label>
-                                                    <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td style="width:10%">
-                                                <div id="divtxtCantidad" class="field">
-                                                    <label>Cantidad</label>
-                                                    <input id="txtCantidad" type="number" min="1" />
-                                                </div>
-
-                                            </td>
-                                            <td style="width:30%">
-                                                <div class="field">
-                                                    <label>Observación</label>
-                                                    <input id="txtObservacionArticulo" type="text" />
-                                                </div>
-                                            </td>
-                                            <td style="width:10%">
-                                                <div class="field">
-                                                    <label style="opacity:0">" "</label>
-                                                    <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
-
-                                <div id="DivMessajeErrorProducto" class="ui error hidden message" style="margin-left:auto; margin-right:auto; width:100%">
-                                    <div class="header">
-                                        Se han encontrado algunos problemas, revíselos...
-                                    </div>
-                                    <ul id="listMessajeErrorProducto" class="list"></ul>
-                                </div>
-
-                            </div>
-                        }
+                        
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
-                            <thead>
+                            @*<thead>
                                 <tr>
-
-                                    <th style="width:10%">Op</th>
                                     <th style="width:50%">Artículo</th>
-                                    <th style="width:10%">Cantidad</th>
+                                    <th style="width:10%">Consumo</th>
+                                    <th style="width:10%">Factor</th>
+                                    <th style="width:10%">Solicitado</th>
                                     <th style="width:10%">Unidad</th>
                                     <th style="width:30%">Observacion</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                            </thead>*@
+                            @*<tbody>
                                 @if (Model.listaProductosExternos != null)
                                 {
                                     foreach (var a in Model.listaProductosExternos)
                                     {
-                                        <tr>
-                                            <td></td>
+                                        <tr>                                            
                                             <td>@a.Descripcion</td>
                                             <td style="text-align:right">@a.Consumo</td>
                                             <td>@a.Unidad</td>
@@ -353,7 +293,7 @@
                                         </tr>
                                     }
                                 }
-                            </tbody>
+                            </tbody>*@
                         </table>
                     </div>
 

@@ -21,6 +21,11 @@ namespace Drogueria.Controllers
             if (lista.Count == 1)
             {
                 SessionH.Usuario = lista[0];
+
+                //Me traigo el establecimiento
+                var establecimiento = DAL.EstablecimientoDAL.ObtenerEstablecimiento(new Entidades.Filtro() { Id = lista[0].Est_id });
+                SessionH.Establecimiento = establecimiento[0];
+
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = true, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
            

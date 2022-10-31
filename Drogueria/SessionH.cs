@@ -9,6 +9,7 @@ namespace Drogueria
     {
         private const string VAR_LOGUEADO = "logueado";
         private const string VAR_USUARIO = "usuario";
+        private const string VAR_ESTABLECIMIENTO = "";
 
         private static T Lee<T>(string variable)
         {
@@ -33,6 +34,13 @@ namespace Drogueria
         {
             get { return Lee<Entidades.Usuario>(VAR_USUARIO); }
             set { Escribe(VAR_USUARIO, value); }
+        }
+
+
+        public static Entidades.Establecimiento Establecimiento
+        {
+            get { return Lee<Entidades.Establecimiento>(VAR_ESTABLECIMIENTO); }
+            set { Escribe(VAR_ESTABLECIMIENTO, value); }
         }
     }
 }

@@ -234,10 +234,12 @@ function ActualizaGrid() {
     var html = GridEncabezado();
     var indice = 0;
     _arregloArticulos.forEach(function (element) {
-        html = html + '<tr>';
-        html = html + '<td><button class="ui red icon button" onclick="Eliminar(' + indice + ',' + element.Producto_Id + ');" ><i class="trash icon"></i></button></td>';
+        html = html + '<tr>';       
         html = html + '<td>' + element.ProductoStr + '</td>';
+        html = html + '<td>' + element.Consumo + '</td>';
+        html = html + '<td>' + element.Factor + '</td>';
         html = html + '<td>' + element.Cantidad + '</td>';
+        html = html + '<td>' + element.Unidad + '</td>';
         html = html + '<td>' + element.Observacion + '</td>';
         html = html + '</tr>';
         indice++;
@@ -248,7 +250,7 @@ function ActualizaGrid() {
 }
 function GridEncabezado() {
     var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
-    encabezado = encabezado + '<thead><tr><th style="width:10%">Op</th><th style="width:50%">Artículo</th><th style="width:10%">Cantidad</th><th style="width:30%">Observacion</th></tr></thead>';
+    encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
     return encabezado;
 }
 function GridPie() {
@@ -531,6 +533,7 @@ function ObtenerProductosCombo() {
 function PreparaRelacion(id, producto) {
     $("#idProductoSeleccionado").val(id);
     $("#txtNombreExterno").val(producto);
+    
 }
 
 
@@ -553,6 +556,45 @@ function GuardarRelacion() {
         },
         error: function (ex) {
             alert('Error al generar la solicitud');
+        }
+    });
+}
+
+function PreparaFactor(id, producto, factor) {
+    $("#idCarga").val(id);
+    $("#txtNombreProductoFactor").val(producto);
+    $("#txtFactor").val(factor.replace(',','.'));
+}
+
+
+function CambiarFactor() {
+    var id = $("#idCarga").val();
+    var factor = $("#txtFactor").val();
+
+    $.ajax({
+        url: window.urlCambiarFactor,
+        type: 'POST',
+        data: { id: id, factor: factor },
+        success: function (data) {
+            location.reload();
+        },
+        error: function () {
+            alert('Error al cargar los productos existentes');
+        }
+    });
+}
+
+function EliminarNoRelacionados() {
+
+
+    $.ajax({
+        url: window.urlEliminarNoRelacionados,
+        type: 'POST',      
+        success: function (data) {
+            location.reload();
+        },
+        error: function () {
+            alert('Error al cargar los productos existentes');
         }
     });
 }

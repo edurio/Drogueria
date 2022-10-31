@@ -10,10 +10,12 @@ namespace Entidades
     {
         public int Id { get; set; }
         public int Id_Externo { get; set; }
+        public int ProdId { get; set; }
         public int Est_Id { get; set; }
         public string Establecimiento { get; set; }
         public string Descripcion { get; set; }
         public int Consumo { get; set; }
+        public int Solicitado { get; set; }
         public decimal FactorSeguridad { get; set; }
         public int Unid_Id { get; set; }
         public string Unidad { get; set; }
