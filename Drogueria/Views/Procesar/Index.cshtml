@@ -1,0 +1,319 @@
+﻿@model Drogueria.Models.SolicitudDetalleModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/Home.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>Libro de solicitudes</title>
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+
+
+    <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/RecursosExternos/bootstrap.min.js"></script>
+    <script src="~/RecursosExternos/jquery.min.js"></script>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+    <script src="~/Scripts/Script_LibroSolicitudes.js"></script>
+
+    <style>
+
+
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .card-img-top {
+            width: 250px;
+        }
+
+        .contenedor-imagen {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        var urlObtenerProductos = '@Url.Action("ObtenerProductos", "LibroSolicitudes")';
+        @*var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "LibroSolicitudes")';*@
+        var urlObtenerEstado = '@Url.Action("ObtenerEstado", "LibroSolicitudes")';
+        var urlObtenerSolicitud = '@Url.Action("ObtenerSolicitud", "LibroSolicitudes")';
+        var urlObtenerDetalleSolicitud = '@Url.Action("ObtenerDetalleSolicitud", "LibroSolicitudes")';
+        var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "LibroSolicitudes")';
+        var urlAgregarProducto = '@Url.Action("AgregarProducto", "LibroSolicitudes")';
+        var urlQuitarProducto = '@Url.Action("QuitarProducto", "LibroSolicitudes")';
+        var urlBusquedaFiltro = '@Url.Action("BusquedaFiltro", "LibroSolicitudes")';
+        var urlObtenerClases = '@Url.Action("ObtenerClases", "LibroSolicitudes")';
+        var urlEnviarSolicitud = '@Url.Action("EnviarSolicitud", "LibroSolicitudes")';
+
+        $(document).ready(function () {
+            $('.tabular.menu .item').tab();
+
+            $('.ui.selection.dropdown').dropdown();
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+
+            ExportarExcel = function () {
+                location.href = '@Url.Action("ExportToExcel", "LibroSolicitudes")';
+             };
+        });
+    </script>
+</head>
+<body>
+    <br />
+
+    <div class="" id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+        <div class="modal-xl" role="document">
+            <div class="modal-content" style="width:100%">
+                <div style="height:3px">
+
+                </div>
+                <h4 class="ui center aligned header">
+                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    Ingreso de solicitudes
+                </h4>
+                <div class="modal-body">
+                    <div class="image content">
+                        <div class="ui info message">
+                            <div class="header">
+                                Atención al llenar el formulario!
+                            </div>
+
+                            <div id="msjAdvertencia" class="ui icon hidden warning message">
+                                <i class="exclamation triangle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Esta conductor ya existe!!!
+                                    </div>
+                                    <p>el RUT que está digitando ya está registrado.</p>
+                                </div>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="ui form">
+
+                                <div class="two fields">
+                                    <div class="field">
+                                        <label>Fecha Solicitud</label>
+                                        <input id="txtFechaIngreso" placeholder=" " value=@Session["FechaActual"] type="text" readonly>
+                                    </div>
+                                    <div class="field">
+                                        <label>Folio</label>
+                                        <input id="txtFolio" placeholder=" " type="text" readonly>
+                                    </div>
+                                    <div id="divcmbTipo" class="field">
+                                        <label>Tipo</label>
+                                        <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown" readonly>
+                                        </select>
+                                    </div>
+                                    @*<div id="divcmbPrioridad"  class="field">
+                                            <label>Prioridad</label>
+                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
+                                    @*<div id="divcmbEstado" class="field">
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
+
+                                </div>
+                                <div class="field">
+                                    <label>Observación</label>
+                                    <textarea id="txtObservacion" rows="4" placeholder="Observación" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+
+
+                    <div class="modal-body">
+                        <div class="image content">
+                            <div class="ui info message">
+                                <div class="ui form">
+
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label>N° Etiqueta</label>
+                                            <input id="txtCodigo" type="text" readonly>
+                                        </div>
+                                        <div class="eight wide field">
+                                            <label>Artículo</label>
+                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                        </div>
+                                        <div class="field">
+                                            <label>Lote</label>
+                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                        </div>
+                                        <div class="field">
+                                            <label>Cantidad</label>
+                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="ui top attached tabular menu">
+                        <a class="item active" data-tab="first">Detalle General</a>
+                        <a class="item" data-tab="second">Detalle por lote</a>
+                    </div>
+                    <div class="ui bottom attached tab segment active" data-tab="first">
+                        <div id="divProgramacion">
+
+                            <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50%">Artículo</th>
+                                        <th style="width:10%">Solicitado</th>
+                                        <th style="width:10%">Preparado</th>
+                                        <th style="width:10%">Unidad</th>
+                                        <th style="width:30%">Observacion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.lista != null)
+                                    {
+                                        foreach (var a in Model.lista)
+                                        {
+                                            <tr>
+                                                <td>@a.ProductoStr</td>
+                                                <td style="text-align:right">@a.Cantidad</td>
+                                                <td style="text-align:right">0</td>
+                                                <td>@a.Unidad</td>
+                                                <td>@a.Observacion</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="second">
+                        Second
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="third">
+                        Third
+                    </div>
+                    <div style="height:7px"></div>
+
+
+                    <div class="actions">
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Se han encontrado algunos problemas, revíselos...
+                            </div>
+                            <ul id="listMessajeError" class="list"></ul>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="times circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar crear la solicitud.</p>
+                    </div>
+                </div>
+                <div id="msjExito" class="ui icon success hidden message">
+                    <i class="check icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Éxito!!!
+                        </div>
+                        <p>La solicitud fue modificada con éxito.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="btnSalir" class="ui right labeled icon button" data-dismiss="modal">Salir<i class="cancel icon"></i></div>
+                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
+                        Guardar
+                        <i class="checkmark icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalEnviarSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLongTitle">Enviar Solicitud</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="divConsultaEnviar" class="ui icon positive message">
+                            <i class="paper plane outline icon"></i>
+                            <div class="content">
+                                <div class="header">
+                                    ¿Desea enviar esta solicitud?
+                                </div>
+                                <p>Esta solicitud será enviada a la droguería sin posibilidad de revertir el envió.</p>
+                            </div>
+                        </div>
+                        <div id="divExitoEnviar" class="ui icon hidden positive  message">
+                            <i class="paper plane outline icon"></i>
+                            <div class="content">
+                                <div class="header">
+                                    Éxito!!
+                                </div>
+                                <p>La solicitud fue enviada con éxito.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div id="btnEnviar" onclick="EnviaSolicitud();" class="ui green right labeled icon button">
+                            Enviar
+                            <i class="checkmark icon"></i>
+                        </div>
+                        <div id="btnLimpiar" data-dismiss="modal" class="ui right labeled icon button">
+                            Limpiar
+                            <i class="cancel icon"></i>
+                        </div>
+                        <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
+                            Cancelar
+                            <i class="cancel icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+
+<input type="hidden" id="idSolicitudSeleccionada" value="0" />

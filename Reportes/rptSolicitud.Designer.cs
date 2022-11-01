@@ -38,6 +38,7 @@ namespace Reportes
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.txtObservacion = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel5 = new DevExpress.XtraReports.UI.XRLabel();
@@ -64,9 +65,12 @@ namespace Reportes
             this.xrTableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tcArticulo = new DevExpress.XtraReports.UI.XRTableCell();
             this.tcCantidad = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tcObservación = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tcUnidad = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tcObservación = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tcConsumo = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tcFactor = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -134,8 +138,8 @@ namespace Reportes
             this.xrTable1.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
             | DevExpress.XtraPrinting.BorderSide.Right) 
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.xrTable1.BorderWidth = 2F;
-            this.xrTable1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xrTable1.BorderWidth = 1F;
+            this.xrTable1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 360.3526F);
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
@@ -146,11 +150,15 @@ namespace Reportes
             this.xrTable1.StylePriority.UseBorders = false;
             this.xrTable1.StylePriority.UseBorderWidth = false;
             this.xrTable1.StylePriority.UseFont = false;
+            this.xrTable1.StylePriority.UseTextAlignment = false;
+            this.xrTable1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrTableRow1
             // 
             this.xrTableRow1.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell2,
+            this.xrTableCell5,
+            this.xrTableCell6,
             this.xrTableCell3,
             this.xrTableCell1,
             this.xrTableCell4});
@@ -164,7 +172,7 @@ namespace Reportes
             this.xrTableCell2.Name = "xrTableCell2";
             this.xrTableCell2.StylePriority.UseBackColor = false;
             this.xrTableCell2.Text = "Artículo";
-            this.xrTableCell2.Weight = 3.286249267668687D;
+            this.xrTableCell2.Weight = 6.0570824780160475D;
             // 
             // xrTableCell3
             // 
@@ -172,8 +180,17 @@ namespace Reportes
             this.xrTableCell3.Multiline = true;
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StylePriority.UseBackColor = false;
-            this.xrTableCell3.Text = "Cantidad";
-            this.xrTableCell3.Weight = 0.90541717529296872D;
+            this.xrTableCell3.Text = "Solicitado";
+            this.xrTableCell3.Weight = 1.7586453885609752D;
+            // 
+            // xrTableCell1
+            // 
+            this.xrTableCell1.BackColor = System.Drawing.Color.White;
+            this.xrTableCell1.Multiline = true;
+            this.xrTableCell1.Name = "xrTableCell1";
+            this.xrTableCell1.StylePriority.UseBackColor = false;
+            this.xrTableCell1.Text = "Unidad";
+            this.xrTableCell1.Weight = 1.2816649262555868D;
             // 
             // xrTableCell4
             // 
@@ -182,7 +199,7 @@ namespace Reportes
             this.xrTableCell4.Name = "xrTableCell4";
             this.xrTableCell4.StylePriority.UseBackColor = false;
             this.xrTableCell4.Text = "Observación";
-            this.xrTableCell4.Weight = 2.1779171752929685D;
+            this.xrTableCell4.Weight = 3.07416942433035D;
             // 
             // txtObservacion
             // 
@@ -438,11 +455,15 @@ namespace Reportes
             this.xrTable2.StylePriority.UseBorders = false;
             this.xrTable2.StylePriority.UseBorderWidth = false;
             this.xrTable2.StylePriority.UseFont = false;
+            this.xrTable2.StylePriority.UseTextAlignment = false;
+            this.xrTable2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrTableRow2
             // 
             this.xrTableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.tcArticulo,
+            this.tcConsumo,
+            this.tcFactor,
             this.tcCantidad,
             this.tcUnidad,
             this.tcObservación});
@@ -454,37 +475,66 @@ namespace Reportes
             this.tcArticulo.Multiline = true;
             this.tcArticulo.Name = "tcArticulo";
             this.tcArticulo.Text = "tcArticulo";
-            this.tcArticulo.Weight = 3.2862489624929263D;
+            this.tcArticulo.Weight = 6.0570823611026361D;
             // 
             // tcCantidad
             // 
             this.tcCantidad.Multiline = true;
             this.tcCantidad.Name = "tcCantidad";
+            this.tcCantidad.StylePriority.UseTextAlignment = false;
             this.tcCantidad.Text = "tcCantidad";
-            this.tcCantidad.Weight = 0.90541717529296872D;
-            // 
-            // tcObservación
-            // 
-            this.tcObservación.Multiline = true;
-            this.tcObservación.Name = "tcObservación";
-            this.tcObservación.Text = "tcObservación";
-            this.tcObservación.Weight = 2.1779171752929685D;
-            // 
-            // xrTableCell1
-            // 
-            this.xrTableCell1.BackColor = System.Drawing.Color.White;
-            this.xrTableCell1.Multiline = true;
-            this.xrTableCell1.Name = "xrTableCell1";
-            this.xrTableCell1.StylePriority.UseBackColor = false;
-            this.xrTableCell1.Text = "Unidad";
-            this.xrTableCell1.Weight = 2.1779171752929685D;
+            this.tcCantidad.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.tcCantidad.Weight = 1.7586446248206198D;
             // 
             // tcUnidad
             // 
             this.tcUnidad.Multiline = true;
             this.tcUnidad.Name = "tcUnidad";
             this.tcUnidad.Text = "tcUnidad";
-            this.tcUnidad.Weight = 2.1779171752929685D;
+            this.tcUnidad.Weight = 1.2913903467319741D;
+            // 
+            // tcObservación
+            // 
+            this.tcObservación.Multiline = true;
+            this.tcObservación.Name = "tcObservación";
+            this.tcObservación.Text = "tcObservación";
+            this.tcObservación.Weight = 3.0644440038539629D;
+            // 
+            // xrTableCell5
+            // 
+            this.xrTableCell5.BackColor = System.Drawing.Color.White;
+            this.xrTableCell5.Multiline = true;
+            this.xrTableCell5.Name = "xrTableCell5";
+            this.xrTableCell5.StylePriority.UseBackColor = false;
+            this.xrTableCell5.Text = "Consumo";
+            this.xrTableCell5.Weight = 1.6254155121423377D;
+            // 
+            // xrTableCell6
+            // 
+            this.xrTableCell6.BackColor = System.Drawing.Color.White;
+            this.xrTableCell6.Multiline = true;
+            this.xrTableCell6.Name = "xrTableCell6";
+            this.xrTableCell6.StylePriority.UseBackColor = false;
+            this.xrTableCell6.Text = "Factor";
+            this.xrTableCell6.Weight = 1.3230215995796686D;
+            // 
+            // tcConsumo
+            // 
+            this.tcConsumo.Multiline = true;
+            this.tcConsumo.Name = "tcConsumo";
+            this.tcConsumo.StylePriority.UseTextAlignment = false;
+            this.tcConsumo.Text = "tcConsumo";
+            this.tcConsumo.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.tcConsumo.Weight = 1.6254155745600856D;
+            // 
+            // tcFactor
+            // 
+            this.tcFactor.Multiline = true;
+            this.tcFactor.Name = "tcFactor";
+            this.tcFactor.StylePriority.UseTextAlignment = false;
+            this.tcFactor.Text = "tcFactor";
+            this.tcFactor.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.tcFactor.Weight = 1.3230215022884069D;
             // 
             // rptSolicitud
             // 
@@ -540,5 +590,9 @@ namespace Reportes
         private DevExpress.XtraReports.UI.XRLabel xrLabel12;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
         private DevExpress.XtraReports.UI.XRTableCell tcUnidad;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell5;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell6;
+        private DevExpress.XtraReports.UI.XRTableCell tcConsumo;
+        private DevExpress.XtraReports.UI.XRTableCell tcFactor;
     }
 }

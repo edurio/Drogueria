@@ -35,25 +35,29 @@ namespace Reportes
             dataSet1.Tables.Add(dataTable1);
             dataTable1.TableName = "Table";
 
-            dataTable1.Columns.Add("OP", typeof(string));
+            
             dataTable1.Columns.Add("Articulo", typeof(string));
+            dataTable1.Columns.Add("Consumo", typeof(string));
+            dataTable1.Columns.Add("Factor", typeof(string));
             dataTable1.Columns.Add("Cantidad", typeof(string));
             dataTable1.Columns.Add("Unidad", typeof(string));
             dataTable1.Columns.Add("Observación", typeof(string));
 
             foreach (var d in detalleSolicitud)
             {
-                dataTable1.Rows.Add(new object[] { " ", d.ProductoStr, d.Cantidad, d.Unidad, d.Observacion });
+                dataTable1.Rows.Add(new object[] {  d.ProductoStr, d.Consumo, d.Factor, d.Cantidad, d.Unidad, d.Observacion });
             }
 
             this.DataSource = dataSet1;
             this.DataMember = dataTable1.TableName;
 
             
-            this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[1].Caption);
-            this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[2].Caption);
-            this.tcUnidad.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);
-            this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[4].Caption);
+            this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[0].Caption);
+            this.tcConsumo.DataBindings.Add("Text", null, dataTable1.Columns[1].Caption);
+            this.tcFactor.DataBindings.Add("Text", null, dataTable1.Columns[2].Caption);
+            this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);
+            this.tcUnidad.DataBindings.Add("Text", null, dataTable1.Columns[4].Caption);
+            this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[5].Caption);
         }
     }
 }

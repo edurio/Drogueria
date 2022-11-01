@@ -135,9 +135,9 @@
             <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width:100px"></th>
+                        <th style="width:160px"></th>
                         <th>Fecha de ingreso</th>
-                        <th>Numero Solicitud</th>
+                        <th>N° Solicitud</th>
                         <th>Tipo</th>
 
                         <th>Observación</th>
@@ -152,13 +152,19 @@
                         {
                             <tr>
 
-                                <td style="width:8%">
+                                <td style="width:160px">
                                     <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
                                         <i class="eye icon"></i>
                                     </button>
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
+                                        <i class="print icon"></i>
+                                    </button>
+                                    <button class="ui icon blue button" onclick="location.href='/Procesar?id=@listaSolicitudes.Id'" ;">
+                                        <i class="cog icon"></i>
+                                    </button>
                                 </td>
                                 <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
-                                <td>@listaSolicitudes.Folio</td>
+                                <td style="text-align:right">@listaSolicitudes.Folio</td>
                                 <td>@listaSolicitudes.Tipo</td>
 
                                 <td>@listaSolicitudes.Observacion_Solicitud</td>
@@ -211,15 +217,18 @@
                 </div>
                 <h4 class="ui center aligned header">
                     <img src="~/Images/LogoBackline2.png" class="ui image">
-                    Ingreso de solicitudesxxx
+                    Ingreso de solicitudes
                 </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <div class="modal-body">
                     <div class="image content">
                         <div class="ui info message">
                             <div class="header">
                                 Atención al llenar el formulario!
                             </div>
-                            
+
                             <div id="msjAdvertencia" class="ui icon hidden warning message">
                                 <i class="exclamation triangle icon"></i>
                                 <div class="content">
@@ -247,15 +256,15 @@
                                         </select>
                                     </div>
                                     @*<div id="divcmbPrioridad"  class="field">
-                                            <label>Prioridad</label>
-                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-                                            </select>
-                                        </div>*@
+                                <label>Prioridad</label>
+                                <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                </select>
+                            </div>*@
                                     @*<div id="divcmbEstado" class="field">
-                                            <label>Estado</label>
-                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-                                            </select>
-                                        </div>*@
+                                <label>Estado</label>
+                                <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                </select>
+                            </div>*@
 
                                 </div>
                                 <div class="field">
@@ -268,32 +277,32 @@
 
                     <div style="height:7px"></div>
                     <div id="divProgramacion">
-                        
+
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             @*<thead>
-                                <tr>
-                                    <th style="width:50%">Artículo</th>
-                                    <th style="width:10%">Consumo</th>
-                                    <th style="width:10%">Factor</th>
-                                    <th style="width:10%">Solicitado</th>
-                                    <th style="width:10%">Unidad</th>
-                                    <th style="width:30%">Observacion</th>
-                                </tr>
-                            </thead>*@
+                        <tr>
+                            <th style="width:50%">Artículo</th>
+                            <th style="width:10%">Consumo</th>
+                            <th style="width:10%">Factor</th>
+                            <th style="width:10%">Solicitado</th>
+                            <th style="width:10%">Unidad</th>
+                            <th style="width:30%">Observacion</th>
+                        </tr>
+                    </thead>*@
                             @*<tbody>
-                                @if (Model.listaProductosExternos != null)
-                                {
-                                    foreach (var a in Model.listaProductosExternos)
-                                    {
-                                        <tr>                                            
-                                            <td>@a.Descripcion</td>
-                                            <td style="text-align:right">@a.Consumo</td>
-                                            <td>@a.Unidad</td>
-                                            <td></td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>*@
+                        @if (Model.listaProductosExternos != null)
+                        {
+                            foreach (var a in Model.listaProductosExternos)
+                            {
+                                <tr>
+                                    <td>@a.Descripcion</td>
+                                    <td style="text-align:right">@a.Consumo</td>
+                                    <td>@a.Unidad</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>*@
                         </table>
                     </div>
 
@@ -327,7 +336,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/LibroSolicitudes?limpiar=1')">Salir<i class="cancel icon"></i></div>
+                    <div id="btnSalir" class="ui right labeled icon button" data-dismiss="modal">Salir<i class="cancel icon"></i></div>
                     <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
                         Guardar
                         <i class="checkmark icon"></i>
