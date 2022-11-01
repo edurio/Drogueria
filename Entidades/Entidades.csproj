@@ -45,6 +45,7 @@
     <Compile Include="DetalleSolicitud.cs" />
     <Compile Include="Establecimiento.cs" />
     <Compile Include="Estado.cs" />
+    <Compile Include="Etiqueta.cs" />
     <Compile Include="Filtro.cs" />
     <Compile Include="Prioridad.cs" />
     <Compile Include="Producto.cs" />

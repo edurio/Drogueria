@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text;
 using System.Web.Mvc;
 
 namespace Drogueria.Controllers
@@ -38,5 +39,28 @@ namespace Drogueria.Controllers
 
             return View(model);
         }
+
+        public JsonResult ObtenerEtiqueta(string numero)
+        {
+            string[] split = numero.Split(new Char[] { '/','-' });
+
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            filtro.Numero = int.Parse(split[0]);
+            filtro.Año = int.Parse(split[1]);
+            filtro.EmpId = SessionH.Usuario.EmpId;
+
+            var lista = DAL.EtiquetaDAL.Obtener(filtro);
+            if (lista.Count > 0)
+            {
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista[0], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            else
+            {
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            
+        }
+
+        
     }
 }

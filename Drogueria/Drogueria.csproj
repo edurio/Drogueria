@@ -214,6 +214,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Script_Procesar.js" />
     <Content Include="Scripts\Script_MantenedorRelacionProductos30092022.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Script_LibroSolicitudes.js" />

@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_LibroSolicitudes.js"></script>
+    <script src="~/Scripts/Script_Procesar.js"></script>
 
     <style>
 
@@ -55,17 +55,8 @@
     </style>
 
     <script>
-        var urlObtenerProductos = '@Url.Action("ObtenerProductos", "LibroSolicitudes")';
-        @*var urlObtenerPrioridad = '@Url.Action("ObtenerPrioridad", "LibroSolicitudes")';*@
-        var urlObtenerEstado = '@Url.Action("ObtenerEstado", "LibroSolicitudes")';
-        var urlObtenerSolicitud = '@Url.Action("ObtenerSolicitud", "LibroSolicitudes")';
-        var urlObtenerDetalleSolicitud = '@Url.Action("ObtenerDetalleSolicitud", "LibroSolicitudes")';
-        var urlInsertarSolicitud = '@Url.Action("InsertarSolicitud", "LibroSolicitudes")';
-        var urlAgregarProducto = '@Url.Action("AgregarProducto", "LibroSolicitudes")';
-        var urlQuitarProducto = '@Url.Action("QuitarProducto", "LibroSolicitudes")';
-        var urlBusquedaFiltro = '@Url.Action("BusquedaFiltro", "LibroSolicitudes")';
-        var urlObtenerClases = '@Url.Action("ObtenerClases", "LibroSolicitudes")';
-        var urlEnviarSolicitud = '@Url.Action("EnviarSolicitud", "LibroSolicitudes")';
+        var urlObtenerEtiqueta= '@Url.Action("ObtenerEtiqueta", "Procesar")';
+
 
         $(document).ready(function () {
             $('.tabular.menu .item').tab();
@@ -159,19 +150,19 @@
                                     <div class="fields">
                                         <div class="field">
                                             <label>N° Etiqueta</label>
-                                            <input id="txtCodigo" type="text" readonly>
+                                            <input id="txtNumeroEtiqueta" type="text">
                                         </div>
                                         <div class="eight wide field">
                                             <label>Artículo</label>
-                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                            <input id="txtArticulo" placeholder=" " type="text" readonly>
                                         </div>
                                         <div class="field">
                                             <label>Lote</label>
-                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                            <input id="txtLote" placeholder=" " type="text" readonly>
                                         </div>
                                         <div class="field">
                                             <label>Cantidad</label>
-                                            <input id="txtFolio" placeholder=" " type="text" readonly>
+                                            <input id="txtCantidad" placeholder=" " type="text" readonly>
                                         </div>
 
                                     </div>
@@ -197,6 +188,7 @@
                                         <th style="width:50%">Artículo</th>
                                         <th style="width:10%">Solicitado</th>
                                         <th style="width:10%">Preparado</th>
+                                        <th style="width:10%">Saldo</th>
                                         <th style="width:10%">Unidad</th>
                                         <th style="width:30%">Observacion</th>
                                     </tr>
@@ -206,10 +198,14 @@
                                     {
                                         foreach (var a in Model.lista)
                                         {
+                                            var id1 = "txt_cantidad_" + a.Producto_Id;
+                                            var id2 = "txt_pistoleado_" + a.Producto_Id;
+                                            var id3 = "txt_saldo_" + a.Producto_Id;
                                             <tr>
                                                 <td>@a.ProductoStr</td>
-                                                <td style="text-align:right">@a.Cantidad</td>
-                                                <td style="text-align:right">0</td>
+                                                <td id=@id1 style="text-align:right">@a.Cantidad</td>
+                                                <td id=@id2 style="text-align:right">0</td>
+                                                <td id=@id3 style="text-align:right">@a.Cantidad</td>
                                                 <td>@a.Unidad</td>
                                                 <td>@a.Observacion</td>
                                             </tr>

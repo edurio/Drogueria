@@ -11,6 +11,8 @@ namespace Entidades
         public int EmpId { get; set; }
         public int Id { get; set; }
 
+        public int Año { get; set; }
+
         public int ClasId { get; set; }
         public int Solicitud_Id { get; set; }
         public int Estado_Id { get; set; }
@@ -19,6 +21,8 @@ namespace Entidades
         public DateTime Desde { get; set; }
         public DateTime Hasta { get; set; }
         public int Est_Id { get; set; }
+
+        public int Numero { get; set; }
         public string Descripcion { get; set; }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="DetalleSolicitudDAL.cs" />
     <Compile Include="EstablecimientoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
+    <Compile Include="EtiquetaDAL.cs" />
     <Compile Include="PrioridadDAL.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="ProductoExternoDAL.cs" />
