@@ -41,6 +41,7 @@ function ObtenerEtiqueta() {
             $(txtSaldo).html(cantidadRestante);
 
             _arregloArticulos.push(data);
+            ActualizaGrid();
             
         },
         error: function () {
@@ -48,4 +49,33 @@ function ObtenerEtiqueta() {
             //hideLoading();
         }
     });
+}
+
+
+
+function ActualizaGrid() {
+    var html = GridEncabezado();
+    var indice = 0;
+    _arregloArticulos.forEach(function (element) {
+        html = html + '<tr>';
+        html = html + '<td>' + element.Articulo + '</td>';
+        html = html + '<td>' + element.Numero + '</td>';
+        html = html + '<td>' + element.Lote + '</td>';
+        html = html + '<td>' + element.FechaVencimientoStr + '</td>';
+        html = html + '<td>' + element.Cantidad + '</td>';
+        html = html + '</tr>';
+        indice++;
+    });
+
+    html = html + GridPie();
+    $('#divLote').html(html);
+}
+function GridEncabezado() {
+    var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+    encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Etiqueta</th><th style="width:10%">Lote</th><th style="width:10%">Vencimiento</th><th style="width:10%">Cantidad</th></tr></thead>';
+    return encabezado;
+}
+function GridPie() {
+    var pie = '</table>';
+    return pie;
 }
