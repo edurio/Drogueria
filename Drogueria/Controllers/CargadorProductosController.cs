@@ -126,7 +126,7 @@ namespace Drogueria.Controllers
                     if (productoEncontrado == false)
                     {
                         Entidades.ProductoExterno productoExterno = new Entidades.ProductoExterno();
-                        productoExterno.Id = i;
+                        
                         productoExterno.ProdId = idProductoDrogueria;
                         productoExterno.Id_Externo = int.Parse(idExterno.ToString());
                         productoExterno.Descripcion = descripcion;
@@ -138,6 +138,7 @@ namespace Drogueria.Controllers
                         productoExterno.Solicitado = int.Parse(nuevaCantidad.ToString());
                         productoExterno.SinRelacionar = false;
                         Entidades.ProductoExterno productoNuevo = DAL.ProductoExternoDAL.InsertarProductoExterno(productoExterno);
+                        productoExterno.Id = i;
 
                         productoExternos.Add(productoNuevo);
                         listaProductosLeidos.Add(productoNuevo);
