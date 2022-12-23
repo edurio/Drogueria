@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 
 namespace Drogueria
 {
@@ -104,5 +105,18 @@ namespace Drogueria
             }
             return rutDevuelto;
         }
+
+        public static string ObtenerPDF(Entidades.Solicitud entity, List<Entidades.DetalleSolicitud> listadoProductos )
+        {
+            Reportes.rptSolicitud rptSolicitud = new Reportes.rptSolicitud();
+            rptSolicitud.Cargar(entity, listadoProductos);
+            rptSolicitud.CreateDocument(true);
+
+            var ruta = ConfigurationSettings.AppSettings.Get("RutaPDF_Fisica") + "Solicitud_N°" + entity.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
+            rptSolicitud.ExportToPdf(ruta, null);
+
+            return ruta;
+        }
+
     }
 }

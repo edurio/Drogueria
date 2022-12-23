@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClaseDAL.cs" />
+    <Compile Include="DestinatarioCorreoDAL.cs" />
     <Compile Include="DetalleSolicitudDAL.cs" />
     <Compile Include="EstablecimientoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />

@@ -179,12 +179,15 @@ namespace Drogueria.Controllers
                     }
                 }
 
-                Reportes.rptSolicitud rptSolicitud = new Reportes.rptSolicitud();
-                rptSolicitud.Cargar(entity, listadoProductos);
-                rptSolicitud.CreateDocument(true);
+                //Reportes.rptSolicitud rptSolicitud = new Reportes.rptSolicitud();
+                //rptSolicitud.Cargar(entity, listadoProductos);
+                //rptSolicitud.CreateDocument(true);
 
-                var ruta = ConfigurationSettings.AppSettings.Get("RutaPDF_Fisica") + "Solicitud_N°" + entity.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
-                rptSolicitud.ExportToPdf(ruta, null);
+                //var ruta = ConfigurationSettings.AppSettings.Get("RutaPDF_Fisica") + "Solicitud_N°" + entity.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
+                //rptSolicitud.ExportToPdf(ruta, null);
+
+                var ruta = Utiles.ObtenerPDF(entity, listadoProductos);
+
 
                 var url = "";
 

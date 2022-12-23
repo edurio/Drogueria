@@ -169,12 +169,14 @@
 
                                 <td>@listaSolicitudes.Observacion_Solicitud</td>
                                 <td>@listaSolicitudes.UsuarioCreador</td>
+
                                 @if (listaSolicitudes.Estado_Id == 1)
                                 {
                                     <td>
                                         <button class="ui icon green button" value="@listaSolicitudes.Id" disabled>
                                             <i class="paper plane outline icon"></i>
                                         </button>
+                                        Enviada
                                     </td>
                                 }
                                 @if (listaSolicitudes.Estado_Id == 2)
@@ -183,6 +185,7 @@
                                         <button class="ui icon red button" data-toggle="modal" data-target="#modalEnviarSolicitud" value="@listaSolicitudes.Id" onclick="PreparaEnviaSolicitud(this.value, this);">
                                             <i class="paper plane outline icon"></i>
                                         </button>
+                                        Borrador por enviar
                                     </td>
                                 }
                             </tr>

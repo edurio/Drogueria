@@ -276,7 +276,18 @@ namespace Drogueria.Controllers
         }
         public JsonResult EnviarSolicitud(int idSolicitud)
         {
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            filtro.Id = idSolicitud;
+            filtro.Solicitud_Id = idSolicitud;
+            var lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
+            List<Entidades.DetalleSolicitud> detalleSolicitud = DAL.DetalleSolicitudDAL.ObtenerDetalleSolicitud(filtro);
+
+            var rutaPDF = Utiles.ObtenerPDF(lista, detalleSolicitud);
+
+
             DAL.SolicitudDAL.EnviarSolicitud(idSolicitud);
+
+            Mensajeria.EnviarConfirmarEmail("eduardo.rios@erex.cl", "Eduardo Ríos", "Solicitud " + lista.Tipo + " N°" + lista.Folio.ToString(), "Tiene una nueva solicitud a revisar", rutaPDF);
 
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

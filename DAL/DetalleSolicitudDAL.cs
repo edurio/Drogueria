@@ -71,7 +71,7 @@ namespace DAL
                     OBJ.Producto_Id = (int)(!reader.IsDBNull(PROD_ID) ? reader.GetValue(PROD_ID) : 0);
                     OBJ.ProductoStr = (String)(!reader.IsDBNull(PRODUCTO) ? reader.GetValue(PRODUCTO) : string.Empty);
                     OBJ.Consumo = (int)(!reader.IsDBNull(CONSUMO) ? reader.GetValue(CONSUMO) : 0);
-                    OBJ.Factor = (decimal)(!reader.IsDBNull(FACTOR) ? reader.GetValue(FACTOR) : 0);
+                    OBJ.Factor = (decimal)(!reader.IsDBNull(FACTOR) ? reader.GetValue(FACTOR) : Decimal.Parse("0"));
                     OBJ.Cantidad = (int)(!reader.IsDBNull(CANTIDAD) ? reader.GetValue(CANTIDAD) : 0);
                     OBJ.Observacion = (String)(!reader.IsDBNull(OBSERVACION) ? reader.GetValue(OBSERVACION) : string.Empty);
                     OBJ.ProductoNuevo = (bool)(!reader.IsDBNull(NUEVO) ? reader.GetValue(NUEVO) : false);
