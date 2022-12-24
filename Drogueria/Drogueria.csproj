@@ -182,6 +182,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\BtnDetalle.png" />
+    <Content Include="Images\BtnExcel.png" />
+    <Content Include="Images\BtnForm.png" />
+    <Content Include="Images\BtnProducto.png" />
+    <Content Include="Images\BtnRelacionar.png" />
     <Content Include="Images\CargarProductos.png" />
     <Content Include="Images\CrearSolicitudFnd.png" />
     <Content Include="Images\LibroSolicitudes.png" />
@@ -191,6 +196,7 @@
     <Content Include="Images\MantenedorRelacion.png" />
     <Content Include="Images\SolicitudDetalle.png" />
     <Content Include="Images\Wall1.jpg" />
+    <Content Include="Images\WallMedico.jpg" />
     <Content Include="js\easing.js" />
     <Content Include="js\move-top.js" />
     <Content Include="js\slippry.js" />
@@ -216,9 +222,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Script_Procesar.js" />
-    <Content Include="Scripts\Script_MantenedorRelacionProductos30092022.js" />
+    <Content Include="Scripts\Script_MantenedorRelacionProductos23122022.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Script_LibroSolicitudes.js" />
+    <Content Include="Scripts\Script_LibroSolicitudes23122022.js" />
     <Content Include="Scripts\Script_Login.js" />
     <Content Include="Scripts\Script_MantenedorProductos30092022.js" />
     <Content Include="Scripts\Script_SolicitudDetalle.js" />

@@ -25,19 +25,19 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_MantenedorRelacionProductos30092022.js"></script>
+    <script src="~/Scripts/Script_MantenedorRelacionProductos23122022.js"></script>
 
     <style>
 
 
-           /* html {
+        /* html {
                 background: url('/Images/Wall1.jpg') no-repeat center center fixed;
                 background-size: cover;
             }*/
 
-           
 
-            body {
+
+        body {
             width: 100%;
             height: 100%;
             background-image: url('/Images/Wall1.jpg');
@@ -48,11 +48,11 @@
         }
 
 
-            .card-img-top {
-                width: 250px;
-            }
+        .card-img-top {
+            width: 250px;
+        }
 
-           /* .contenedor-imagen {
+        /* .contenedor-imagen {
                 width: 100%;
                 text-align: center;
             }*/
@@ -63,7 +63,10 @@
         var urlObtenerProductoExterno = '@Url.Action("ObtenerProductoExterno", "MantenedorRelacionProductos")';
         var urlInsertarRelacionProducto = '@Url.Action("InsertarRelacionProducto", "MantenedorRelacionProductos")';
         var urlObtenerProductosRelacionados = '@Url.Action("ObtenerProductosRelacionados", "MantenedorRelacionProductos")';
+        var urlEliminarRelacion = '@Url.Action("EliminarRelacion", "MantenedorRelacionProductos")';
+
         
+
 
         $(document).ready(function () {
 
@@ -81,90 +84,58 @@
 <body>
     <br />
     <div>
-        @if (Request.Browser.IsMobileDevice)
-        {
+
+        <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
+
             <div class="fields">
+                <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalRelacion">Crear relación<i class="exchange icon"></i></div>
+                <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
                 <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
-                @*<div id="btnExportar" class="ui labeled purple icon button" onclick="ExportarExcel();">
-                        <i class="table download icon"></i>Exportar a Excel
-                    </div>*@
             </div>
-            <table class="ui fixed table inverted table-striped table-bordered">
+            <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:120px"></th>
+                        <th style="width:10%">ID Droguería</th>
+                        <th>Descripción Droguería</th>
+                        <th style="width:10%">ID Externo</th>
+                        <th>Descripción Externo</th>
+                    </tr>
+                </thead>
                 <tbody>
                     @foreach (var listaProductos in Model.lista)
                     {
                         <tr>
+
                             <td style="width:10%">
-                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalRelacion" value="@listaProductos.Id" onclick="ObtenerSolicitud(this.value, this);">
-                                    <i class="eye icon"></i>
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalRelacion" value="@listaProductos.Id" onclick="ObtenerProductosRelacionados(this.value, this);">
+                                    <i class="pencil icon"></i>
+                                </button>
+                                <button class="ui icon red button" data-toggle="modal" data-target="#modalEliminar" value="@listaProductos.Id" onclick="ObtenerProductosRelacionados(this.value, this);">
+                                    <i class="trash icon"></i>
                                 </button>
                             </td>
-                            <td>ID Drogueria: @listaProductos.Prod_Id_Drogueria</td>
-                            <td>Descripción Drogueria: @listaProductos.Descripcion_Drogueria</td>
-                            <td>ID Externo: @listaProductos.Prod_Id_Externo</td>
-                            <td>Descripción Externa: @listaProductos.Descripcion_Externa</td>
+                            <td>@listaProductos.Prod_Id_Drogueria</td>
+                            <td>@listaProductos.Descripcion_Drogueria</td>
+                            <td>@listaProductos.Prod_Id_Externo</td>
+                            <td>@listaProductos.Descripcion_Externa</td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="10">
+                        <th colspan="5">
                             <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
                         </th>
                     </tr>
                 </tfoot>
             </table>
-        }
-        else
-        {
-            <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
-
-                <div class="fields">
-                    <div id="btnExportar" class="ui labeled black icon button" data-toggle="modal" data-target="#modalRelacion">Crear relación<i class="exchange icon"></i></div>
-                    <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
-                    <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
-                </div>
-                <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width:100px"></th>
-                            <th style="width:10%">ID Droguería</th>
-                            <th>Descripción Droguería</th>
-                            <th style="width:10%">ID Externo</th>
-                            <th>Descripción Externo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var listaProductos in Model.lista)
-                        {
-                            <tr>
-
-                                <td style="width:8%">
-                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalRelacion" value="@listaProductos.Id" onclick="ObtenerProductosRelacionados(this.value, this);">
-                                        <i class="pencil icon"></i>
-                                    </button>
-                                </td>
-                                <td>@listaProductos.Prod_Id_Drogueria</td>
-                                <td>@listaProductos.Descripcion_Drogueria</td>
-                                <td>@listaProductos.Prod_Id_Externo</td>
-                                <td>@listaProductos.Descripcion_Externa</td>
-                            </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="5">
-                                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+        </div>
 
 
 
 
-        }
+
     </div>
     <br />
     <br />
@@ -227,16 +198,8 @@
                     </div>
                 </div>
                 <br />
-                <div id="msjError" class="ui icon error hidden message">
-                    <i class="times circle icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Error!!!
-                        </div>
-                        <p>Error al intentar crear la solicitud.</p>
-                    </div>
-                </div>
-                
+
+
                 <div class="modal-footer">
                     <div id="btnGuardar" class="ui black right labeled icon button" onclick="GuardarRelacionProducto();">
                         Relacionar
@@ -249,5 +212,41 @@
     </div>
 </body>
 </html>
+
+
+<!-- Modal Mensaje Éxito -->
+<div class="modal fade bd-example-modal-sm" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ui icon negative message">
+                    <i class="trash icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            ¿Desea eliminar esta relación?
+                        </div>
+                        <p>La operación fue ejecutada con éxito</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="EliminarRelacion();">
+                    Eliminar
+                    <i class="trash icon"></i>
+                </div>
+                <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
+                    Cancelar
+                    <i class="cancel icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <input type="hidden" id="idRelacion" value="0" />

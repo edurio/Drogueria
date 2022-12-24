@@ -147,5 +147,18 @@ namespace DAL
             db.ExecuteNonQuery(dbCommand);
         }
 
+        public static void Eliminar(int id)
+        {
+            Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_SOLICITUD_DEL");
+
+
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, id);
+
+
+
+            db.ExecuteNonQuery(dbCommand);
+        }
+
     }
 }

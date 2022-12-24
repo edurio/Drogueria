@@ -64,13 +64,11 @@ namespace Drogueria.Controllers
             var lista = DAL.ProductoDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId, ClasId = id });
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
         public JsonResult ObtenerPrioridad()
         {
             var lista = DAL.PrioridadDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId });
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
         public JsonResult ObtenerClases()
         {
             var lista = DAL.ClaseDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId });
@@ -292,7 +290,37 @@ namespace Drogueria.Controllers
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult Imprimir(int id)
+        {
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            filtro.Id = id;
+            filtro.Solicitud_Id = id;
+            var solicitud = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
+            List<Entidades.DetalleSolicitud> detalleSolicitud = DAL.DetalleSolicitudDAL.ObtenerDetalleSolicitud(filtro);
 
+            var rutaPDF = Utiles.ObtenerPDF(solicitud, detalleSolicitud);
+
+
+            var url = "";
+            if (ConfigurationSettings.AppSettings.Get("Ambiente") == "CER")
+            {
+                url = ConfigurationSettings.AppSettings.Get("RutaPDF_Url_CER") + "Solicitud_N°" + solicitud.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
+            }
+            else
+            {
+                url = ConfigurationSettings.AppSettings.Get("RutaPDF_Url_PROD") + "Solicitud_N°" + solicitud.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
+            }
+
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = url, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+
+        public JsonResult Eliminar(int id)
+        {
+            DAL.SolicitudDAL.Eliminar(id);
+            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "Ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
 
     }
 }

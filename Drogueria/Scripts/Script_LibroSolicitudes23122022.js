@@ -157,6 +157,7 @@ function CargaProductos() {
     });
 
 }
+
 function ObtenerSolicitud(id) {
     $('#idSolicitudSeleccionada').val(id);
 
@@ -598,3 +599,47 @@ function EliminarNoRelacionados() {
         }
     });
 }
+
+
+function Imprimir(id) {    
+    
+
+    $.ajax({
+        url: window.urlImprimir,
+        type: 'POST',
+        data: { id: id },
+        success: function (data) {
+            window.open(data, '_blank');                
+        },
+        error: function () {
+            alert('Error al cargar los productos existentes');
+        }
+    });
+
+}
+
+
+function Eliminar(id) {
+
+    var id = $("#idSolicitudSeleccionada").val();
+
+    $.ajax({
+        url: window.urlEliminar,
+        type: 'POST',
+        data: { id: id },
+        success: function (data) {
+            location.reload();
+        },
+        error: function () {
+            alert('Error al cargar los productos existentes');
+        }
+    });
+
+}
+
+
+function PreparaEliminar(id) {
+    $("#idSolicitudSeleccionada").val(id);
+}
+
+
