@@ -152,6 +152,7 @@
     <Compile Include="Controllers\CargadorProductosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibroSolicitudesController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MantenedorProductosController.cs" />
     <Compile Include="Controllers\MantenedorRelacionProductosController.cs" />
@@ -260,6 +261,7 @@
     <Content Include="Views\MantenedorRelacionProductos\MantenedorRelacionProductos.cshtml" />
     <Content Include="Views\Solicitud\Index.cshtml" />
     <Content Include="Views\Procesar\Index.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
