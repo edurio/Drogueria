@@ -1,0 +1,247 @@
+﻿@model Drogueria.Models.MantenedorUsuariosModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/MantenedorUsuarios/MantenedorUsuarios.cshtml";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>Mantenedor de usuarios V2</title>
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+
+
+    <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/RecursosExternos/bootstrap.min.js"></script>
+    <script src="~/RecursosExternos/jquery.min.js"></script>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+    <script src="~/Scripts/Script_MantenedorUsuarios.js"></script>
+
+    <style>
+
+
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .card-img-top {
+            width: 250px;
+        }
+
+        .contenedor-imagen {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+
+        var urlObtenerRoles = '@Url.Action("ObtenerRoles", "MantenedorUsuarios")';
+        var urlObtenerEstablecimientoDrogueria = '@Url.Action("ObtenerEstablecimientoDrogueria", "MantenedorUsuarios")';
+        var urlGuardarUsuario = '@Url.Action("GuardarUsuario", "MantenedorUsuarios")';
+        var urlObtenerUsuario = '@Url.Action("ObtenerUsuario", "MantenedorUsuarios")';
+
+
+        $(document).ready(function () {
+
+            $('.ui.selection.dropdown').dropdown();
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+
+            ExportarExcel = function () {
+                location.href = '@Url.Action("ExportToExcel", "MantenedorUsuarios")';
+             };
+        });
+    </script>
+</head>
+<body>
+    <br />
+    <div>
+        <div style="margin-left:auto; margin-right:auto;width:90%;opacity:0.9">
+            <div class="fields">
+                <div id="btnCrearUsuario" class="ui labeled black icon button" data-toggle="modal" data-target="#modalMantenedorUsuarios">Crear Usuario<i class="check icon"></i></div>
+                <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
+                <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+            </div>
+            <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:10%"></th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Usuario</th>
+                        <th>Establecimiento</th>
+                        <th>Roles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var Usuario in Model.lista)
+                    {
+                        <tr>
+
+                            <td style="width:8%">
+                                <button class="ui icon blue button" data-toggle="modal" data-target="#modalMantenedorUsuarios" value="@Usuario.Id" onclick="ObtenerUsuario(this.value, this);">
+                                    <i class="pencil icon"></i>
+                                </button>
+                            </td>
+                            <td>@Usuario.Id</td>
+                            <td>@Usuario.Nombre</td>
+                            <td>@Usuario.Correo</td>
+                            <td>@Usuario.Username</td>
+                            <td>@Usuario.Establecimiento</td>
+                            <td>
+                                @foreach (var rol in Usuario.ListaRoles)
+                                {
+                                    <a class="ui orange label">@rol.RolStr</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">
+                            <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="modal fade" id="modalMantenedorUsuarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: auto; margin-right: auto; width: 50%; opacity:1">
+        <div class="modal-xl" role="document">
+            <div class="modal-content" style="width:100%">
+                <div style="height:3px">
+
+                </div>
+                <h4 class="ui center aligned header">
+                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    Mantenedor de usuarios
+                </h4>
+                <div class="modal-body">
+                    <div class="image content">
+                        <div class="ui info message">
+                            <div class="header">
+                                ¡Atención al completar los datos!
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    La data de este formulario debe ser llenada con la mayor exactitud posible.
+                                </li>
+                            </ul>
+                            <div id="msjAdvertencia" class="ui icon hidden warning message">
+                                <i class="exclamation triangle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Esta conductor ya existe!!!
+                                    </div>
+                                    <p>el RUT que está digitando ya está registrado.</p>
+                                </div>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="ui form">
+
+                                <div class="two fields">
+                                    <div id="divtxtNombre" class="field">
+                                        <label>Nombre completo</label>
+                                        <input id="txtNombre" placeholder="Aquí debes indicar el nombre completo." type="text">
+                                    </div>
+                                    <div id="divtxtCorreo" class="field">
+                                        <label>Correo</label>
+                                        <input id="txtCorreo" placeholder="Aquí debes indicar el correo." type="text">
+                                    </div>
+
+                                </div>
+                                <div class="two fields">
+                                    <div id="divtxtusuario" class="field">
+                                        <label>Usuario</label>
+                                        <input id="txtusuario" placeholder="Aquí debes indicar el usuario." type="text">
+                                    </div>
+                                    <div id="divtxtContraseña" class="field">
+                                        <label>Contraseña</label>
+                                        <input id="txtContraseña" placeholder="Aquí debes indicar la contraseña." type="text">
+                                    </div>
+
+                                </div>
+                                <div class="two fields">
+                                    <div id="divcmbEstablecimientos" class="field">
+                                        <label>Establecimientos</label>
+                                        <select id="cmbEstablecimientos" name="cmbEstablecimientos" class="ui fluid search selection dropdown">
+                                        </select>
+                                    </div>
+                                    <div id="divcmbRoles" class="field">
+                                        <label>Roles</label>
+                                        <select id="cmbRoles" name="cmbRoles" class="ui fluid search selection dropdown" multiple="">
+                                            <option value="">Seleccione roles</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="msjExito" class="ui icon success hidden message">
+                                <i class="check icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Éxito!!!
+                                    </div>
+                                    <p>El usuario fue guardado con éxito.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Se han encontrado algunos problemas, revíselos...
+                            </div>
+                            <ul id="listMessajeError" class="list"></ul>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="times circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar guardar el usuario.</p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardaUsuario();">
+                        Guardar
+                        <i class="checkmark icon"></i>
+                    </div>
+                    <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/MantenedorUsuarios')">Salir<i class="cancel icon"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<input type="hidden" id="idUsuario" value="0" />

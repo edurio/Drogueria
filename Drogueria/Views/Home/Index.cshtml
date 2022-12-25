@@ -31,14 +31,18 @@
     <style>
 
 
-
-
-        html, body {
-            background-image: url('/Images/WallMedico.jpg');
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-repeat: no-repeat;
+        }
+
+        body {
+            width: 100%;
             height: 100%;
-            font-family: 'Numans', sans-serif;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
 
         .card-img-top {
@@ -56,7 +60,7 @@
     <div class="ui link cards">
         <div class="container">
             <div style="height:5px"></div>
-            <h2 style="color:white" class="ui center aligned header" >
+            <h2 style="color:black" class="ui center aligned header">
                 @*<img src="~/Recursos/Imagenes/IconoAsmar.png" class="ui image">*@
                 Bienvenido @SessionH.Usuario.Nombre
             </h2>
@@ -68,7 +72,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnForm.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/CrearSolicitudFnd.png" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">Aquí podras crear y revisar las solicitudes.</p>
@@ -87,7 +91,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnExcel.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/CargarProductos.png" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">Aquí podrás cargar los productos.</p>
@@ -106,7 +110,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnRelacionar.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/MantenedorRelacion.png" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">Aquí podrás realizar la relación de productos.</p>
@@ -125,7 +129,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnDetalle.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/SolicitudDetalle.png" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">Aquí podras revisar las solicitudes por detalle.</p>
@@ -144,7 +148,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnProducto.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/MantenedoresC.jpg" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">Aquí podrás crear y editar los productos.</p>
@@ -159,17 +163,18 @@
                                 </div>
                             </div>
                         </div>
+                        @*MantenedorUsuarios*@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm" style="opacity:.85">
                                 <div class="contenedor-imagen">
-                                    <img class="card-img-top" src="~/Images/BtnLog.png" alt="Card image cap">
+                                    <img class="card-img-top" src="~/Images/MantenedorUsuarios.jpg" alt="Card image cap">
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">Aquí podrás crear y editar los productos.</p>
+                                    <p class="card-text">Aquí podrás crear y editar los usuarios.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <div id="btnMarketPlace" onclick="window.location.href = '/log'" class="ui right labeled icon black button">
-                                                Log del sistema
+                                            <div id="btnMarketPlace" onclick="window.location.href = '/MantenedorUsuarios'" class="ui right labeled icon black button">
+                                                Mantenedor Usuarios
                                                 <i class="hand point left icon"></i>
                                             </div>
                                         </div>

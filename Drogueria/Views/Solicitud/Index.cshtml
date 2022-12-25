@@ -25,17 +25,23 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_LibroSolicitudes23122022.js"></script>
+    <script src="~/Scripts/Script_LibroSolicitudes.js"></script>
 
     <style>
 
 
-        html, body {
-            background-image: url('/Images/WallMedico.jpg');
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-repeat: no-repeat;
+        }
+
+        body {
+            width: 100%;
             height: 100%;
-            font-family: 'Numans', sans-serif;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
 
         .card-img-top {
@@ -124,26 +130,25 @@
                                         <label>Fecha Solicitud</label>
                                         <input id="txtFechaIngreso" placeholder=" " value=@Session["FechaActual"] type="text" readonly>
                                     </div>
-
+                                    <div class="field">
+                                        <label>Folio</label>
+                                        <input id="txtFolio" placeholder=" " type="text" readonly>
+                                    </div>
                                     <div id="divcmbTipo" class="field">
                                         <label>Tipo</label>
                                         <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown">
                                         </select>
                                     </div>
-                                    <div class="field" >
-                                        <label>Folio</label>
-                                        <input id="txtFolio" placeholder=" " type="text" style="background-color:aliceblue" readonly>
-                                    </div>
                                     @*<div id="divcmbPrioridad"  class="field">
-            <label>Prioridad</label>
-            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-            </select>
-        </div>*@
+                                            <label>Prioridad</label>
+                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
                                     @*<div id="divcmbEstado" class="field">
-            <label>Estado</label>
-            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-            </select>
-        </div>*@
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
 
                                 </div>
                                 <div class="field">
@@ -299,7 +304,15 @@
                     </div>
                 </div>
                 <br />
-                
+                <div id="msjError" class="ui icon error hidden message">
+                    <i class="times circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Error!!!
+                        </div>
+                        <p>Error al intentar crear la solicitud.</p>
+                    </div>
+                </div>
                 <div id="msjExito" class="ui icon success hidden message">
                     <i class="check icon"></i>
                     <div class="content">
@@ -310,15 +323,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="msjError" class="ui icon error hidden message">
-                        <i class="times circle icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                Error!!!x
-                            </div>
-                            <p>Error al intentar crear la solicitud.</p>
-                        </div>
-                    </div>
+
 
                     <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
                         Guardar

@@ -77,18 +77,5 @@ namespace DAL
             return lista;
 
         }
-
-
-        public static void EliminarRelacion(int id)
-        {
-            Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
-            DbCommand dbCommand = db.GetStoredProcCommand("SP_RL_PROD_INTERNO_PROD_EXTERNO_DEL");
-
-            db.AddInParameter(dbCommand, "ID", DbType.Int32, id);
-           
-
-            db.ExecuteNonQuery(dbCommand);
-            
-        }
     }
 }

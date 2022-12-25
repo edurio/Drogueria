@@ -1,6 +1,5 @@
 ﻿var _id = 0;
 
-
 $(function () {
    
     ObtenerProductos();
@@ -53,49 +52,12 @@ function ObtenerProductoExterno() {
     });
 
 }
-
-
-function ValidarGuardar() {
-    var errores = [];
-    $('#msjError').addClass("hidden");
-    $('#divcmbProdDrogueria').removeClass("error");
-    $('#divcmbProdExterno').removeClass("error");
-
-    if ($('#cmbProdDrogueria').val() <= 0) {
-        $('#divcmbProdDrogueria').addClass("error");
-        errores.push('Debe indicar el producto de la droguería');
-    }
-    if ($('#cmbProdExterno').val() <= 0) {
-        $('#divcmbProdExterno').addClass("error");
-        errores.push('Debe indicar su equivalente en el establecimiento');
-    }
-
-
-
-    if (errores.length > 0) {
-        var mensaje = '';
-        $('#DivMessajeErrorGeneral').removeClass("hidden");
-        for (i = 0; i < errores.length; i++) {
-            mensaje += '<li>' + errores[i] + '</li>';
-        }
-        mensaje += '</ul>';
-        $('#listMessajeError').empty();
-        $('#listMessajeError').prepend(mensaje);
-        return false;
-    }
-    else {
-        return true;
-    }
-    
-
-}
-
-
 function GuardarRelacionProducto() {
 
-    if (ValidarGuardar() === false) {        
-        return;
-    }
+    //if (ValidaGuardar() === false) {
+    //    //alert('no valido');
+    //    return;
+    //}
 
     $('#btnGuardar').addClass('loading');
     $('#btnGuardar').addClass('disabled');
@@ -151,26 +113,3 @@ function ObtenerProductosRelacionados(id) {
     _id = id;
 }
 
-function PreparaEliminar(id) {
-    $('#idRelacion').val(id);
-}
-
-function EliminarRelacion(id) {
-   
-
-    id = $('#idRelacion').val();
-    $.ajax({
-        url: window.urlEliminarRelacion,
-        type: 'POST',
-        data: { id: id },
-        success: function (data) {
-            setTimeout(() => { window.location.href = '/MantenedorRelacionProductos' }, 1000);
-
-        },
-
-        error: function () {
-            alert('Error al cargar el usuario seleccionado');
-        }
-    });
-    _id = id;
-}

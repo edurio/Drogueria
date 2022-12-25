@@ -25,17 +25,23 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_LibroSolicitudes23122022.js"></script>
+    <script src="~/Scripts/Script_LibroSolicitudes.js"></script>
 
     <style>
 
 
-        html, body {
-            background-image: url('/Images/WallMedico.jpg');
+        html {
+            background: url('/Images/Wall1.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-repeat: no-repeat;
+        }
+
+        body {
+            width: 100%;
             height: 100%;
-            font-family: 'Numans', sans-serif;
+            background-image: url('/Images/Wall1.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
 
         .card-img-top {
@@ -60,8 +66,6 @@
         var urlBusquedaFiltro = '@Url.Action("BusquedaFiltro", "LibroSolicitudes")';
         var urlObtenerClases = '@Url.Action("ObtenerClases", "LibroSolicitudes")';
         var urlEnviarSolicitud = '@Url.Action("EnviarSolicitud", "LibroSolicitudes")';
-        var urlImprimir= '@Url.Action("Imprimir", "LibroSolicitudes")';
-         var urlEliminar= '@Url.Action("Eliminar", "LibroSolicitudes")';
 
         $(document).ready(function () {
 
@@ -152,23 +156,12 @@
                                     <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
                                         <i class="eye icon"></i>
                                     </button>
-                                    <button class="ui icon blue button"  value="@listaSolicitudes.Id" onclick="Imprimir(this.value, this);">
+                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
                                         <i class="print icon"></i>
                                     </button>
-                                    @if (listaSolicitudes.Estado_Id == 1)
-                                    {
-                                        <button class="ui icon blue button" onclick="location.href='/Procesar?id=@listaSolicitudes.Id'" ;">
-                                            <i class="cog icon"></i>
-                                        </button>
-                                    }
-
-                                    @if (listaSolicitudes.Estado_Id == 2)
-                                    {
-                                        <button class="ui icon red button" data-toggle="modal" data-target="#modalEliminar" value="@listaSolicitudes.Id" onclick="PreparaEliminar(this.value, this);">
-                                            <i class="trash icon"></i>
-                                        </button>
-                                    }
-
+                                    <button class="ui icon blue button" onclick="location.href='/Procesar?id=@listaSolicitudes.Id'" ;">
+                                        <i class="cog icon"></i>
+                                    </button>
                                 </td>
                                 <td>@listaSolicitudes.Fecha_Ingreso.ToString()</td>
                                 <td style="text-align:right">@listaSolicitudes.Folio</td>
@@ -180,10 +173,10 @@
                                 @if (listaSolicitudes.Estado_Id == 1)
                                 {
                                     <td>
-                                        @*<button class="ui icon green button" value="@listaSolicitudes.Id" disabled>
-                                                <i class="paper plane outline icon"></i>
-                                            </button>*@
-                                        <div class="ui horizontal label">Enviada</div>
+                                        <button class="ui icon green button" value="@listaSolicitudes.Id" disabled>
+                                            <i class="paper plane outline icon"></i>
+                                        </button>
+                                        Enviada
                                     </td>
                                 }
                                 @if (listaSolicitudes.Estado_Id == 2)
@@ -192,7 +185,7 @@
                                         <button class="ui icon red button" data-toggle="modal" data-target="#modalEnviarSolicitud" value="@listaSolicitudes.Id" onclick="PreparaEnviaSolicitud(this.value, this);">
                                             <i class="paper plane outline icon"></i>
                                         </button>
-                                        <div class="ui red horizontal label">Borrador por enviar</div>
+                                        Borrador por enviar
                                     </td>
                                 }
                             </tr>
@@ -266,15 +259,15 @@
                                         </select>
                                     </div>
                                     @*<div id="divcmbPrioridad"  class="field">
-                                            <label>Prioridad</label>
-                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-                                            </select>
-                                        </div>*@
+                                <label>Prioridad</label>
+                                <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                </select>
+                            </div>*@
                                     @*<div id="divcmbEstado" class="field">
-                                            <label>Estado</label>
-                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-                                            </select>
-                                        </div>*@
+                                <label>Estado</label>
+                                <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                </select>
+                            </div>*@
 
                                 </div>
                                 <div class="field">
@@ -290,29 +283,29 @@
 
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             @*<thead>
-                                    <tr>
-                                        <th style="width:50%">Artículo</th>
-                                        <th style="width:10%">Consumo</th>
-                                        <th style="width:10%">Factor</th>
-                                        <th style="width:10%">Solicitado</th>
-                                        <th style="width:10%">Unidad</th>
-                                        <th style="width:30%">Observacion</th>
-                                    </tr>
-                                </thead>*@
+                        <tr>
+                            <th style="width:50%">Artículo</th>
+                            <th style="width:10%">Consumo</th>
+                            <th style="width:10%">Factor</th>
+                            <th style="width:10%">Solicitado</th>
+                            <th style="width:10%">Unidad</th>
+                            <th style="width:30%">Observacion</th>
+                        </tr>
+                    </thead>*@
                             @*<tbody>
-                                    @if (Model.listaProductosExternos != null)
-                                    {
-                                        foreach (var a in Model.listaProductosExternos)
-                                        {
-                                            <tr>
-                                                <td>@a.Descripcion</td>
-                                                <td style="text-align:right">@a.Consumo</td>
-                                                <td>@a.Unidad</td>
-                                                <td></td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>*@
+                        @if (Model.listaProductosExternos != null)
+                        {
+                            foreach (var a in Model.listaProductosExternos)
+                            {
+                                <tr>
+                                    <td>@a.Descripcion</td>
+                                    <td style="text-align:right">@a.Consumo</td>
+                                    <td>@a.Unidad</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>*@
                         </table>
                     </div>
 
@@ -389,7 +382,10 @@
                         Enviar
                         <i class="checkmark icon"></i>
                     </div>
-
+                    <div id="btnLimpiar" data-dismiss="modal" class="ui right labeled icon button">
+                        Limpiar
+                        <i class="cancel icon"></i>
+                    </div>
                     <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
                         Cancelar
                         <i class="cancel icon"></i>
@@ -400,44 +396,5 @@
     </div>
 </body>
 </html>
-
-
-
-
-<!-- Modal Mensaje Éxito -->
-<div class="modal fade bd-example-modal-sm" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle">Eliminar Solicitud</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="ui icon negative message">
-                    <i class="trash icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            ¿Desea eliminar esta solicitud?
-                        </div>
-                        <p>Se eliminará esta solicitud de la base de datos</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="Eliminar();">
-                    Eliminar
-                    <i class="trash icon"></i>
-                </div>
-                <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
-                    Cancelar
-                    <i class="cancel icon"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <input type="hidden" id="idSolicitudSeleccionada" value="0" />

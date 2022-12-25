@@ -203,10 +203,6 @@ namespace Drogueria.Controllers
                 Session["ListaProductos"] = new List<Entidades.DetalleSolicitud>();
                 Session["listaProductosCargados"] = null;
 
-                //LOG
-                var Log = new Entidades.Log() { Modulo="Solicitud", Descripcion="Crea solicitud N°" + entity.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
-                DAL.LogDAL.InsertarLog(Log);
-
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = url, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)

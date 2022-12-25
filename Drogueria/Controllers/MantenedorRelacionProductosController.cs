@@ -59,11 +59,5 @@ namespace Drogueria.Controllers
 
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "noexiste", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
-        public JsonResult EliminarRelacion(int id)
-        {            
-            DAL.RLProductosDAL.EliminarRelacion(id);           
-            return new JsonResult() { ContentEncoding = Encoding.Default, Data = "Ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
     }
 }

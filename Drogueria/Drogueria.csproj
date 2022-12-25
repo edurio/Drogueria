@@ -155,6 +155,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MantenedorProductosController.cs" />
     <Compile Include="Controllers\MantenedorRelacionProductosController.cs" />
+    <Compile Include="Controllers\MantenedorUsuariosController.cs" />
     <Compile Include="Controllers\ProcesarController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Models\LibroSolicitudesModel.cs" />
     <Compile Include="Models\MantenedorProductosModel.cs" />
     <Compile Include="Models\MantenedorRelacionProductosModel.cs" />
+    <Compile Include="Models\MantenedorUsuariosModel.cs" />
     <Compile Include="Models\SolicitudDetalleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionH.cs" />
@@ -182,13 +184,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\BtnDetalle.png" />
-    <Content Include="Images\BtnExcel.png" />
-    <Content Include="Images\BtnForm.png" />
-    <Content Include="Images\btnHistoria.png" />
-    <Content Include="Images\BtnLog.png" />
-    <Content Include="Images\BtnProducto.png" />
-    <Content Include="Images\BtnRelacionar.png" />
     <Content Include="Images\CargarProductos.png" />
     <Content Include="Images\CrearSolicitudFnd.png" />
     <Content Include="Images\LibroSolicitudes.png" />
@@ -196,9 +191,9 @@
     <Content Include="Images\LogoBackline2.png" />
     <Content Include="Images\MantenedoresC.jpg" />
     <Content Include="Images\MantenedorRelacion.png" />
+    <Content Include="Images\MantenedorUsuarios.jpg" />
     <Content Include="Images\SolicitudDetalle.png" />
     <Content Include="Images\Wall1.jpg" />
-    <Content Include="Images\WallMedico.jpg" />
     <Content Include="js\easing.js" />
     <Content Include="js\move-top.js" />
     <Content Include="js\slippry.js" />
@@ -223,10 +218,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Script_MantenedorUsuarios.js" />
     <Content Include="Scripts\Script_Procesar.js" />
-    <Content Include="Scripts\Script_MantenedorRelacionProductos23122022.js" />
+    <Content Include="Scripts\Script_MantenedorRelacionProductos30092022.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Script_LibroSolicitudes23122022.js" />
+    <Content Include="Scripts\Script_LibroSolicitudes.js" />
     <Content Include="Scripts\Script_Login.js" />
     <Content Include="Scripts\Script_MantenedorProductos30092022.js" />
     <Content Include="Scripts\Script_SolicitudDetalle.js" />
@@ -260,6 +256,8 @@
     <Content Include="Views\MantenedorRelacionProductos\MantenedorRelacionProductos.cshtml" />
     <Content Include="Views\Solicitud\Index.cshtml" />
     <Content Include="Views\Procesar\Index.cshtml" />
+    <Content Include="Views\MantenedorUsuarios\Index.cshtml" />
+    <Content Include="Views\MantenedorUsuarios\MantenedorUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

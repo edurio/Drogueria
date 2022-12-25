@@ -24,5 +24,7 @@ namespace Entidades
 
         public int Numero { get; set; }
         public string Descripcion { get; set; }
+        public int Usr_Id { get; set; }
+        public bool TraeRoles { get; set; }
     }
 }
