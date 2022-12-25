@@ -26,6 +26,10 @@ namespace Drogueria.Controllers
                 var establecimiento = DAL.EstablecimientoDAL.ObtenerEstablecimiento(new Entidades.Filtro() { Id = lista[0].Est_id });
                 SessionH.Establecimiento = establecimiento[0];
 
+                //LOG
+                var Log = new Entidades.Log() { Modulo = "Login", Descripcion = "Se logea en el sistema", Usr_Id = SessionH.Usuario.Id };
+                DAL.LogDAL.InsertarLog(Log);
+
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = true, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
            

@@ -164,6 +164,9 @@ namespace Drogueria.Controllers
             xlWorkbook.Close();
             xlApp.Quit();
 
+            //LOG
+            var Log = new Entidades.Log() { Modulo = "Cargar Excel desde Rayen", Descripcion = "Se carga el excel nombre " + ruta, Usr_Id = SessionH.Usuario.Id };
+            DAL.LogDAL.InsertarLog(Log);
 
             Session["listaProductosCargados"] = listaProductosLeidos;
 

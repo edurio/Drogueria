@@ -62,6 +62,7 @@
     <Compile Include="EstablecimientoDAL.cs" />
     <Compile Include="EstadoDAL.cs" />
     <Compile Include="EtiquetaDAL.cs" />
+    <Compile Include="LogDAL.cs" />
     <Compile Include="PrioridadDAL.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="ProductoExternoDAL.cs" />

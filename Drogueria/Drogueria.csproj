@@ -185,6 +185,8 @@
     <Content Include="Images\BtnDetalle.png" />
     <Content Include="Images\BtnExcel.png" />
     <Content Include="Images\BtnForm.png" />
+    <Content Include="Images\btnHistoria.png" />
+    <Content Include="Images\BtnLog.png" />
     <Content Include="Images\BtnProducto.png" />
     <Content Include="Images\BtnRelacionar.png" />
     <Content Include="Images\CargarProductos.png" />

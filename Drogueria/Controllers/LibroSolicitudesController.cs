@@ -287,6 +287,10 @@ namespace Drogueria.Controllers
 
             Mensajeria.EnviarConfirmarEmail("eduardo.rios@erex.cl", "Eduardo Ríos", "Solicitud " + lista.Tipo + " N°" + lista.Folio.ToString(), "Tiene una nueva solicitud a revisar", rutaPDF);
 
+            //LOG
+            var Log = new Entidades.Log() { Modulo = "Solicitud", Descripcion = "Se envía la solicitud N°" + lista.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
+            DAL.LogDAL.InsertarLog(Log);
+
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -311,13 +315,26 @@ namespace Drogueria.Controllers
                 url = ConfigurationSettings.AppSettings.Get("RutaPDF_Url_PROD") + "Solicitud_N°" + solicitud.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
             }
 
+            //LOG
+            var Log = new Entidades.Log() { Modulo = "Solicitud", Descripcion = "Imprime PDF la solicitud N°" + solicitud.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
+            DAL.LogDAL.InsertarLog(Log);
+
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = url, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
 
         public JsonResult Eliminar(int id)
         {
+            Entidades.Filtro filtro = new Entidades.Filtro();
+            filtro.Id = id;
+            filtro.Solicitud_Id = id;
+            var solicitud = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
+
             DAL.SolicitudDAL.Eliminar(id);
+
+            //LOG
+            var Log = new Entidades.Log() { Modulo = "Solicitud", Descripcion = "Se elimina la solicitud N°" + solicitud.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
+            DAL.LogDAL.InsertarLog(Log);
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = "Ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }

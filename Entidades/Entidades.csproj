@@ -48,6 +48,7 @@
     <Compile Include="Estado.cs" />
     <Compile Include="Etiqueta.cs" />
     <Compile Include="Filtro.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Prioridad.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoExterno.cs" />
