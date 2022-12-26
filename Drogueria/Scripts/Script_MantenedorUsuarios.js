@@ -200,3 +200,29 @@ function ValidaGuardar() {
 
 
 }
+function PreparaEliminarUsuario(id) {
+    $('#idUsuario').val(id);
+
+}
+function EliminaUsuario() {
+    $('#btnEliminar').addClass('loading');
+    $('#btnEliminar').addClass('disabled');
+
+    id = $('#idUsuario').val();
+    $.ajax({
+        url: window.urlEliminarUsuario,
+        type: 'POST',
+        data: { id: id },
+        success: function (data) {
+            if (data === 'exito') {
+                $('#divConsultaElimina').addClass("hidden");
+                $('#divExitoElimina').removeClass("hidden");
+                setTimeout(() => { location.reload(); }, 2000);
+            }
+        },
+        error: function (data) {
+            console.log(data);
+            showMessage('body', 'danger', 'Ocurrió un error al eliminar el usuario seleccionado.' + data);
+        }
+    });
+}
