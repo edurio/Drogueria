@@ -147,5 +147,17 @@ namespace DAL
             return lista;
 
         }
+        public static void EliminarUsuario(int id)
+        {
+            Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_USUARIO_DEL");
+
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, id);
+
+
+            db.ExecuteNonQuery(dbCommand);
+
+        }
+
     }
 }

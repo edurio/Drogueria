@@ -99,5 +99,18 @@ namespace Drogueria.Controllers
             return File(filecontent, Code.ExcelExportHelper.ExcelContentType, "listaUsuarios_" + timestamp + ".xlsx");
 
         }
+        public JsonResult EliminarUsuario(int id)
+        {
+            try
+            {
+                DAL.UsuarioDAL.EliminarUsuario(id);
+
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "exito", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
     }
 }
