@@ -18,7 +18,7 @@ namespace DAL
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA_Solicitudes");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_EST_ESTABLECIMIENTO_LEER");
 
-            db.AddInParameter(dbCommand, "ID", DbType.Int32, filtro.Id != 0 ? filtro.Id : (object) null);
+            db.AddInParameter(dbCommand, "ID", DbType.Int32, filtro.Id != 0 ? filtro.Id : (object)null);
             db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);
 
 
@@ -55,6 +55,46 @@ namespace DAL
             }
 
             return listaEstablecimiento;
+
+        }
+        public static List<Entidades.Establecimiento> ObtenerEstablecimientoDrogueria(Entidades.Filtro filtro)
+        {
+            List<Entidades.Establecimiento> lista = new List<Entidades.Establecimiento>();
+            Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_BODE_BODEGA_LEER");
+
+            db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);
+
+
+            IDataReader reader = (IDataReader)db.ExecuteReader(dbCommand);
+
+            try
+            {
+                int ID = reader.GetOrdinal("ID");
+                int DESCRIPCION = reader.GetOrdinal("DESCRIPCION");
+
+                while (reader.Read())
+                {
+                    Entidades.Establecimiento OBJ = new Entidades.Establecimiento();
+                    //BeginFields
+                    OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
+                    OBJ.Descripcion = (String)(!reader.IsDBNull(DESCRIPCION) ? reader.GetValue(DESCRIPCION) : string.Empty);
+                    //EndFields
+
+                    lista.Add(OBJ);
+                }
+            }
+            catch (Exception ex)
+            {
+                //GlobalesDAO.InsertErrores(ex);
+                throw ex;
+            }
+            finally
+            {
+                reader.Close();
+            }
+
+            return lista;
 
         }
     }

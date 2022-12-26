@@ -53,6 +53,7 @@
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoExterno.cs" />
     <Compile Include="RLProductos.cs" />
+    <Compile Include="Rol.cs" />
     <Compile Include="Solicitud.cs" />
     <Compile Include="Unidad.cs" />
     <Compile Include="Usuario.cs" />

@@ -11,7 +11,23 @@ namespace Drogueria.Controllers
         // GET: Log
         public ActionResult Index()
         {
-            return View();
+            Models.LogModel modelo = new Models.LogModel();
+            modelo.ListaLog = DAL.LogDAL.ObtenerLog(new Entidades.Filtro());
+
+            Session["registrosEncontradosLog"] = modelo.ListaLog;
+            return View(modelo);
+        }
+
+
+        public FileContentResult ExportToExcel()
+        {
+            var timestamp = Utiles.ObtenerTimeStamp();
+            List<Entidades.Log> lista = Session["registrosEncontradosLog"] as List<Entidades.Log>;
+
+            string[] columns = { "Fecha", "Modulo", "Descripcion", "Usuario"};
+            byte[] filecontent = Code.ExcelExportHelper.ExportExcel(lista, "Log del sistema", true, columns);
+            return File(filecontent, Code.ExcelExportHelper.ExcelContentType, "listaLog_" + timestamp + ".xlsx");
+
         }
     }
 }

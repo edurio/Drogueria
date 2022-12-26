@@ -67,6 +67,7 @@
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="ProductoExternoDAL.cs" />
     <Compile Include="RLProductosDAL.cs" />
+    <Compile Include="RolDAL.cs" />
     <Compile Include="SolicitudDAL.cs" />
     <Compile Include="UnidadDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />

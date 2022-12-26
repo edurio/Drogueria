@@ -156,6 +156,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MantenedorProductosController.cs" />
     <Compile Include="Controllers\MantenedorRelacionProductosController.cs" />
+    <Compile Include="Controllers\MantenedorUsuariosController.cs" />
     <Compile Include="Controllers\ProcesarController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
@@ -164,8 +165,10 @@
     </Compile>
     <Compile Include="Mensajeria.cs" />
     <Compile Include="Models\LibroSolicitudesModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\MantenedorProductosModel.cs" />
     <Compile Include="Models\MantenedorRelacionProductosModel.cs" />
+    <Compile Include="Models\MantenedorUsuariosModel.cs" />
     <Compile Include="Models\SolicitudDetalleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionH.cs" />
@@ -262,6 +265,9 @@
     <Content Include="Views\Solicitud\Index.cshtml" />
     <Content Include="Views\Procesar\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\MantenedorUsuarios\Index.cshtml" />
+    <Content Include="Views\MantenedorUsuarios\MantenedorUsuarios.cshtml" />
+    <Content Include="Views\Log\Log.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
