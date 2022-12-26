@@ -35,7 +35,10 @@ namespace DAL
             List<Entidades.Log> lista = new List<Entidades.Log>();
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA_Solicitudes");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_LOG_READ");
-           
+
+            db.AddInParameter(dbCommand, "FECHA_DESDE", DbType.DateTime, filtro.Desde);
+            db.AddInParameter(dbCommand, "FECHA_HASTA", DbType.Date, filtro.Hasta);
+
             IDataReader reader = (IDataReader)db.ExecuteReader(dbCommand);
 
             try

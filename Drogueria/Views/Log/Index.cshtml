@@ -63,13 +63,57 @@
 
         <div style="margin-left:auto; margin-right:auto;width:80%;opacity:0.9">
 
-            <div class="fields">          
+            <div class="ui bottom attached segment" style="margin-left:auto; margin-right:auto; width:100%; opacity:0.9">
+                <div class="ui icon warning message">
+                    <i class="search icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Filtro
+                        </div>
+                        <p>Para lograr una búsqueda efectiva debe seleccionar al menos un filtro.</p>
+                    </div>
+                </div>
+                <table border="0">
+                    <tr>
+                        <td><label>Fecha desde</label></td>
+                        <td style="width:5px"></td>
+                        <td>
+                            <div class="ui calendar" id="divFiltroDesde">
+                                <div class="ui input left icon">
+                                    <input id="txtFiltroDesde" type="date" placeholder="Fecha desde" value=@Session["FiltroInformeDesde"]>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="width:5px"></td>
+                        <td style="text-align:right"><label>Fecha Hasta</label></td>
+                        <td style="width:5px"></td>
+                        <td><div class="ui input"><input id="txtFiltroHasta" type="date" placeholder="Fecha hasta" value=@Session["FiltroInformeHasta"]></div></td>
+                        <td style="width:5px"></td>
+                        <td>
+                            <div id="btnBuscarFiltro" style="width:200px" class="ui blue right labeled icon button" onclick="BusquedaFiltro();">
+                                Buscar por fecha
+                                <i class="search icon"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="width:5px">
+                        <td><label></label></td>
+                        <td></td>
+
+                    </tr>
+
+
+                </table>
+
+            </div>
+
+            <div class="fields">
                 <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
                 <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
             </div>
             <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
                 <thead>
-                    <tr>                        
+                    <tr>
                         <th style="width:15%">Fecha</th>
                         <th style="width:25%">Módulo</th>
                         <th style="width:40%">Descrpción</th>
@@ -79,7 +123,7 @@
                 <tbody>
                     @foreach (var log in Model.ListaLog)
                     {
-                        <tr>                            
+                        <tr>
                             <td>@log.Fecha.ToString()</td>
                             <td>@log.Modulo</td>
                             <td>@log.Descripcion</td>
