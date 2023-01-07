@@ -7,9 +7,9 @@ using System.Data;
 
 namespace Reportes
 {
-    public partial class rptSolicitud : DevExpress.XtraReports.UI.XtraReport
+    public partial class rptSolicitudRayen : DevExpress.XtraReports.UI.XtraReport
     {
-        public rptSolicitud()
+        public rptSolicitudRayen()
         {
             InitializeComponent();
         }
@@ -52,8 +52,10 @@ namespace Reportes
             this.DataMember = dataTable1.TableName;
 
             
-            this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[0].Caption);        
-            this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);          
+            this.tcArticulo.DataBindings.Add("Text", null, dataTable1.Columns[0].Caption);
+            this.tcConsumo.DataBindings.Add("Text", null, dataTable1.Columns[1].Caption);
+            this.tcFactor.DataBindings.Add("Text", null, dataTable1.Columns[2].Caption);
+            this.tcCantidad.DataBindings.Add("Text", null, dataTable1.Columns[3].Caption);            
             this.tcObservación.DataBindings.Add("Text", null, dataTable1.Columns[5].Caption);
 
 

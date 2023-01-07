@@ -1,6 +1,23 @@
 ﻿var _id = 0;
 var _arregloArticulos = [];
+var _esRayen = false;
 
+$(function () {
+    // CargaProductos();
+    /*CargaPrioridad();*/
+    /*ObtenerEstado();*/
+    CargaTipo();
+    ObtenerClase();
+    ObtenerProductosCombo();
+    RecuperarSolicitud();
+    $('#cmbClase').change(function () { CargaProductos(); });
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    
+    _esRayen = params.esRayen == 'true' ? true : false ; 
+});
 
 function RecuperarSolicitud() {
     $.ajax({
@@ -249,25 +266,49 @@ function Eliminar(indice, Producto_Id) {
 function ActualizaGrid() {
     var html = GridEncabezado();
     var indice = 0;
-    _arregloArticulos.forEach(function (element) {
-        html = html + '<tr>';
-        html = html + '<td>' + element.ProductoStr + '</td>';
-        html = html + '<td>' + element.Consumo + '</td>';
-        html = html + '<td>' + element.Factor + '</td>';
-        html = html + '<td>' + element.Cantidad + '</td>';
-        html = html + '<td>' + element.Unidad + '</td>';
-        html = html + '<td>' + element.Observacion + '</td>';
-        html = html + '</tr>';
-        indice++;
-    });
+
+    if (_esRayen == true) {
+        _arregloArticulos.forEach(function (element) {
+            html = html + '<tr>';
+            html = html + '<td>' + element.ProductoStr + '</td>';
+            html = html + '<td style="text-align:right">' + element.Consumo + '</td>';
+            html = html + '<td style="text-align:right">' + element.Factor + '</td>';
+            html = html + '<td style="text-align:right">' + element.Cantidad + '</td>';           
+            html = html + '<td>' + element.Observacion + '</td>';
+            html = html + '</tr>';
+            indice++;
+        });
+    }
+
+    if (_esRayen == false) {
+        _arregloArticulos.forEach(function (element) {
+            html = html + '<tr>';
+            html = html + '<td>' + element.ProductoStr + '</td>';            
+            html = html + '<td style="text-align:right">' + element.Cantidad + '</td>';            
+            html = html + '<td>' + element.Observacion + '</td>';
+            html = html + '</tr>';
+            indice++;
+        });
+    }
 
     html = html + GridPie();
     $('#grdArticulos').html(html);
 }
 function GridEncabezado() {
-    var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
-    encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
-    return encabezado;
+
+    if (_esRayen == true) {
+        var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
+        return encabezado;
+    }
+
+    if (_esRayen == false) {
+        var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
+        return encabezado;
+    }
+
+    
 }
 function GridPie() {
     var pie = '</table>';
@@ -333,6 +374,8 @@ function AgregarProducto() {
         Cantidad: $('#txtCantidad').val(),
         Observacion: $('#txtObservacionArticulo').val(),
         ProductoNuevo: true,
+        Factor: 0,
+        Consumo: 0
     };
 
     $.ajax({
@@ -621,7 +664,7 @@ function PreparaEditar(id) {
 
 
 function Imprimir(id) {
-    
+
     $.ajax({
         url: window.urlImprimir,
         type: 'POST',

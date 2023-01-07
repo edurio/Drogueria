@@ -31,7 +31,7 @@ namespace Drogueria.Controllers
         {
             Entidades.Filtro filtro = new Entidades.Filtro();
             filtro.EmpId = SessionH.Usuario.EmpId;
-            var lista = DAL.EstablecimientoDAL.ObtenerEstablecimientoDrogueria(filtro);
+            var lista = DAL.EstablecimientoDAL.ObtenerEstablecimiento(filtro);
 
             if (lista == null || lista.Count == 0)
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = "Error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };

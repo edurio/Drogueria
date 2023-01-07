@@ -16,7 +16,7 @@ namespace DAL
         {
             List<Entidades.Usuario> lista = new List<Entidades.Usuario>();
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
-            DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_USUARIO_GET");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_USUARIO_GET_V2");
 
             db.AddInParameter(dbCommand, "CORREO", DbType.String, filtro.Nombre);
             db.AddInParameter(dbCommand, "CLAVE", DbType.String, filtro.Password);
@@ -32,6 +32,7 @@ namespace DAL
                 //int TELEFONO = reader.GetOrdinal("TELEFONO");
                 int CLAVE = reader.GetOrdinal("PASSWORD");
                 int EST_ID = reader.GetOrdinal("EST_ID");
+                int ESTABLECIMIENTO = reader.GetOrdinal("ESTABLECIMIENTO");
 
 
                 while (reader.Read())
@@ -41,6 +42,7 @@ namespace DAL
                     OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
                     OBJ.EmpId = (int)(!reader.IsDBNull(EMP_ID) ? reader.GetValue(EMP_ID) : 0);
                     OBJ.Nombre = (String)(!reader.IsDBNull(NOMBRE) ? reader.GetValue(NOMBRE) : string.Empty);
+                    OBJ.Establecimiento = (String)(!reader.IsDBNull(ESTABLECIMIENTO) ? reader.GetValue(ESTABLECIMIENTO) : string.Empty);
                     //  OBJ.Correo = (String)(!reader.IsDBNull(CORREO) ? reader.GetValue(CORREO) : string.Empty);
                     OBJ.Est_id = (int)(!reader.IsDBNull(EST_ID) ? reader.GetValue(EST_ID) : 0);
 
@@ -86,7 +88,7 @@ namespace DAL
         {
             List<Entidades.Usuario> lista = new List<Entidades.Usuario>();
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
-            DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_USUARIO_LEER");
+            DbCommand dbCommand = db.GetStoredProcCommand("SP_USR_USUARIO_LEER_v2");
 
             db.AddInParameter(dbCommand, "ID", DbType.Int32, filtro.Id != 0 ? filtro.Id : (object)null);
             db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);

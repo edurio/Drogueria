@@ -36,6 +36,7 @@
             background-repeat: no-repeat;
             height: 100%;
             font-family: 'Numans', sans-serif;
+            background-attachment: fixed;
         }
 
         .card-img-top {
@@ -124,21 +125,21 @@
 
             </div>
             <div class="fields">
-                <div id="btnExportar" class="ui labeled black icon button" onclick="location.href='/solicitud'">Crear solicitud<i class="check icon"></i></div>
+                <div id="btnExportar" class="ui labeled black icon button" onclick="location.href='/solicitud?esRayen=false'">Crear solicitud<i class="check icon"></i></div>
                 <div id="btnExportar" class="ui labeled blue icon button" onclick="ExportarExcel();">Exportar a Excel<i class="table download icon"></i></div>
                 <div class="ui icon red button" onclick="window.location.replace('/Home')">Volver<i class="left chevron icon"></i></div>
             </div>
             <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width:160px"></th>
-                        <th>Fecha de ingreso</th>
-                        <th>N° Solicitud</th>
-                        <th>Tipo</th>
+                        <th style="width:210px"></th>
+                        <th style="width:15%">Fecha de ingreso</th>
+                        <th style="width:10%">N° Solicitud</th>
+                        <th style="width:10%">Tipo</th>
 
-                        <th>Observación</th>
-                        <th>Usuario solicitante</th>
-                        <th>Estado</th>
+                        <th style="width:30%">Observación</th>
+                        <th style="width:15%">Usuario solicitante</th>
+                        <th style="width:10%">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,15 +149,17 @@
                         {
                             <tr>
 
-                                <td style="width:160px">
-                                    <button class="ui icon blue button" data-toggle="modal" data-target="#modalSolicitud" value="@listaSolicitudes.Id" onclick="ObtenerSolicitud(this.value, this);">
-                                        <i class="eye icon"></i>
-                                    </button>
-                                    <button class="ui icon blue button"  value="@listaSolicitudes.Id" onclick="Imprimir(this.value, this);">
-                                        <i class="print icon"></i>
-                                    </button>
+                                <td style="width:210px">
+
+
                                     @if (listaSolicitudes.Estado_Id == 1)
                                     {
+                                        <button class="ui icon blue button" value="@listaSolicitudes.Id" onclick="PreparaVer(this.value, this);">
+                                            <i class="eye icon"></i>
+                                        </button>
+                                        <button class="ui icon blue button" value="@listaSolicitudes.Id" onclick="Imprimir(this.value, this);">
+                                            <i class="print icon"></i>
+                                        </button>
                                         <button class="ui icon blue button" onclick="location.href='/Procesar?id=@listaSolicitudes.Id'" ;">
                                             <i class="cog icon"></i>
                                         </button>
@@ -164,6 +167,12 @@
 
                                     @if (listaSolicitudes.Estado_Id == 2)
                                     {
+                                        <button class="ui icon green button" value="@listaSolicitudes.Id" onclick="PreparaEditar(this.value, this);">
+                                            <i class="pencil icon"></i>
+                                        </button>
+                                        <button class="ui icon blue button" value="@listaSolicitudes.Id" onclick="Imprimir(this.value, this);">
+                                            <i class="print icon"></i>
+                                        </button>
                                         <button class="ui icon red button" data-toggle="modal" data-target="#modalEliminar" value="@listaSolicitudes.Id" onclick="PreparaEliminar(this.value, this);">
                                             <i class="trash icon"></i>
                                         </button>

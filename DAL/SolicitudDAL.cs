@@ -66,6 +66,7 @@ namespace DAL
             db.AddInParameter(dbCommand, "OBSERVACION", DbType.String, solicitud.Observacion_Solicitud != null ? solicitud.Observacion_Solicitud : (object)null);
             db.AddInParameter(dbCommand, "NULA", DbType.Byte, solicitud.Nula == true ? 1 : 0);
             db.AddInParameter(dbCommand, "ELIMINADO", DbType.Byte, solicitud.Eliminado == true ? 1 : 0);
+            db.AddInParameter(dbCommand, "ES_RAYEN", DbType.Byte, solicitud.Es_Rayen == true ? 1 : 0);
 
             solicitud.Id = int.Parse(db.ExecuteScalar(dbCommand).ToString());
 
@@ -98,6 +99,7 @@ namespace DAL
                 int SOES_ID = reader.GetOrdinal("SOES_ID");
                 int ESTADO = reader.GetOrdinal("ESTADO");
                 int OBSERVACION = reader.GetOrdinal("OBSERVACION");
+                int ES_RAYEN = reader.GetOrdinal("ES_RAYEN");
 
                 while (reader.Read())
                 {
@@ -114,6 +116,7 @@ namespace DAL
                     OBJ.Estado_Id = (int)(!reader.IsDBNull(SOES_ID) ? reader.GetValue(SOES_ID) : 0);
                     OBJ.Estado = (String)(!reader.IsDBNull(ESTADO) ? reader.GetValue(ESTADO) : string.Empty);
                     OBJ.Observacion_Solicitud = (String)(!reader.IsDBNull(OBSERVACION) ? reader.GetValue(OBSERVACION) : string.Empty);
+                    OBJ.Es_Rayen = (Boolean)(!reader.IsDBNull(ES_RAYEN) ? reader.GetValue(ES_RAYEN) : false);
                     //EndFields
 
                     solicitud.Add(OBJ);

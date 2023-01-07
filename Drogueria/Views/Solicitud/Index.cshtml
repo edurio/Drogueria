@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-    <script src="~/Scripts/Script_LibroSolicitudes23122022.js"></script>
+    <script src="~/Scripts/Script_Solicitud.js"></script>
 
     <style>
 
@@ -66,8 +66,9 @@
         var urlGuardarRelacion = '@Url.Action("InsertarRelacionProducto", "Solicitud")';
         var urlCambiarFactor = '@Url.Action("CambiarFactor", "Solicitud")';
         var urlEliminarNoRelacionados = '@Url.Action("EliminarNoRelacionados", "Solicitud")';
+        var urlRecuperarSolicitud = '@Url.Action("RecuperarSolicitud", "Solicitud")';
 
-        
+
 
 
         $(document).ready(function () {
@@ -93,7 +94,7 @@
 
                 </div>
                 <h4 class="ui center aligned header">
-                    <img src="~/Images/LogoBackline2.png" class="ui image">
+                    @*<img src="~/Images/LogoBackline2.png" class="ui image">*@
                     Ingreso de solicitudes
                 </h4>
                 <div class="modal-body">
@@ -131,20 +132,20 @@
                                         <select id="cmbTipo" name="cmbTipo" class="ui fluid search selection dropdown">
                                         </select>
                                     </div>
-                                    <div class="field" >
+                                    <div class="field">
                                         <label>Folio</label>
                                         <input id="txtFolio" placeholder=" " type="text" style="background-color:aliceblue" readonly>
                                     </div>
                                     @*<div id="divcmbPrioridad"  class="field">
-            <label>Prioridad</label>
-            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
-            </select>
-        </div>*@
+                                            <label>Prioridad</label>
+                                            <select id="cmbPrioridad" name="cmbPrioridad" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
                                     @*<div id="divcmbEstado" class="field">
-            <label>Estado</label>
-            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
-            </select>
-        </div>*@
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" name="cmbEstado" class="ui fluid search selection dropdown">
+                                            </select>
+                                        </div>*@
 
                                 </div>
                                 <div class="field">
@@ -156,20 +157,20 @@
 
                         @if (@Model.CantidadNoRelacionada > 0)
                         {
-                    <div class="ui icon negative  message">
-                        <i class="exclamation triangle icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                Errores en la carga
+                            <div class="ui icon negative  message">
+                                <i class="exclamation triangle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        Errores en la carga
+                                    </div>
+                                    <p>Hay productos (@Model.CantidadNoRelacionada) en la carga que no tienen configurado su equivalente para la droguería, debe configurar su equivalente</p>
+                                    <button class="ui red labeled icon button" onclick="EliminarNoRelacionados();">
+                                        <i class="trash icon"></i>
+                                        Eliminar productos no relacionados
+                                    </button>
+                                </div>
+
                             </div>
-                            <p>Hay productos (@Model.CantidadNoRelacionada) en la carga que no tienen configurado su equivalente para la droguería, debe configurar su equivalente</p>
-                            <button class="ui red labeled icon button" onclick="EliminarNoRelacionados();">
-                                <i class="trash icon"></i>
-                                Eliminar productos no relacionados
-                            </button>
-                        </div>
-                        
-                    </div>
                         }
 
 
@@ -179,7 +180,7 @@
 
                     <div style="height:7px"></div>
                     <div id="divProgramacion">
-                        @if (Model.SolicitudCargada == false)
+                        @if (Model.SoloLectura == false)
                         {
                             <h4 class="ui top attached block header" style="margin-left:auto; margin-right:auto; width:100%;height:90%">
                                 Detalle artículos
@@ -197,7 +198,7 @@
                                         <tr>
                                             <td style="width:40%">
                                                 <div id="divcmbArticulo" class="field">
-                                                    <label>Articulo</label>
+                                                    <label>Artículo</label>
                                                     <select id="cmbArticulo" name="cmbArticulo" class="ui search selection dropdown">
                                                     </select>
                                                 </div>
@@ -219,7 +220,7 @@
                                             <td style="width:10%">
                                                 <div class="field">
                                                     <label style="opacity:0">" "</label>
-                                                    <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="thumbs up icon"></i></div>
+                                                    <div class="ui right blue labeled icon button" onclick="AgregarProducto();">Agregar<i class="plus icon"></i></div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -235,17 +236,18 @@
 
                             </div>
                         }
-                    
+
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             <thead>
                                 <tr>
-
-                                    <th style="width:15%">Op</th>
                                     <th style="width:50%">Artículo</th>
-                                    <th style="width:10%">Consumo</th>
-                                    <th style="width:10%">Factor</th>
+                                    @if (Model.EsRayen)
+                                    {
+                                        <th style="width:10%">Consumo</th>
+                                        <th style="width:10%">Factor</th>
+                                    }
                                     <th style="width:10%">Solicitado</th>
-                                    <th style="width:10%">Unidad</th>
+                                    @*<th style="width:10%">Unidad</th>*@
                                     <th style="width:30%">Observacion</th>
                                 </tr>
                             </thead>
@@ -277,8 +279,12 @@
                                             }
 
                                             <td>@a.Descripcion</td>
-                                            <td style="text-align:right">@a.Consumo.ToString("#,#")</td>
-                                            <td style="text-align:right">@a.FactorSeguridad</td>
+                                            @if (Model.EsRayen)
+                                            {
+                                                <td style="text-align:right">@a.Consumo.ToString("#,#")</td>
+                                                <td style="text-align:right">@a.FactorSeguridad</td>
+                                            }
+
                                             <td style="text-align:right">@a.Solicitado.ToString("#,#")</td>
                                             <td>@a.Unidad</td>
                                             <td></td>
@@ -290,8 +296,8 @@
                     </div>
 
                     <div class="actions">
-                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
-                            <i class="close icon"></i>
+                        <div style="height:2px"></div>
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">                            
                             <div class="header">
                                 Se han encontrado algunos problemas, revíselos...
                             </div>
@@ -299,8 +305,8 @@
                         </div>
                     </div>
                 </div>
-                <br />
-                
+           
+
                 <div id="msjExito" class="ui icon success hidden message">
                     <i class="check icon"></i>
                     <div class="content">
@@ -315,17 +321,21 @@
                         <i class="times circle icon"></i>
                         <div class="content">
                             <div class="header">
-                                Error!!!x
+                                Error!!!
                             </div>
                             <p>Error al intentar crear la solicitud.</p>
                         </div>
                     </div>
 
-                    <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
-                        Guardar
-                        <i class="checkmark icon"></i>
-                    </div>
-                    <div id="btnLimpiar" class="ui right grey labeled icon button" onclick="LimpiarSolicitud();">Limpiar<i class="file outline icon"></i></div>
+                    @if (Model.SoloLectura == false)
+                    {
+                        <div id="btnGuardar" class="ui positive right labeled icon button" onclick="GuardarSolicitud();">
+                            Guardar
+                            <i class="checkmark icon"></i>
+                        </div>
+                        <div id="btnLimpiar" class="ui right grey labeled icon button" onclick="LimpiarSolicitud();">Limpiar<i class="file outline icon"></i></div>
+                    }
+
                     <div id="btnSalir" class="ui right labeled icon button" onclick="window.location.replace('/LibroSolicitudes?limpiar=1')">Salir<i class="cancel icon"></i></div>
                 </div>
             </div>

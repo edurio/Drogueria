@@ -14,5 +14,9 @@ namespace Drogueria.Models
         public int CantidadNoRelacionada;
 
         public List<Entidades.ProductoExterno> listaProductosExternos;
+
+        public bool SoloLectura;
+
+        public bool EsRayen;
     }
 }

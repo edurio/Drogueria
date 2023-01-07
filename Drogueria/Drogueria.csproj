@@ -235,6 +235,7 @@
     <Content Include="Scripts\Script_LibroSolicitudes23122022.js" />
     <Content Include="Scripts\Script_Login.js" />
     <Content Include="Scripts\Script_MantenedorProductos30092022.js" />
+    <Content Include="Scripts\Script_Solicitud.js" />
     <Content Include="Scripts\Script_SolicitudDetalle.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

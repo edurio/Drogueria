@@ -31,7 +31,11 @@ namespace Entidades
         public bool Nula { get; set; }
         public bool Eliminado { get; set; }
         public bool Es_Modificacion { get; set; }
+
+        public bool Es_Rayen { get; set; }
         public string UsuarioCreador { get; set; }
+
+        public List<Entidades.DetalleSolicitud> DetalleSolicitud { get; set; }
 
         public string Tipo 
         {

@@ -31,9 +31,9 @@ namespace Drogueria.Controllers
             if (Session["registrosEncontrados"] != null && limpiar != null)
             {
                 filtro.EmpId = SessionH.Usuario.EmpId;
-                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(DateTime.Now);
+                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
-                filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
+                filtro.Desde = Utiles.FechaObtenerMinimo(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
                 modelo.SolicitudCargada = false;
@@ -42,9 +42,9 @@ namespace Drogueria.Controllers
             if (Session["registrosEncontrados"] == null && limpiar != null)
             {
                 filtro.EmpId = SessionH.Usuario.EmpId;
-                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(DateTime.Now);
+                Session["FiltroInformeDesde"] = Utiles.ReversaFecha(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
-                filtro.Desde = Utiles.FechaObtenerMinimo(DateTime.Now);
+                filtro.Desde = Utiles.FechaObtenerMinimo(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
                 modelo.SolicitudCargada = false;
@@ -57,6 +57,7 @@ namespace Drogueria.Controllers
                 modelo.listaProductosExternos = Session["listaProductosCargados"] as List<Entidades.ProductoExterno>;
             }
 
+            Session["idSolicitud"] = null;
             return View(modelo);
         }
         public JsonResult ObtenerProductos(int id)
@@ -279,13 +280,15 @@ namespace Drogueria.Controllers
             filtro.Solicitud_Id = idSolicitud;
             var lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
             List<Entidades.DetalleSolicitud> detalleSolicitud = DAL.DetalleSolicitudDAL.ObtenerDetalleSolicitud(filtro);
+            lista.Estado_Id = 1;
+            lista.Estado = "Enviada";
 
             var rutaPDF = Utiles.ObtenerPDF(lista, detalleSolicitud);
 
 
             DAL.SolicitudDAL.EnviarSolicitud(idSolicitud);
 
-            Mensajeria.EnviarConfirmarEmail("eduardo.rios@erex.cl", "Eduardo Ríos", "Solicitud " + lista.Tipo + " N°" + lista.Folio.ToString(), "Tiene una nueva solicitud a revisar", rutaPDF);
+            Mensajeria.EnviarConfirmarEmail("eduardo.rios@erex.cl", "Eduardo Ríos", "Solicitud " + lista.Tipo + " N°" + lista.Folio.ToString(), lista.Observacion_Solicitud, rutaPDF);
 
             //LOG
             var Log = new Entidades.Log() { Modulo = "Solicitud", Descripcion = "Se envía la solicitud N°" + lista.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };

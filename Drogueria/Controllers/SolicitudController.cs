@@ -14,8 +14,10 @@ namespace Drogueria.Controllers
     public class SolicitudController : Controller
     {
         // GET: LibroSolicitudes
-        public ActionResult Index(string limpiar)
+        public ActionResult Index(string limpiar, int? id, int? sl)
         {
+            //sp:solo lectura
+
             Drogueria.Models.LibroSolicitudesModel modelo = new Models.LibroSolicitudesModel();
             Entidades.Filtro filtro = new Entidades.Filtro();
             var text = DateTime.Now.ToString();
@@ -83,16 +85,50 @@ namespace Drogueria.Controllers
                         a.SinRelacionar = false;
                     }
                 }
+                modelo.EsRayen = true;
+                
                 modelo.CantidadNoRelacionada = cantidad;
 
             }
 
+            if (id != null)
+            {
+                Session["idSolicitud"] = id;
+            }
+
+            if (sl == 1)
+            {
+                modelo.SoloLectura = true;
+            }
+
+            Session["EsRayen"] = modelo.EsRayen;
             return View(modelo);
         }
+
         public JsonResult ObtenerProductos(int id)
         {
             var lista = DAL.ProductoDAL.Obtener(new Entidades.Filtro() { EmpId = SessionH.Usuario.EmpId, ClasId = id });
             return new JsonResult() { ContentEncoding = Encoding.Default, Data = lista, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        public JsonResult RecuperarSolicitud()
+        {
+            if (Session["idSolicitud"] != null)
+            {
+                int id = int.Parse(Session["idSolicitud"].ToString());
+                Entidades.Filtro filtro = new Entidades.Filtro();
+                filtro.Id = filtro.Solicitud_Id = id;
+                var solicitud = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
+                var detalleSolicitud = DAL.DetalleSolicitudDAL.ObtenerDetalleSolicitud(filtro);
+
+                solicitud[0].DetalleSolicitud = detalleSolicitud;
+                Session["ListaProductos"] = detalleSolicitud;
+
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = solicitud[0], JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            else
+            {                
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "no", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
         }
 
         public JsonResult ObtenerPrioridad()
@@ -136,6 +172,14 @@ namespace Drogueria.Controllers
         {
             try
             {
+                //SI ESTO OCURRE ES UNA MODIFICACION
+                var textoLog = "Crea solicitud N°";
+                if (Session["idSolicitud"] != null)
+                {
+                    entity.Id = int.Parse(Session["idSolicitud"].ToString());
+                    textoLog = "Modifica solicitud N°";
+                }
+
                 if (entity.Id == 0)
                 {
                     Entidades.Filtro filtro = new Entidades.Filtro();
@@ -146,6 +190,9 @@ namespace Drogueria.Controllers
                 entity.Usr_Id = SessionH.Usuario.Id;
                 entity.Emp_Id = SessionH.Usuario.EmpId;
                 entity.Estado_Id = 2;
+                entity.Es_Rayen = bool.Parse(Session["EsRayen"].ToString());
+
+
                 entity = DAL.SolicitudDAL.InsertarSolicitud(entity);
 
 
@@ -204,7 +251,7 @@ namespace Drogueria.Controllers
                 Session["listaProductosCargados"] = null;
 
                 //LOG
-                var Log = new Entidades.Log() { Modulo="Solicitud", Descripcion="Crea solicitud N°" + entity.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
+                var Log = new Entidades.Log() { Modulo="Solicitud", Descripcion= textoLog + entity.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };
                 DAL.LogDAL.InsertarLog(Log);
 
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = url, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
