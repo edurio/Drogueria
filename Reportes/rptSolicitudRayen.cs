@@ -22,8 +22,7 @@ namespace Reportes
             txtFechaIngreso.Text = lista[0].Fecha_Ingreso.ToString();
             txtFolio.Text = lista[0].Folio.ToString();
             txtSolicitante.Text = lista[0].UsuarioCreador;
-            txtEstablecimiento.Text = " ";
-            txtPrioridad.Text = lista[0].Prioridad;
+            txtEstablecimiento.Text = lista[0].Establecimiento;        
             txtEstado.Text = lista[0].Estado;
             txtObservacion.Text = lista[0].Observacion_Solicitud;
             txtTipo.Text = lista[0].Tipo;

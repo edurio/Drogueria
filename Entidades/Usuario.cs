@@ -54,5 +54,18 @@ namespace Entidades
                 return Roles;
             }
         }
+
+        public bool TieneRol(Entidades.Enumerados.Rol rol)
+        {
+            bool retorno = false;
+            foreach(var a in ListaRoles)
+            {
+                if (a.Id == (int) rol)
+                {
+                    return true;
+                }
+            }
+            return retorno;
+        }
     }
 }

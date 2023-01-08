@@ -191,7 +191,8 @@ namespace Drogueria.Controllers
                 entity.Emp_Id = SessionH.Usuario.EmpId;
                 entity.Estado_Id = 2;
                 entity.Es_Rayen = bool.Parse(Session["EsRayen"].ToString());
-
+                entity.EstId = SessionH.Usuario.Est_id;
+                entity.Establecimiento = SessionH.Establecimiento.Descripcion;
 
                 entity = DAL.SolicitudDAL.InsertarSolicitud(entity);
 

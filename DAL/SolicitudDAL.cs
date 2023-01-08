@@ -58,6 +58,7 @@ namespace DAL
 
             db.AddInParameter(dbCommand, "ID", DbType.Int32, solicitud.Id != 0 ? solicitud.Id : (object)null);
             db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, solicitud.Emp_Id != 0 ? solicitud.Emp_Id : (object)null);
+            db.AddInParameter(dbCommand, "EST_ID", DbType.Int32, solicitud.EstId != 0 ? solicitud.EstId : (object)null);
             db.AddInParameter(dbCommand, "USUARIO_ID", DbType.Int32, solicitud.Usr_Id != 0 ? solicitud.Usr_Id : (object)null);
             db.AddInParameter(dbCommand, "FECHA", DbType.DateTime, solicitud.Fecha_Ingreso != DateTime.MinValue ? solicitud.Fecha_Ingreso : (object)null);
             db.AddInParameter(dbCommand, "FOLIO", DbType.Int32, solicitud.Folio != 0 ? solicitud.Folio : (object)null);
@@ -80,6 +81,7 @@ namespace DAL
 
             db.AddInParameter(dbCommand, "ID", DbType.Int32, filtro.Id != 0 ? filtro.Id : (object)null);
             db.AddInParameter(dbCommand, "EMP_ID", DbType.Int32, filtro.EmpId != 0 ? filtro.EmpId : (object)null);
+            db.AddInParameter(dbCommand, "EST_ID", DbType.Int32, filtro.Est_Id != 0 ? filtro.Est_Id : (object)null);
             db.AddInParameter(dbCommand, "FECHA_DESDE", DbType.DateTime, filtro.Desde != DateTime.MinValue ? filtro.Desde : (object)null);
             db.AddInParameter(dbCommand, "FECHA_HASTA", DbType.DateTime, filtro.Hasta != DateTime.MinValue ? filtro.Hasta : (object)null);
 
@@ -100,6 +102,7 @@ namespace DAL
                 int ESTADO = reader.GetOrdinal("ESTADO");
                 int OBSERVACION = reader.GetOrdinal("OBSERVACION");
                 int ES_RAYEN = reader.GetOrdinal("ES_RAYEN");
+                int ESTABLECIMIENTO = reader.GetOrdinal("ESTABLECIMIENTO");
 
                 while (reader.Read())
                 {
@@ -117,6 +120,7 @@ namespace DAL
                     OBJ.Estado = (String)(!reader.IsDBNull(ESTADO) ? reader.GetValue(ESTADO) : string.Empty);
                     OBJ.Observacion_Solicitud = (String)(!reader.IsDBNull(OBSERVACION) ? reader.GetValue(OBSERVACION) : string.Empty);
                     OBJ.Es_Rayen = (Boolean)(!reader.IsDBNull(ES_RAYEN) ? reader.GetValue(ES_RAYEN) : false);
+                    OBJ.Establecimiento = (String)(!reader.IsDBNull(ESTABLECIMIENTO) ? reader.GetValue(ESTABLECIMIENTO) : string.Empty);
                     //EndFields
 
                     solicitud.Add(OBJ);

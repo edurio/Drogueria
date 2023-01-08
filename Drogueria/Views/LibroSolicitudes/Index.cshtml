@@ -132,14 +132,16 @@
             <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width:210px"></th>
-                        <th style="width:15%">Fecha de ingreso</th>
-                        <th style="width:10%">N° Solicitud</th>
-                        <th style="width:10%">Tipo</th>
+                        <th style="width:13%"></th>
+                        <th style="width:12%">Fecha de ingreso</th>
+                        <th style="width:5%">Folio</th>
+                        <th style="width:5%">Tipo</th>
 
-                        <th style="width:30%">Observación</th>
-                        <th style="width:15%">Usuario solicitante</th>
-                        <th style="width:10%">Estado</th>
+                        <th style="width:20%">Observación</th>
+                        <th style="width:10%">Usuario solicitante</th>
+                        <th style="width:15%">Estado</th>
+                        <th style="width:5%">Rayén</th>
+                        <th style="width:20%">Establecimiento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,7 +151,7 @@
                         {
                             <tr>
 
-                                <td style="width:210px">
+                                <td style="width:13%">
 
 
                                     @if (listaSolicitudes.Estado_Id == 1)
@@ -204,6 +206,21 @@
                                         <div class="ui red horizontal label">Borrador por enviar</div>
                                     </td>
                                 }
+
+                                @if (listaSolicitudes.Es_Rayen == false)
+                                {
+                                    <td>
+                                        <div class="ui horizontal label">no</div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div class="ui green horizontal label">si</div>
+                                    </td>
+                                }
+
+                                <td style="width:20%">@listaSolicitudes.Establecimiento</td>
                             </tr>
                         }
                     }
@@ -435,7 +452,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="Eliminar();">
+                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="EliminarSolicitud();">
                     Eliminar
                     <i class="trash icon"></i>
                 </div>

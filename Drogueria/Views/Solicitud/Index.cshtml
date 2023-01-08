@@ -240,6 +240,10 @@
                         <table id="grdArticulos" class="ui inverted table table-striped table-bordered">
                             <thead>
                                 <tr>
+                                    @if (Model.EsRayen)
+                                    {
+                                        <th style="width:400px">Opciones</th>
+                                    }
                                     <th style="width:50%">Artículo</th>
                                     @if (Model.EsRayen)
                                     {
@@ -247,8 +251,16 @@
                                         <th style="width:10%">Factor</th>
                                     }
                                     <th style="width:10%">Solicitado</th>
-                                    @*<th style="width:10%">Unidad</th>*@
-                                    <th style="width:30%">Observacion</th>
+
+                                    @if (!Model.EsRayen)
+                                    {
+                                        <th style="width:30%">Observacion</th>
+                                    }
+
+                                    @if (Model.EsRayen)
+                                    {
+                                        <th style="width:10%">Unidad</th>
+                                    }
                                 </tr>
                             </thead>
 
@@ -297,7 +309,7 @@
 
                     <div class="actions">
                         <div style="height:2px"></div>
-                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">                            
+                        <div id="DivMessajeErrorGeneral" class="ui hidden error message" style="margin-left:auto; margin-right:auto; width:100%">
                             <div class="header">
                                 Se han encontrado algunos problemas, revíselos...
                             </div>
@@ -305,7 +317,7 @@
                         </div>
                     </div>
                 </div>
-           
+
 
                 <div id="msjExito" class="ui icon success hidden message">
                     <i class="check icon"></i>

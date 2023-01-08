@@ -21,6 +21,8 @@ namespace Drogueria.Controllers
             if (lista.Count == 1)
             {
                 SessionH.Usuario = lista[0];
+                SessionH.Usuario.ListaRoles = DAL.RolDAL.ObtenerRolesUsuario(lista[0].Id);
+
 
                 //Me traigo el establecimiento
                 var establecimiento = DAL.EstablecimientoDAL.ObtenerEstablecimiento(new Entidades.Filtro() { Id = lista[0].Est_id });

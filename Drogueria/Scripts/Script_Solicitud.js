@@ -273,7 +273,8 @@ function ActualizaGrid() {
             html = html + '<td>' + element.ProductoStr + '</td>';
             html = html + '<td style="text-align:right">' + element.Consumo + '</td>';
             html = html + '<td style="text-align:right">' + element.Factor + '</td>';
-            html = html + '<td style="text-align:right">' + element.Cantidad + '</td>';           
+            html = html + '<td style="text-align:right">' + element.Cantidad + '</td>';        
+            html = html + '<td>' + element.Unidad + '</td>';
             html = html + '<td>' + element.Observacion + '</td>';
             html = html + '</tr>';
             indice++;
@@ -298,7 +299,7 @@ function GridEncabezado() {
 
     if (_esRayen == true) {
         var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
-        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
+        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
         return encabezado;
     }
 

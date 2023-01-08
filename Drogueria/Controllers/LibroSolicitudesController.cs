@@ -35,6 +35,13 @@ namespace Drogueria.Controllers
                 Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
                 filtro.Desde = Utiles.FechaObtenerMinimo(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
+
+                //Si soy Administrador veo todo, sino, solo veo las de mi establecimiento
+                if (!SessionH.Usuario.TieneRol(Entidades.Enumerados.Rol.Administrador))
+                {
+                    filtro.Est_Id = SessionH.Usuario.Est_id;
+                }
+
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
                 modelo.SolicitudCargada = false;
                 Session["registrosEncontrados"] = modelo.lista;
@@ -46,6 +53,12 @@ namespace Drogueria.Controllers
                 Session["FiltroInformeHasta"] = Utiles.ReversaFecha(DateTime.Now);
                 filtro.Desde = Utiles.FechaObtenerMinimo(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
                 filtro.Hasta = Utiles.FechaObtenerMaximo(DateTime.Now);
+                //Si soy Administrador veo todo, sino, solo veo las de mi establecimiento
+                if (!SessionH.Usuario.TieneRol(Entidades.Enumerados.Rol.Administrador))
+                {
+                    filtro.Est_Id = SessionH.Usuario.Est_id;
+                }
+
                 modelo.lista = DAL.SolicitudDAL.ObtenerSolicitud(filtro);
                 modelo.SolicitudCargada = false;
                 Session["registrosEncontrados"] = modelo.lista;
@@ -256,6 +269,13 @@ namespace Drogueria.Controllers
             entity.Desde = Utiles.FechaObtenerMinimo(entity.Desde);
             entity.Hasta = Utiles.FechaObtenerMaximo(entity.Hasta);
             entity.EmpId = SessionH.Usuario.EmpId;
+
+            //Si soy Administrador veo todo, sino, solo veo las de mi establecimiento
+            if (!SessionH.Usuario.TieneRol(Entidades.Enumerados.Rol.Administrador))
+            {
+                entity.Est_Id = SessionH.Usuario.Est_id;
+            }
+
             List<Entidades.Solicitud> historicosEncontrados = DAL.SolicitudDAL.ObtenerSolicitud(entity);
             Session["FiltroInformeDesde"] = Utiles.ReversaFecha(entity.Desde);
             Session["FiltroInformeHasta"] = Utiles.ReversaFecha(entity.Hasta);
@@ -305,7 +325,14 @@ namespace Drogueria.Controllers
             var solicitud = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
             List<Entidades.DetalleSolicitud> detalleSolicitud = DAL.DetalleSolicitudDAL.ObtenerDetalleSolicitud(filtro);
 
-            var rutaPDF = Utiles.ObtenerPDF(solicitud, detalleSolicitud);
+            if (!solicitud.Es_Rayen)
+            {
+                var rutaPDF = Utiles.ObtenerPDF(solicitud, detalleSolicitud);
+            }
+            else
+            {
+                var rutaPDF = Utiles.ObtenerPDF_Rayen(solicitud, detalleSolicitud);
+            }
 
 
             var url = "";
@@ -326,14 +353,14 @@ namespace Drogueria.Controllers
 
         }
 
-        public JsonResult Eliminar(int id)
+        public JsonResult Eliminar(int Id)
         {
             Entidades.Filtro filtro = new Entidades.Filtro();
-            filtro.Id = id;
-            filtro.Solicitud_Id = id;
+            filtro.Id = Id;
+            filtro.Solicitud_Id = Id;
             var solicitud = DAL.SolicitudDAL.ObtenerSolicitud(filtro)[0];
 
-            DAL.SolicitudDAL.Eliminar(id);
+            DAL.SolicitudDAL.Eliminar(Id);
 
             //LOG
             var Log = new Entidades.Log() { Modulo = "Solicitud", Descripcion = "Se elimina la solicitud N°" + solicitud.Folio.ToString(), Usr_Id = SessionH.Usuario.Id };

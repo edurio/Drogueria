@@ -31,7 +31,7 @@ namespace Drogueria.Controllers
                 ProcesarExcel(path);
             }
             
-            return RedirectToAction("Index", "Solicitud");
+            return RedirectToAction("Index", "Solicitud", new { @esRayen = "true" });
         }
 
 

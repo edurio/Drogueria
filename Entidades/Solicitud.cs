@@ -10,6 +10,10 @@ namespace Entidades
     {
         public int Id { get; set; }
         public int Emp_Id { get; set; }
+
+        public int EstId { get; set; }
+
+        public string Establecimiento { get; set; }
         public string Empresa { get; set; }
         public int Usr_Id { get; set; }
         public DateTime Fecha_Ingreso { get; set; }

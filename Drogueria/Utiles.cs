@@ -118,5 +118,17 @@ namespace Drogueria
             return ruta;
         }
 
+        public static string ObtenerPDF_Rayen(Entidades.Solicitud entity, List<Entidades.DetalleSolicitud> listadoProductos)
+        {
+            Reportes.rptSolicitudRayen rptSolicitud = new Reportes.rptSolicitudRayen();
+            rptSolicitud.Cargar(entity, listadoProductos);
+            rptSolicitud.CreateDocument(true);
+
+            var ruta = ConfigurationSettings.AppSettings.Get("RutaPDF_Fisica") + "Solicitud_N°" + entity.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
+            rptSolicitud.ExportToPdf(ruta, null);
+
+            return ruta;
+        }
+
     }
 }

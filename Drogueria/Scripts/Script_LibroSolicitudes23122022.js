@@ -615,6 +615,10 @@ function EliminarNoRelacionados() {
     });
 }
 
+function PreparaEliminar(id) {    
+    $("#idSolicitudSeleccionada").val(id);    
+}
+
 function PreparaEditar(id) {
     location.href = '/solicitud?limpiar=1&id=' + id;
 }
@@ -640,4 +644,23 @@ function Imprimir(id) {
 
 function PreparaVer(id) {
     location.href = '/solicitud?limpiar=1&id=' + id + '&sl=1';
+}
+
+
+function EliminarSolicitud() {
+
+    var Id = $("#idSolicitudSeleccionada").val();
+
+    $.ajax({
+        url: window.urlEliminar,
+        type: 'POST',
+        data: { Id: Id },
+        success: function (data) {
+            location.reload();
+
+        },
+        error: function (ex) {
+            alert('Error al eliminar el producto');
+        }
+    });
 }
