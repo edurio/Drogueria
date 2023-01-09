@@ -17,6 +17,7 @@ namespace DAL
             Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_SOLICITUD_DETALLE_INS");
 
+            db.AddInParameter(dbCommand, "ID_LINEA", DbType.Int32, detalleSolicitud.IdLineaProducto != 0 ? detalleSolicitud.IdLineaProducto : (object)null);
             db.AddInParameter(dbCommand, "SOLICITUD_ID", DbType.Int32, detalleSolicitud.Solicitud_Id != 0 ? detalleSolicitud.Solicitud_Id : (object)null);
             db.AddInParameter(dbCommand, "PROD_ID", DbType.Int32, detalleSolicitud.Producto_Id != 0 ? detalleSolicitud.Producto_Id : (object)null);
             db.AddInParameter(dbCommand, "CONSUMO", DbType.Int32, detalleSolicitud.Consumo != 0 ? detalleSolicitud.Consumo : (object)null);
@@ -49,6 +50,7 @@ namespace DAL
             try
             {
                 int ID = reader.GetOrdinal("ID");
+                int ID_LINEA = reader.GetOrdinal("ID_LINEA");
                 int SOLICITUD_ID = reader.GetOrdinal("SOLICITUD_ID");
                 int PROD_ID = reader.GetOrdinal("PROD_ID");
                 int PRODUCTO = reader.GetOrdinal("PRODUCTO");
@@ -67,6 +69,7 @@ namespace DAL
                     Entidades.DetalleSolicitud OBJ = new Entidades.DetalleSolicitud();
                     //BeginFields
                     OBJ.Id = (int)(!reader.IsDBNull(ID) ? reader.GetValue(ID) : 0);
+                    OBJ.IdLineaProducto = (int)(!reader.IsDBNull(ID_LINEA) ? reader.GetValue(ID_LINEA) : 0);
                     OBJ.Solicitud_Id = (int)(!reader.IsDBNull(SOLICITUD_ID) ? reader.GetValue(SOLICITUD_ID) : 0);
                     OBJ.Producto_Id = (int)(!reader.IsDBNull(PROD_ID) ? reader.GetValue(PROD_ID) : 0);
                     OBJ.ProductoStr = (String)(!reader.IsDBNull(PRODUCTO) ? reader.GetValue(PRODUCTO) : string.Empty);
@@ -99,12 +102,13 @@ namespace DAL
             return detalleSolicitud;
 
         }
-        public static void EliminarProducto(int id)
+        public static void EliminarProducto(int id, int idLinea)
         {
             Microsoft.Practices.EnterpriseLibrary.Data.Database db = DatabaseFactory.CreateDatabase("baseDatosDROGUERIA");
             DbCommand dbCommand = db.GetStoredProcCommand("SP_SOLICITUD_DETALLE_DEL");
 
             db.AddInParameter(dbCommand, "ID", DbType.Int32, id);
+            db.AddInParameter(dbCommand, "ID_LINEA", DbType.Int32, idLinea);
 
 
             db.ExecuteNonQuery(dbCommand);

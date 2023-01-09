@@ -9,6 +9,9 @@ namespace Entidades
     public class DetalleSolicitud
     {
         public int Id { get; set; }
+
+        public int IdLineaProducto { get; set; }
+
         public int Solicitud_Id { get; set; }
         public int FolioSolicitud { get; set; }
         public DateTime Fecha_Ingreso { get; set; }

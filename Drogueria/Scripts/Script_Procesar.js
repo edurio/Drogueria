@@ -42,6 +42,13 @@ function ObtenerEtiqueta() {
 
             _arregloArticulos.push(data);
             ActualizaGrid();
+
+            //Limpiar
+            $('#txtNumeroEtiqueta').val("");
+            $('#txtArticulo').val("");
+            $('#txtLote').val("");
+            $('#txtCantidad').val("");
+            document.getElementById("txtNumeroEtiqueta").focus();
             
         },
         error: function () {

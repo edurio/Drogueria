@@ -67,6 +67,8 @@
         var urlCambiarFactor = '@Url.Action("CambiarFactor", "Solicitud")';
         var urlEliminarNoRelacionados = '@Url.Action("EliminarNoRelacionados", "Solicitud")';
         var urlRecuperarSolicitud = '@Url.Action("RecuperarSolicitud", "Solicitud")';
+        var urlRemoverProducto = '@Url.Action("RemoverProducto", "Solicitud")';
+        
 
 
 
@@ -517,3 +519,39 @@
 <input type="hidden" id="idCarga" value="0" />
 <input type="hidden" id="idSolicitudSeleccionada" value="0" />
 <input type="hidden" id="idProductoSeleccionado" value="0" />
+
+
+<!-- Modal Mensaje Éxito -->
+<div class="modal fade bd-example-modal-sm" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Eliminar artículo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ui icon negative message">
+                    <i class="trash icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            ¿Desea eliminar esta artículo?
+                        </div>
+                        <p>Se eliminará esta artpiculo de la solicitud</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="EliminarProducto();">
+                    Eliminar
+                    <i class="trash icon"></i>
+                </div>
+                <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
+                    Cancelar
+                    <i class="cancel icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 ﻿var _id = 0;
+var _idLineaProducto = 1;
 var _arregloArticulos = [];
 var _esRayen = false;
+var _esSoloLectura = false;
 
 $(function () {
     // CargaProductos();
@@ -16,7 +18,8 @@ $(function () {
         get: (searchParams, prop) => searchParams.get(prop),
     });
     
-    _esRayen = params.esRayen == 'true' ? true : false ; 
+    _esRayen = params.esRayen == 'true' ? true : false; 
+    _esSoloLectura = params.sl == '1' ? true : false; 
 });
 
 function RecuperarSolicitud() {
@@ -28,8 +31,11 @@ function RecuperarSolicitud() {
             $("#cmbTipo").dropdown('set selected', data.Tipo_Id);
             $('#txtObservacion').val(data.Observacion_Solicitud);
 
+            var _idLineaProducto = 1; 
             $.each(data.DetalleSolicitud, function (value, item) {
+               // item.IdLineaProducto = _idLineaProducto;
                 _arregloArticulos.push(item);
+                _idLineaProducto++;
             }
             );
 
@@ -263,6 +269,45 @@ function Eliminar(indice, Producto_Id) {
         }
     });
 }
+
+
+function RemoverProducto(IdLineaProducto) {
+
+   
+
+    $.ajax({
+        url: window.urlRemoverProducto,
+        type: 'POST',
+        data: { IdLineaProducto: IdLineaProducto },
+        success: function (data) {            
+           ActualizaGrid();
+
+        },
+        error: function (ex) {
+            alert('Error al eliminar el producto');
+        }
+    });
+}
+
+function PreparaEliminarLinea(id) {    
+    $('#idProductoSeleccionado').val(id);   
+}
+
+function EliminarProducto() {
+    var id = $('#idProductoSeleccionado').val();
+    var arregloArticulos = [];
+
+    _arregloArticulos.forEach(function (element) {
+        if (element.IdLineaProducto != id) {
+            arregloArticulos.push(element);
+        }
+    });
+
+    RemoverProducto(id);
+    _arregloArticulos = arregloArticulos;
+    ActualizaGrid();
+}
+
 function ActualizaGrid() {
     var html = GridEncabezado();
     var indice = 0;
@@ -270,6 +315,10 @@ function ActualizaGrid() {
     if (_esRayen == true) {
         _arregloArticulos.forEach(function (element) {
             html = html + '<tr>';
+            if (_esSoloLectura == false) {
+                html = html + '<td><button class="ui icon red button" data-toggle="modal" data-target="#modalEliminar" onclick="PreparaEliminarLinea(' + element.IdLineaProducto + ');"><i class="trash icon"></i></button></td>';
+            }
+            
             html = html + '<td>' + element.ProductoStr + '</td>';
             html = html + '<td style="text-align:right">' + element.Consumo + '</td>';
             html = html + '<td style="text-align:right">' + element.Factor + '</td>';
@@ -284,6 +333,9 @@ function ActualizaGrid() {
     if (_esRayen == false) {
         _arregloArticulos.forEach(function (element) {
             html = html + '<tr>';
+            if (_esSoloLectura == false) {
+                html = html + '<td><button class="ui icon red button" data-toggle="modal" data-target="#modalEliminar" onclick="PreparaEliminarLinea(' + element.IdLineaProducto + ');"><i class="trash icon"></i></button></td>';
+            }
             html = html + '<td>' + element.ProductoStr + '</td>';            
             html = html + '<td style="text-align:right">' + element.Cantidad + '</td>';            
             html = html + '<td>' + element.Observacion + '</td>';
@@ -298,15 +350,31 @@ function ActualizaGrid() {
 function GridEncabezado() {
 
     if (_esRayen == true) {
-        var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
-        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
-        return encabezado;
+        if (_esSoloLectura == false) {
+            var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+            encabezado = encabezado + '<thead><th style="width:10%">Op.</th><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
+            return encabezado;
+        }
+        if (_esSoloLectura == true) {
+            var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+            encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Consumo</th><th style="width:10%">Factor</th><th style="width:10%">Solicitado</th><th style="width:10%">Unidad</th><th style="width:30%">Observación</th></tr></thead>';
+            return encabezado;
+        }
+       
     }
 
     if (_esRayen == false) {
-        var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
-        encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
-        return encabezado;
+        if (_esSoloLectura == false) {
+            var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+            encabezado = encabezado + '<thead><th style="width:10%">Op.</th><th style="width:50%">Artículo</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
+            return encabezado;
+        }
+        if (_esSoloLectura == true) {
+            var encabezado = '<table id="grdDatos" class="ui inverted table table-striped table-bordered">';
+            encabezado = encabezado + '<thead><th style="width:50%">Artículo</th><th style="width:10%">Solicitado</th><th style="width:30%">Observación</th></tr></thead>';
+            return encabezado;
+        }
+        
     }
 
     
@@ -370,6 +438,7 @@ function AgregarProducto() {
         return;
 
     var DetalleProducto = {
+        IdLineaProducto: _idLineaProducto,
         Producto_Id: $('#cmbArticulo').val(),
         ProductoStr: $('#cmbArticulo').dropdown('get text'),
         Cantidad: $('#txtCantidad').val(),
@@ -378,6 +447,8 @@ function AgregarProducto() {
         Factor: 0,
         Consumo: 0
     };
+
+    _idLineaProducto++;
 
     $.ajax({
         url: window.urlAgregarProducto,

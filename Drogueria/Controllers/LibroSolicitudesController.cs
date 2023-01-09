@@ -245,7 +245,7 @@ namespace Drogueria.Controllers
                         if (detalle.ProductoNuevo == false)
                         {
                             var id = detalle.Id;
-                            DAL.DetalleSolicitudDAL.EliminarProducto(id);
+                            //DAL.DetalleSolicitudDAL.EliminarProducto(id);
                         }
                         var indice = entity.Indice;
                         listadoProductos.RemoveAt(indice);

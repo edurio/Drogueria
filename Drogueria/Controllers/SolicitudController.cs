@@ -320,7 +320,7 @@ namespace Drogueria.Controllers
                         if (detalle.ProductoNuevo == false)
                         {
                             var id = detalle.Id;
-                            DAL.DetalleSolicitudDAL.EliminarProducto(id);
+                       //     DAL.DetalleSolicitudDAL.EliminarProducto(id);
                         }
                         var indice = entity.Indice;
                         listadoProductos.RemoveAt(indice);
@@ -332,6 +332,41 @@ namespace Drogueria.Controllers
 
 
                 //ControlStock.DAL.FacturaDAL.InsertarFactura(entity);
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = listadoProductos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult() { ContentEncoding = Encoding.Default, Data = "error", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        public JsonResult RemoverProducto(int IdLineaProducto)
+        {
+            try
+            {
+                List<Entidades.DetalleSolicitud> listadoProductos = Session["ListaProductos"] as List<Entidades.DetalleSolicitud>;
+                List<Entidades.DetalleSolicitud> listadoProductosNueva = new List<Entidades.DetalleSolicitud>();
+                foreach (var detalle in listadoProductos)
+                {
+                    if (detalle.IdLineaProducto != IdLineaProducto)
+                    {
+                        listadoProductosNueva.Add(detalle);
+                    }
+                }
+
+                listadoProductos = listadoProductosNueva;
+                Session["ListaProductos"] = listadoProductos;
+
+
+                //Entró en modo edición de una solicitud ya existente
+                if (Session["idSolicitud"] != null)
+                {
+                    int id = int.Parse(Session["idSolicitud"].ToString());
+                    DAL.DetalleSolicitudDAL.EliminarProducto(id, IdLineaProducto);
+                }
+
+               
+
                 return new JsonResult() { ContentEncoding = Encoding.Default, Data = listadoProductos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)
