@@ -196,6 +196,7 @@
     <Content Include="Images\BtnProducto.png" />
     <Content Include="Images\BtnRelacionar.png" />
     <Content Include="Images\BtnUser.png" />
+    <Content Include="Images\btnYou.png" />
     <Content Include="Images\CargarProductos.png" />
     <Content Include="Images\CrearSolicitudFnd.png" />
     <Content Include="Images\LibroSolicitudes.png" />

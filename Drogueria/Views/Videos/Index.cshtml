@@ -9,19 +9,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    @*<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">*@
+    <meta name="viewport" content="width=device-width" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
-    <title>@ConfigurationSettings.AppSettings.Get("TituloPestaña")</title>
-
-
-    <!--Fontawesome CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <title>Libro de solicitudes</title>
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
     <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+
+
+    <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/RecursosExternos/bootstrap.min.js"></script>
+    <script src="~/RecursosExternos/jquery.min.js"></script>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
     <style>
 
 
@@ -126,7 +131,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="ui icon info message">
-                            <i class="trash icon"></i>
+                            <i class="youtube icon"></i>
                             <div class="content">
                                 <p>Seleccione el video de su interes. en este periodo inicial, con el paso de los dias se irán agregando mas videos</p>
                             </div>
@@ -165,7 +170,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button" onclick="location.href='/login'">
+                        <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button" onclick="history.back()">
                             volver
                             <i class="cancel icon"></i>
                         </div>
