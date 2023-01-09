@@ -1,4 +1,6 @@
-﻿@using System.Configuration;
+﻿@model Drogueria.Models.LoginModel
+
+@using System.Configuration;
 
 <link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="~/RecursosExternos/bootstrap.min.js"></script>
@@ -68,7 +70,7 @@
 
         .input-group-prepend span {
             width: 50px;
-            background-color:darkslateblue;
+            background-color: darkslateblue;
             color: black;
             border: 0 !important;
         }
@@ -121,21 +123,21 @@
                     <h3><img src="~/Images/LogoBackline.png" width="100" alt="Hal9000">Hub Droguerías</h3>
                     <div class="d-flex justify-content-end social_icon">
                         @*<span data-toggle="tooltip" title="Gráfico diario de accesos"><i onclick="window.open(@ConfigurationSettings.AppSettings.Get("URL_dashboard"),'_blank') ;" class="fas fa-chart-pie"></i></span>
-                        <span data-toggle="tooltip" title="Acceso a videos de apoyo"><i onclick="window.open(@ConfigurationSettings.AppSettings.Get("URL_Videos"),'_blank') ;" class="fab fa-youtube"></i></span>*@
+                            <span data-toggle="tooltip" title="Acceso a videos de apoyo"><i onclick="window.open(@ConfigurationSettings.AppSettings.Get("URL_Videos"),'_blank') ;" class="fab fa-youtube"></i></span>*@
                         @*<span><i class="fab fa-twitter-square"></i></span>*@
                     </div>
                 </div>
                 <div class="card-body">
                     @*<form>*@
                     @*@{
-                        var sessionGuardada = Request.Cookies["EREX_MM_ID_u0A"] != null ? Request.Cookies["EREX_MM_ID_u0A"].Value : "0";
-                        var usuario = Request.Cookies["EREX_MM_ID_u1A"] != null ? Erex.Utiles.Utiles.Base64Decode(Request.Cookies["EREX_MM_ID_u1A"].Value) : "";
-                        var password = Request.Cookies["EREX_MM_ID_u2A"] != null ? Erex.Utiles.Utiles.Base64Decode(Request.Cookies["EREX_MM_ID_u2A"].Value) : "";
+                            var sessionGuardada = Request.Cookies["EREX_MM_ID_u0A"] != null ? Request.Cookies["EREX_MM_ID_u0A"].Value : "0";
+                            var usuario = Request.Cookies["EREX_MM_ID_u1A"] != null ? Erex.Utiles.Utiles.Base64Decode(Request.Cookies["EREX_MM_ID_u1A"].Value) : "";
+                            var password = Request.Cookies["EREX_MM_ID_u2A"] != null ? Erex.Utiles.Utiles.Base64Decode(Request.Cookies["EREX_MM_ID_u2A"].Value) : "";
 
-                        var chk = sessionGuardada == "1" ? "checked" : "";
-                    }*@
+                            var chk = sessionGuardada == "1" ? "checked" : "";
+                        }*@
 
-                    @{ 
+                    @{
                         var usuario = "Sujei49";
                         var password = "123456";
                         var chk = "checked";
@@ -182,7 +184,7 @@
                         ¿necesita una guía para utilizar el software?
                     </div>
                     <div class="d-flex justify-content-center">
-                        <p> <a href="~/Files/Manual de uso CCAA v2.pdf">descárguela acá</a>.</p>
+                        <p> <a href="/videos">Vea los videos de uso acá</a>.</p>
                     </div>
                 </div>
             </div>
@@ -194,3 +196,39 @@
 </html>
 
 <script src="~/Scripts/Script_Login.js"></script>
+
+
+<!-- Modal Mensaje Éxito -->
+<div class="modal fade bd-example-modal-sm" id="modalVideos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Videos</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ui icon negative message">
+                    <i class="trash icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            ¿Desea eliminar esta solicitud?
+                        </div>
+                        <p>Se eliminará esta solicitud de la base de datos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="btnCancelar" data-dismiss="modal" class="ui red right labeled icon button" onclick="EliminarSolicitud();">
+                    Eliminar
+                    <i class="trash icon"></i>
+                </div>
+                <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button">
+                    Cancelar
+                    <i class="cancel icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

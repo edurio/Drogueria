@@ -160,11 +160,13 @@
     <Compile Include="Controllers\ProcesarController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\SolicitudDetalleController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mensajeria.cs" />
     <Compile Include="Models\LibroSolicitudesModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\MantenedorProductosModel.cs" />
     <Compile Include="Models\MantenedorRelacionProductosModel.cs" />
@@ -271,6 +273,7 @@
     <Content Include="Views\MantenedorUsuarios\Index.cshtml" />
     <Content Include="Views\MantenedorUsuarios\MantenedorUsuarios.cshtml" />
     <Content Include="Views\Log\Log.cshtml" />
+    <Content Include="Views\Videos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

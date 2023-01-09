@@ -12,7 +12,9 @@ namespace Drogueria.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            Drogueria.Models.LoginModel modelo = new Models.LoginModel();
+            modelo.ListaVideos = DAL.VideoDAL.ObtenerVideos();
+            return View(modelo);
         }
 
         public ActionResult ValidaUsuario(Entidades.Filtro entity)

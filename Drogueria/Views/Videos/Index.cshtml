@@ -1,0 +1,185 @@
+﻿@model Drogueria.Models.LoginModel
+
+@using System.Configuration;
+
+<link href="~/RecursosExternos/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="~/RecursosExternos/bootstrap.min.js"></script>
+<script src="~/RecursosExternos/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">*@
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/Hall9000_edo.png" />
+    <title>@ConfigurationSettings.AppSettings.Get("TituloPestaña")</title>
+
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.css">
+    <link rel="stylesheet" type="text/css" href="~/RecursosExternos/semantic.min.css">
+    <style>
+
+
+
+        html, body {
+            background-image: url('/Images/WallMedico.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+
+        .container {
+            height: 100%;
+            align-content: center;
+        }
+
+        .card {
+            height: 450px;
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 400px;
+            background-color: rgba(0,0,0,0.5) !important;
+        }
+
+        .social_icon span {
+            font-size: 60px;
+            margin-left: 10px;
+            color: #FFC312;
+        }
+
+            .social_icon span:hover {
+                color: white;
+                cursor: pointer;
+            }
+
+        .card-header h3 {
+            color: white;
+        }
+
+        .social_icon {
+            position: absolute;
+            right: 20px;
+            top: -45px;
+        }
+
+        .input-group-prepend span {
+            width: 50px;
+            background-color: darkslateblue;
+            color: black;
+            border: 0 !important;
+        }
+
+        input:focus {
+            outline: 0 0 0 0 !important;
+            box-shadow: 0 0 0 0 !important;
+        }
+
+        .remember {
+            color: white;
+        }
+
+            .remember input {
+                width: 20px;
+                height: 20px;
+                margin-left: 15px;
+                margin-right: 5px;
+            }
+
+        .login_btn {
+            color: black;
+            background-color: darkslateblue;
+            width: 100px;
+        }
+
+            .login_btn:hover {
+                color: black;
+                background-color: white;
+            }
+
+        .links {
+            color: white;
+        }
+
+            .links a {
+                margin-left: 4px;
+            }
+    </style>
+    <script>
+        function PreparaVer(url) {
+            location.href = url;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class=" bd-example-modal-sm" id="modalVideos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLongTitle">Videos</h3>                        
+                    </div>
+                    <div class="modal-body">
+                        <div class="ui icon info message">
+                            <i class="trash icon"></i>
+                            <div class="content">
+                                <p>Seleccione el video de su interes. en este periodo inicial, con el paso de los dias se irán agregando mas videos</p>
+                            </div>
+                        </div>
+
+                        <table id="tabla" class="ui fixed table inverted table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:15%"></th>
+                                    <th style="width:85%">Interés</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ListaVideos != null)
+                                {
+                                    foreach (var video in Model.ListaVideos)
+                                    {
+                                        <tr>
+
+                                            <td style="width:13%">
+                                                <button class="ui icon red button" value="@video.Url" onclick="PreparaVer(this.value, this);">
+                                                    <i class="youtube icon"></i>
+                                                </button>
+                                            </td>
+                                            <td>@video.Nombre</td>
+
+                                        </tr>
+
+
+                                    }
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+
+                        <div id="btnCancelar" data-dismiss="modal" class="ui right labeled icon button" onclick="location.href='/login'">
+                            volver
+                            <i class="cancel icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<script src="~/Scripts/Script_Login.js"></script>
+
+
+<!-- Modal Mensaje Éxito -->

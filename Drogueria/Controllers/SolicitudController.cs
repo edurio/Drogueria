@@ -234,7 +234,14 @@ namespace Drogueria.Controllers
                 //var ruta = ConfigurationSettings.AppSettings.Get("RutaPDF_Fisica") + "Solicitud_N°" + entity.Folio.ToString() + "_Empresa_ID" + SessionH.Usuario.EmpId + "_" + DateTime.Now.ToShortDateString() + ".pdf";
                 //rptSolicitud.ExportToPdf(ruta, null);
 
-                var ruta = Utiles.ObtenerPDF(entity, listadoProductos);
+                if (bool.Parse(Session["EsRayen"].ToString()) == false)
+                {
+                    var rutaPDF = Utiles.ObtenerPDF(entity, listadoProductos);
+                }
+                else
+                {
+                    var rutaPDF = Utiles.ObtenerPDF_Rayen(entity, listadoProductos);
+                }
 
 
                 var url = "";
